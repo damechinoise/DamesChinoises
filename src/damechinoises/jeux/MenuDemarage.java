@@ -1,6 +1,9 @@
 package damechinoises.jeux;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 
 public class MenuDemarage extends Menu {
@@ -11,7 +14,7 @@ public class MenuDemarage extends Menu {
 	private JButton nouv,charger,quitter;
 	private JLabel infos;
 	
-	public MenuDemarage(JFrame p) {
+	public MenuDemarage(FenetrePrincipale p) {
 		super(p);
 		infos = new JLabel("Dames chinoises, 2013");
 		infos.setFont(font);
@@ -29,6 +32,21 @@ public class MenuDemarage extends Menu {
 		content.add(charger);
 		content.add(quitter);
 		this.add(content,BorderLayout.CENTER);
+		nouv.addActionListener(new NouvellePartieListener(this));
 	}
 
+	
+	class NouvellePartieListener implements ActionListener{
+
+		private MenuDemarage m;
+		
+		public NouvellePartieListener(MenuDemarage m){
+			this.m=m;
+		}
+		
+		public void actionPerformed(ActionEvent e) {
+			m.getParent().setMain(new MenuNouvellePartie(m.getParent()));
+		}
+		
+	}
 }

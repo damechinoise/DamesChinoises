@@ -13,7 +13,7 @@ public class FenetrePrincipale extends JFrame {
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		main= new MenuDemarage(this);
-		this.setContentPane(main);
+		this.add(main);
 		this.setVisible(true);
 	}
 	
@@ -22,7 +22,10 @@ public class FenetrePrincipale extends JFrame {
 	}
 	
 	public void setMain(JPanel panel){
+		this.remove(main);
 		main=panel;
-		this.repaint();
+		this.add(main);
+		this.setVisible(false);
+		this.setVisible(true);
 	}
 }

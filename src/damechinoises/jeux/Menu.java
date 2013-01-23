@@ -6,11 +6,15 @@ import javax.swing.*;
 
 public abstract class Menu extends JPanel {
 
-	private JFrame parent; 
+	private FenetrePrincipale parent; 
 	
-	public Menu(JFrame p){
+	public Menu(FenetrePrincipale p){
 		parent=p;
 		this.setLayout(new BorderLayout());
 	}
 	
+	public FenetrePrincipale getParent(){
+		return parent;
+	}
+
 }
