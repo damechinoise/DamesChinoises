@@ -1,10 +1,12 @@
 package damechinoises.jeux;
 
+import java.awt.GridLayout;
+
 import javax.swing.*;
 
 public class FenetrePrincipale extends JFrame {
 	
-	private JPanel main;
+	private JPanel content;
 	
 	public FenetrePrincipale(){
 		this.setTitle("Dames chinoises");
@@ -12,20 +14,16 @@ public class FenetrePrincipale extends JFrame {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
-		main= new MenuDemarage(this);
-		this.add(main);
+		content = new JPanel(new GridLayout(0,1));
+		this.setContentPane(content);
+		content.add(new MenuDemarage(this));
 		this.setVisible(true);
-	}
-	
-	public JPanel getMain(){
-		return main;
 	}
 	
 	public void setMain(JPanel panel){
-		this.remove(main);
-		main=panel;
-		this.add(main);
-		this.setVisible(false);
-		this.setVisible(true);
+		content.removeAll();
+		content.add(panel);
+		content.validate();
+		content.repaint();
 	}
 }

@@ -9,11 +9,14 @@ public class MenuNouvellePartie extends Menu {
 
 	private JPanel content;
 	private JButton retour;
+	private JButton lancer;
 	
 	public MenuNouvellePartie(FenetrePrincipale p) {
 		super(p);
-		content = new JPanel(new FlowLayout());
+		content = new JPanel(new GridLayout(0,1,0,20));
+		lancer = new JButton("Lancer");
 		retour = new JButton("Retour au menu principal");
+		content.add(lancer);
 		content.add(retour);
 		this.add(content,BorderLayout.CENTER);
 		retour.addActionListener(new RetourListener(this));
@@ -31,6 +34,5 @@ public class MenuNouvellePartie extends Menu {
 			m.getParent().setMain(new MenuDemarage(m.getParent()));
 		}
 		
-	}
-	
+	}	
 }

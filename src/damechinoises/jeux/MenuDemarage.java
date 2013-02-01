@@ -33,6 +33,11 @@ public class MenuDemarage extends Menu {
 		content.add(quitter);
 		this.add(content,BorderLayout.CENTER);
 		nouv.addActionListener(new NouvellePartieListener(this));
+		quitter.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				System.exit(0);
+			}
+		});
 	}
 
 	
