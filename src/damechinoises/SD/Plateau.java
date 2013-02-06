@@ -18,7 +18,7 @@ public class Plateau {
 		taillePlateau = 4;
 		anneaux = new Vector<AnneauCases>();
 		branches = new BrancheCase[6];
-		for (int i = 0; i <= taillePlateau+1; i++)
+		for (int i = 1; i <= taillePlateau+1; i++)
 			anneaux.add(new AnneauCases(i));
 		for (int i = 0 ; i < 6 ; i++)
 			branches[i]=new BrancheCase(taillePlateau);

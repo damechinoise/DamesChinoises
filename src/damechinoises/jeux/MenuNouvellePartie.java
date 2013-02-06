@@ -20,6 +20,7 @@ public class MenuNouvellePartie extends Menu {
 		content.add(retour);
 		this.add(content,BorderLayout.CENTER);
 		retour.addActionListener(new RetourListener(this));
+		lancer.addActionListener(new NouveauListener(this));
 	}
 
 	class RetourListener implements ActionListener{
@@ -34,5 +35,18 @@ public class MenuNouvellePartie extends Menu {
 			m.getParent().setMain(new MenuDemarage(m.getParent()));
 		}
 		
-	}	
+	}
+	class NouveauListener implements ActionListener{
+
+		private MenuNouvellePartie m;
+		
+		public NouveauListener(MenuNouvellePartie m){
+			this.m=m;
+		}
+		
+		public void actionPerformed(ActionEvent e) {
+			m.getParent().setMain(new PartieAffichage(m.getParent()));
+		}
+		
+	}
 }
