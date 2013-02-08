@@ -13,4 +13,15 @@ public class BrancheCase {
 		for (int i = 1; i <= tailleBranche ; i ++)
 			lignes.add(new LigneCase(i));
 	}
+	
+public LigneCase getLigne(int numLigne){
+		try{
+			return lignes.get(numLigne);
+		}
+		catch (Exception e){
+			System.err.println("Une erreur est survenue lors de la recuperation de la ligne");
+			return null;
+		}
+	}
+	
 }

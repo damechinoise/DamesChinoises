@@ -3,27 +3,26 @@ package damechinoises.SD;
 public class JoueurOrdinateur extends Joueur{
 /*###ATTRIBUTS###*/
 /*##############*/
-		private String difficulte;
-		
+		private int difficulte;
 /*###CONSTRUCTEURS###*/
 /*##################*/
-		public JoueurOrdinateur(){
-			super();
-			difficulte = new String("facile");
+		public JoueurOrdinateur(int taillePlateau){
+			super(taillePlateau);
+			difficulte = 1;
 		}
 		
-		public JoueurOrdinateur(int numero, String couleur,String difficulte){
-			super(numero, couleur);
-			difficulte = new String(difficulte);
+		public JoueurOrdinateur(int taillePlateau, int numero, String couleur,int difficulte, int numeroBrancheDebut){
+			super(taillePlateau, numero, couleur, numeroBrancheDebut);
+			this.difficulte = difficulte;
 		}
 		
 /*###ACCESSEURS###*/
 /*###############*/
-		public String getDifficulte(){
+		public int getDifficulte(){
 			return difficulte;
 		}
 		
-		public void setDificulte(String difficulte){
+		public void setDificulte(int difficulte){
 			this.difficulte = difficulte;
 		}
 		

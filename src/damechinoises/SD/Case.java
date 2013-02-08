@@ -8,6 +8,9 @@ public class Case{
 	 * occupe correspond à l' état de la case, elle vaut true si la case est occupée, false sinon.
 	 */
 	private boolean occupe;
+	private int numBranche;
+	private int numAnneau;
+	private int numCase;
 	
 /*###CONSTRUCTEURS###*/
 /*##################*/

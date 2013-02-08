@@ -7,12 +7,12 @@ public class JoueurHumain extends Joueur{
 	
 /*###CONSTRUCTEURS###*/
 /*##################*/
-	public JoueurHumain(){
-		super();
+	public JoueurHumain(int taillePlateau){
+		super(taillePlateau);
 	}
 	
-	public JoueurHumain(int numero, String couleur){
-		super(numero, couleur);
+	public JoueurHumain(int taillePlateau, int numero, String couleur, int numeroBrancheDebut){
+		super(taillePlateau, numero, couleur, numeroBrancheDebut);
 	}
 	
 /*###ACCESSEURS###*/

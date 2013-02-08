@@ -7,7 +7,7 @@ package damechinoises.SD;
  * @version 1.0
  *
  */
-abstract class Joueur {
+public abstract class Joueur {
 /*###ATTRIBUTS###*/
 /*##############*/
 	/**
@@ -25,33 +25,62 @@ abstract class Joueur {
 	 */
 	private Pion lesPions[];
 	
+	/**
+	 * Correspond à la branche de départ du joueur.
+	 */
+	private int numBrancheDebut;
+	
+	/**
+	 * Correspond à la branche d'arrivée du joueur.
+	 */
+	private int numBrancheFin;
+	
+	private int nbPionParJoueur;
+	
+	
 /*###CONSTRUCTEURS###*/
 /*##################*/
 	/**
 	 * Constructeur par défaut d'un joueur.
+	 * @param taillePlateau la taille du plateau
 	 */
-	public Joueur(){
+	public Joueur(int taillePlateau){
+		nbPionParJoueur = 0;
+		
+		for (int i = 0; i < taillePlateau; i++){
+			nbPionParJoueur += taillePlateau-i;
+		}
+		
 		numero = 0;
 		couleur = new String("Blanc");
-		lesPions = new Pion[10];//A MODIFIER EN RECUPERANT NBPIONPARJOUEUR//
+		lesPions = new Pion[nbPionParJoueur];
 		
-		for (int i = 0; i < 10; i++){
+		for (int i = 0; i < nbPionParJoueur; i++){
 			lesPions[i] = new Pion();
 		}
 	}
 	
 	/**
 	 * Constructeur d'un joueur prenant en paramètre un numéro et une couleur
+	 * @param taillePlateau la taille du plateau
 	 * @param numero le numéro du joueur
 	 * @param couleur la couleur du joueur
 	 */
-	public Joueur(int numero, String couleur){
+	public Joueur(int taillePlateau, int numero, String couleur, int numBrancheDebut){
+		int nbPionParJoueur = 0;
+		
+		for (int i = 0; i < taillePlateau; i++){
+			nbPionParJoueur += taillePlateau-i;
+		}
+		
 		this.numero = numero;
 		this.couleur = couleur;
-		lesPions = new Pion[5];//A MODIFIER EN RECUPERANT NBPIONPARJOUEUR//
+		this.numBrancheDebut = numBrancheDebut;
+		this.numBrancheFin = (numBrancheDebut + 3)%6;
+		lesPions = new Pion[nbPionParJoueur];
 		
-		for (int i = 0; i < 10; i++){
-			lesPions[i] = new Pion(/*TROUVER MOYEN DE CHANGER LA POSITION DE CHAQUE PION*/);  
+		for (int i = 0; i < nbPionParJoueur; i++){
+			lesPions[i] = new Pion(); //PLACER LES PIONS//
 		}
 	}
 	
@@ -105,6 +134,43 @@ abstract class Joueur {
 	 */
 	public void setPion(int numeroPion, Case position){
 		this.lesPions[numeroPion].setPosition(position);
+	}
+	
+	/**
+	 * Retourne le numéro de la branche de départ de ce joueur.
+	 * @return le numéro de la branche de départ de ce joueur
+	 */
+	public int getNumBrancheDebut(){
+		return numBrancheDebut;
+	}
+	
+	/**
+	 * Modifie le numéro de la branche de départ de ce joueur.
+	 * @param num le nouveau numéro de la branche de départ de ce joueur
+	 */
+	public void setNumBrancheDebut(int num){
+		this.numBrancheDebut = num;
+	}
+	
+	/**
+	 * Retourne le numéro de la branche d'arrivée de ce joueur.
+	 * @return le numéro de la branche d'arrivée de ce joueur
+	 */
+	public int getNumBrancheFin(){
+		return numBrancheFin;
+	}
+	
+	/**
+	 * Modifie le numéro de la branche d'arrivée de ce joueur.
+	 * @param num le nouveau numéro de la branche d'arrivée de ce joueur
+	 */
+	public void setNumBrancheFin(int num){
+		this.numBrancheFin = num;
+	}
+	
+	
+	public int getNbPionParJoueur(){
+		return nbPionParJoueur;
 	}
 	
 /*###METHODES###*/

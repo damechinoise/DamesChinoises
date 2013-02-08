@@ -10,6 +10,7 @@ public class Plateau {
 	private int nbPionParJoueur;
 	private Vector<AnneauCases> anneaux;
 	private BrancheCase[] branches;
+	
 	//AJOUTER LES CASES//
 	
 /*###CONSTRUCTEURS###*/
@@ -22,6 +23,17 @@ public class Plateau {
 			anneaux.add(new AnneauCases(i));
 		for (int i = 0 ; i < 6 ; i++)
 			branches[i]=new BrancheCase(taillePlateau);
+	}
+	
+	public Plateau(int taillePlateau){
+		this.taillePlateau=taillePlateau;
+		anneaux = new Vector<AnneauCases>();
+		branches = new BrancheCase[6];
+		for (int i = 1; i <= taillePlateau+1; i++)
+			anneaux.add(new AnneauCases(i));
+		for (int i = 0 ; i < 6 ; i++)
+			branches[i]=new BrancheCase(taillePlateau);
+
 	}
 	
 /*###ACCESSEURS###*/
@@ -42,6 +54,15 @@ public class Plateau {
 		this.nbPionParJoueur = nbPionParJoueur;
 	}
 	
+	public BrancheCase getBranche(int numBranche){
+		try{
+			return branches[numBranche];
+		}
+		catch (Exception e){
+			System.err.println("Une erreur est survenue lors de la recuperation de la branche");
+			return null;
+		}
+	}
 /*###METHODES###*/
 /*#############*/
 }

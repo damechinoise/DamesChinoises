@@ -1,5 +1,8 @@
 package damechinoises.SD;
 
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 public class Pion{
 
 /*###ATTRIBUTS###*/
@@ -10,6 +13,10 @@ public class Pion{
 	 * @see Case
 	 */
 	private Case position;
+	
+	
+	JLabel casegraph;
+	ImageIcon iconefond;
 
 /*###CONSTRUCTEURS###*/
 /*##################*/
@@ -18,14 +25,36 @@ public class Pion{
 	 */
 	public Pion(){
 		position = new Case ();
+		
+		iconefond= new ImageIcon("casevide.jpg","case vide");
+		casegraph=new JLabel(iconefond);
+		casegraph.setSize(32,32);
 	}
 	
 	/**
 	 * Constructeur d'un pion.
 	 * @param position la position de ce pion
 	 */
-	public Pion(Case position){
+	public Pion(Case position, String couleur){
+		
 		this.position = position;
+		
+		if (couleur.equals("vide"))
+			iconefond= new ImageIcon("Images/casevide.png","case vide");
+		if (couleur.equals("bleu"))
+			iconefond= new ImageIcon("Images/casebleu.png","case vide");
+		if (couleur.equals("rouge"))
+			iconefond= new ImageIcon("Images/caserouge.png","case vide");
+		if (couleur.equals("orange"))
+			iconefond= new ImageIcon("Images/caseorange.png","case vide");
+		if (couleur.equals("vert"))
+			iconefond= new ImageIcon("Images/casevert.png","case vide");
+		if (couleur.equals("jaune"))
+			iconefond= new ImageIcon("Images/casejaune.png","case vide");
+		if (couleur.equals("violet"))
+			iconefond= new ImageIcon("Images/caseviolet.png","case vide");
+		casegraph=new JLabel(iconefond);
+		casegraph.setSize(32,32);
 	}
 	
 /*###ACCESSEURS###*/
