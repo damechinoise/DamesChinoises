@@ -45,7 +45,10 @@ public class MenuNouvellePartie extends Menu {
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			m.getParent().setMain(new PartieAffichage(m.getParent()));
+			PartieAffichage p = new PartieAffichage(m.getParent());
+			m.getParent().setMain(p);
+			p.getPanelJeu().update();
+			m.getParent().validate();
 		}
 		
 	}
