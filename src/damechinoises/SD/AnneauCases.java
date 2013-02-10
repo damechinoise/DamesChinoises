@@ -16,4 +16,14 @@ public class AnneauCases {
 		}
 	}
 	
+	public LigneCase getLigne(int numLigne){
+		try{
+			return lignes[numLigne];
+		}
+		catch (Exception e){
+			System.err.println("Erreur dans la récupération de la ligne");
+			return null;
+		}
+	}
+	
 }

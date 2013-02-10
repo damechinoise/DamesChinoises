@@ -69,8 +69,8 @@ public abstract class Joueur {
 	public Joueur(int taillePlateau, int numero, String couleur, int numBrancheDebut){
 		int nbPionParJoueur = 0;
 		
-		for (int i = 0; i < taillePlateau; i++){
-			nbPionParJoueur += taillePlateau-i;
+		for (int i = 1; i <= taillePlateau; i++){
+			nbPionParJoueur += i;
 		}
 		
 		this.numero = numero;

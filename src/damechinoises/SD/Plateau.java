@@ -63,6 +63,16 @@ public class Plateau {
 			return null;
 		}
 	}
+	
+	public AnneauCases getAnneau(int numAnneau){
+		try{
+			return anneaux.get(numAnneau);
+		}
+		catch (Exception e){
+			System.err.println("Une erreur est survenue lors de la recuperation de l'anneau");
+			return null;
+		}
+	}
 /*###METHODES###*/
 /*#############*/
 }

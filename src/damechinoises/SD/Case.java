@@ -8,9 +8,7 @@ public class Case{
 	 * occupe correspond à l' état de la case, elle vaut true si la case est occupée, false sinon.
 	 */
 	private boolean occupe;
-	private int numBranche;
-	private int numAnneau;
-	private int numCase;
+	private String couleur;
 	
 /*###CONSTRUCTEURS###*/
 /*##################*/
@@ -19,6 +17,12 @@ public class Case{
 	 */
 	public Case(){
 		occupe = false;
+		couleur = null;
+	}
+	
+	public Case(String couleur){
+		occupe = true;
+		this.couleur = couleur;
 	}
 	
 	/**
@@ -39,6 +43,9 @@ public class Case{
 		return occupe;
 	}
 	
+	public String getCouleur(){
+		return couleur;
+	}
 	/**
 	 * Permet de modifier l'état de cette case.
 	 * @param occ un booleen permettant de dire si la case est occupée ou non
@@ -47,6 +54,9 @@ public class Case{
 		occupe=occ;
 	}
 	
+	public void setCouleur(String couleur){
+		this.couleur=couleur;
+	}
 /*###METHODES###*/
 /*#############*/
 	

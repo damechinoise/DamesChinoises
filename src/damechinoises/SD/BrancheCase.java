@@ -10,11 +10,11 @@ public class BrancheCase {
 	public BrancheCase(int taille){
 		tailleBranche = taille;
 		lignes = new Vector<LigneCase>();
-		for (int i = 1; i <= tailleBranche ; i ++)
+		for (int i = tailleBranche; i > 0 ; i --)
 			lignes.add(new LigneCase(i));
 	}
 	
-public LigneCase getLigne(int numLigne){
+	public LigneCase getLigne(int numLigne){
 		try{
 			return lignes.get(numLigne);
 		}

@@ -7,11 +7,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import damechinoises.SD.Partie;
 import damechinoises.SD.Plateau;
 
 public class PartieAffichage extends JPanel {
 	
-	private Plateau plateau;
+	private Partie partie;
 	private FenetrePrincipale parent;
 	private JMenuBar mb = new JMenuBar();
 	private JMenu menu=new JMenu("Menu");
@@ -24,7 +25,8 @@ public class PartieAffichage extends JPanel {
 	public PartieAffichage(FenetrePrincipale p){
 		parent = p;
 		this.setLayout(new BorderLayout());
-		plateau = new Plateau();
+		partie = new Partie();
+		Plateau plateau = partie.getPlateau();
 		panelMenu.add(mb,BorderLayout.NORTH);
 		panelJeu = new PlateauAffichage(plateau);
 		mb.add(menu);

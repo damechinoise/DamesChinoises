@@ -13,7 +13,7 @@ public class Pion{
 	 * @see Case
 	 */
 	private Case position;
-	
+	private String couleur;
 	
 	JLabel casegraph;
 	ImageIcon iconefond;
@@ -38,7 +38,7 @@ public class Pion{
 	public Pion(Case position, String couleur){
 		
 		this.position = position;
-		
+		this.couleur=couleur;
 		if (couleur.equals("vide"))
 			iconefond= new ImageIcon("Images/casevide.png","case vide");
 		if (couleur.equals("bleu"))
