@@ -35,7 +35,6 @@ public abstract class Joueur {
 	 */
 	private int numBrancheFin;
 	
-	private int nbPionParJoueur;
 	
 	
 /*###CONSTRUCTEURS###*/
@@ -45,7 +44,7 @@ public abstract class Joueur {
 	 * @param taillePlateau la taille du plateau
 	 */
 	public Joueur(int taillePlateau){
-		nbPionParJoueur = 0;
+		int nbPionParJoueur = 0;
 		
 		for (int i = 0; i < taillePlateau; i++){
 			nbPionParJoueur += taillePlateau-i;
@@ -169,9 +168,6 @@ public abstract class Joueur {
 	}
 	
 	
-	public int getNbPionParJoueur(){
-		return nbPionParJoueur;
-	}
 	
 /*###METHODES###*/
 /*#############*/

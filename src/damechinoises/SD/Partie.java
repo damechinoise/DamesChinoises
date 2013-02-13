@@ -54,5 +54,20 @@ public class Partie {
 	public Plateau getPlateau(){
 		return plateau;
 	}
+	
+	public Joueur getJoueur(int numjoueur){
+		try{
+			return lesJoueurs[numjoueur];
+		}
+		catch (Exception e){
+			System.err.println("Une erreur est survenue lors de la recuperation du joueur");
+			return null;
+		}
+    }
+
+	public int getNbJoueurs(){
+		int nbj=lesJoueurs.length;
+		return nbj;
+	}
 		
 }
