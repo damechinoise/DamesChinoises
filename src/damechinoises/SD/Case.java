@@ -8,7 +8,8 @@ public class Case{
 	 * occupe correspond à l' état de la case, elle vaut true si la case est occupée, false sinon.
 	 */
 	private boolean occupe;
-	private String couleur;
+	private Pion p;
+	private int x,y;
 	
 /*###CONSTRUCTEURS###*/
 /*##################*/
@@ -16,13 +17,16 @@ public class Case{
 	 * Le constructeur par défaut d'une case.
 	 */
 	public Case(){
+		x=0;
+		y=0;
 		occupe = false;
-		couleur = null;
+		p=null;
 	}
 	
 	public Case(String couleur){
+		x=0;
+		y=0;
 		occupe = true;
-		this.couleur = couleur;
 	}
 	
 	/**
@@ -44,7 +48,18 @@ public class Case{
 	}
 	
 	public String getCouleur(){
-		return couleur;
+		if(p!=null)
+			return p.getCouleur();
+		else
+			return null;
+	}
+	
+	public int getX(){
+		return x;
+	}
+	
+	public int getY(){
+		return y;
 	}
 	/**
 	 * Permet de modifier l'état de cette case.
@@ -54,10 +69,35 @@ public class Case{
 		occupe=occ;
 	}
 	
-	public void setCouleur(String couleur){
-		this.couleur=couleur;
+	public void setX(int x){
+		this.x=x;
+	}
+	
+	public void setY(int y){
+		this.y=y;
+	}
+	
+	public Pion getPion(){
+		return p;
+	}
+	
+	public void setPion(Pion p){
+		this.p = p;
 	}
 /*###METHODES###*/
 /*#############*/
 	
+	public boolean move(Case c){
+		boolean move = true;
+		if (occupe){
+			return false;
+		}
+		else{
+			this.setPion(c.getPion());
+			c.setPion(null);
+			this.setOccupe(true);
+			c.setOccupe(false);
+		}
+		return move;
+	}
 }

@@ -79,7 +79,7 @@ public abstract class Joueur {
 		lesPions = new Pion[nbPionParJoueur];
 		
 		for (int i = 0; i < nbPionParJoueur; i++){
-			lesPions[i] = new Pion(); //PLACER LES PIONS//
+			lesPions[i] = new Pion(couleur); //PLACER LES PIONS//
 		}
 	}
 	
@@ -125,15 +125,7 @@ public abstract class Joueur {
 	public Pion getPion(int numeroPion){
 		return lesPions[numeroPion];
 	}
-	
-	/**
-	 * Modifie la position d'un pion
-	 * @param numeroPion le numéro du pion que l'on souhaite modifier
-	 * @param position la nouvelle position du pion
-	 */
-	public void setPion(int numeroPion, Case position){
-		this.lesPions[numeroPion].setPosition(position);
-	}
+
 	
 	/**
 	 * Retourne le numéro de la branche de départ de ce joueur.

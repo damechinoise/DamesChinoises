@@ -29,6 +29,9 @@ public class Plateau {
 		this.taillePlateau=taillePlateau;
 		anneaux = new Vector<AnneauCases>();
 		branches = new BrancheCase[6];
+		nbPionParJoueur = 0;
+		for (int i =1 ; i<= taillePlateau ; i++)
+			nbPionParJoueur+=i;
 		for (int i = 1; i <= taillePlateau+1; i++)
 			anneaux.add(new AnneauCases(i));
 		for (int i = 0 ; i < 6 ; i++)

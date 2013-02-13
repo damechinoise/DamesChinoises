@@ -37,6 +37,7 @@ public class Partie {
 			k=plateau.getTaille();
 			int t=k;
 			int j = 0;
+			int nbpion= nbpionparjoueur;
 			//parcours de pions
 			while (k>0){
 				if(j>0 && j%k==0){
@@ -44,7 +45,8 @@ public class Partie {
 					j=0;
 				}
 				else{
-					plateau.getBranche(i).getLigne(t-k).getCase(j).setCouleur(lesJoueurs[i].getCouleur());
+					plateau.getBranche(i).getLigne(t-k).getCase(j).setPion(lesJoueurs[i].getPion(--nbpion));
+					plateau.getBranche(i).getLigne(t-k).getCase(j).setOccupe(true);
 					j++;
 				}
 			}
