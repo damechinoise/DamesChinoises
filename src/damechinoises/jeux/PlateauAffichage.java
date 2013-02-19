@@ -19,6 +19,7 @@ public class PlateauAffichage extends JPanel {
 	private int taille;
 	public PlateauAffichage(Plateau p){
 		plateau = p;
+		this.setBackground(Color.BLACK);
 		this.addMouseListener(new ClicListener());
 	}
 	
@@ -113,21 +114,23 @@ public class PlateauAffichage extends JPanel {
 	public void affCase(int x,int y,int d,String couleur) {
 		Graphics g = this.getGraphics();
 		if (!(couleur!=null)){
-			g.setColor(Color.black);
+			g.setColor(Color.LIGHT_GRAY);
 		}
 		else{
-		if (couleur.equals("bleu"))
-			g.setColor(Color.blue);
-		if (couleur.equals("rouge"))
-			g.setColor(Color.red);
-		if (couleur.equals("orange"))
-			g.setColor(Color.orange);
-		if (couleur.equals("vert"))
-			g.setColor(Color.green);
-		if (couleur.equals("jaune"))
-			g.setColor(Color.yellow);
-		if (couleur.equals("violet"))
-			g.setColor(Color.magenta);
+			if (couleur.equals("bleu"))
+				g.setColor(Color.blue);
+			if (couleur.equals("rouge"))
+				g.setColor(Color.red);
+			if (couleur.equals("orange"))
+				g.setColor(Color.orange);
+			if (couleur.equals("vert"))
+				g.setColor(Color.green);
+			if (couleur.equals("jaune"))
+				g.setColor(Color.yellow);
+			if (couleur.equals("violet"))
+				g.setColor(Color.magenta);
+			if (couleur.equals("fond"))
+				g.setColor(Color.DARK_GRAY);
 		}
 		g.fillOval(x-d/2, y-d/2, d, d);
 	    g.drawOval(x-d/2, y-d/2, d, d);
@@ -135,8 +138,8 @@ public class PlateauAffichage extends JPanel {
 	
 	public void highLight(int x,int y,int d){
 		Graphics g = this.getGraphics();
-		g.setColor(Color.DARK_GRAY);
-		g.drawOval(x-d/2, y-d/2, d, d);
+		g.setColor(Color.WHITE);
+		g.fillOval(x-4, y-8, 8, 16);
 	}
 	
 	public void affCase(int x,int y){
@@ -187,7 +190,6 @@ public class PlateauAffichage extends JPanel {
 		int casex =plateau.getAnneau(0).getLigne(0).getCase(0).getX();
 		int casey =plateau.getAnneau(0).getLigne(0).getCase(0).getY();
 		if(x>= casex-12 && x<=casex +12 && y>= casey-12 && y<=casey +12 ){
-			System.out.println("Tu as clique sur la case 0 de la ligne 0 de l'anneau 0");
 			return plateau.getAnneau(0).getLigne(0).getCase(0);
 		}
 		for (int anneau = 1; anneau < 1+taille ; anneau ++){
@@ -195,7 +197,6 @@ public class PlateauAffichage extends JPanel {
 				casex = plateau.getAnneau(anneau).getLigne(cases).getCase(0).getX();
 				casey = plateau.getAnneau(anneau).getLigne(cases).getCase(0).getY();
 				if(x>= casex-12 && x<=casex +12 && y>= casey-12 && y<=casey +12 ){
-					System.out.println("Tu as clique sur la case 0 de la ligne "+ cases +" de l'anneau "+ anneau);
 					return plateau.getAnneau(anneau).getLigne(cases).getCase(0);
 				}
 			}
@@ -204,7 +205,6 @@ public class PlateauAffichage extends JPanel {
 					casex = plateau.getAnneau(anneau).getLigne(cases).getCase(i).getX();
 					casey = plateau.getAnneau(anneau).getLigne(cases).getCase(i).getY();
 					if(x>= casex-12 && x<=casex +12 && y>= casey-12 && y<=casey +12 ){
-						System.out.println("Tu as clique sur la case "+i+" de la ligne "+ cases +" de l'anneau "+ anneau);
 						return plateau.getAnneau(anneau).getLigne(cases).getCase(i);
 					}
 				}
@@ -217,7 +217,6 @@ public class PlateauAffichage extends JPanel {
 					casex = plateau.getBranche(cases).getLigne(branche-taille-1).getCase(i-((branche-taillebranche)/2)-1).getX();
 					casey = plateau.getBranche(cases).getLigne(branche-taille-1).getCase(i-((branche-taillebranche)/2)-1).getY();
 					if(x>= casex-12 && x<=casex +12 && y>= casey-12 && y<=casey +12 ){
-						System.out.println("Tu as clique sur la case "+i+" de la ligne "+ (branche-taille) +" de la branche "+ cases);
 						return plateau.getBranche(cases).getLigne(branche-taille-1).getCase(i-((branche-taillebranche)/2)-1);
 					}
 				}
@@ -255,6 +254,12 @@ public class PlateauAffichage extends JPanel {
 					dep=null;
 					arr=null;
 					update();
+				}else
+				if (arr == dep){
+					select = false;
+					affCase(arr.getX(),arr.getY(),24,arr.getCouleur());
+					dep=null;
+					arr=null;
 				}
 			}
 			
