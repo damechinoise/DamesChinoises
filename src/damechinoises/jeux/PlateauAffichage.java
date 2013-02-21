@@ -232,7 +232,7 @@ public class PlateauAffichage extends JPanel {
 	
 	class ClicListener extends MouseAdapter{
 		boolean select = false;
-		Case dep, arr;
+		Case dep, arr,saut;
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
 			int x = arg0.getX();
@@ -248,12 +248,68 @@ public class PlateauAffichage extends JPanel {
 			}
 			else{
 				arr=selCase(x,y);
+				System.out.println("Case depart x : "+dep.getX() +" y : "+dep.getY());
+				System.out.println("Case arrivée x : "+arr.getX() +" y : "+arr.getY());
+				System.out.println("dep: "+dep);
+				System.out.println("arr: "+arr);
 				if (arr != null && arr.getPion()==null){
-					select = false;
-					arr.move(dep);
-					dep=null;
-					arr=null;
-					update();
+					// Cas ou ils ont le meme ordonnée ( meme ligne)
+					if(arr.getY()==dep.getY()){
+						// Directement adjacente
+						if((arr.getX()==(dep.getX()+30))||(arr.getX()==(dep.getX()-30))){
+							select = false;
+							arr.move(dep);
+							dep=null;
+							arr=null;
+							update();
+						}
+						else
+						{
+							// saut vers la droite ou la gauche
+							if((arr.getX()==(dep.getX()+60))||(arr.getX()==(dep.getX()-60))){
+								
+								saut=selCase(((arr.getX()+dep.getX())/2),arr.getY());
+								System.out.println("Case saut x : "+saut.getX() +" y : "+saut.getY());
+								// si il  a bien un pion par lequel on peut sauter
+								if(saut.getPion()!=null)
+								{
+									arr.move(dep);
+									dep=arr;
+									arr=null;
+									update();
+									
+								}
+							}
+						}
+						
+					}
+					else{
+						if((arr.getX()==dep.getX()+15)||(arr.getX()==dep.getX()-15)){
+							// cas d'un simple deplacement d'une case
+							if((arr.getY()==dep.getY()+26)||(arr.getY()==dep.getY()-26)||(arr.getY()==dep.getY()-25)||(arr.getY()==dep.getY()+25)){
+								select = false;
+								arr.move(dep);
+								dep=null;
+								arr=null;
+								update();
+							}
+						}
+						else if((arr.getX()==dep.getX()+30)||(arr.getX()==dep.getX()-30)){
+							
+								if((arr.getY()==dep.getY()+52)||(arr.getY()==dep.getY()-52)||(arr.getY()==dep.getY()-51)||(arr.getY()==dep.getY()+51)){
+									saut=selCase(((arr.getX()+dep.getX())/2),((arr.getY()+dep.getY())/2));
+									System.out.println("Case saut x : "+saut.getX() +" y : "+saut.getY());
+									// si il  a bien un pion par lequel on peut sauter
+									if(saut.getPion()!=null){
+										arr.move(dep);
+										dep=arr;
+										arr=null;
+										update();
+									}
+							}
+						}
+					}
+					
 				}else
 				if (arr == dep){
 					select = false;
@@ -277,7 +333,6 @@ public class PlateauAffichage extends JPanel {
 			update();
 			if (select == true)
 				highLight(dep.getX(),dep.getY(),24);
-			
 		}
 
 		@Override
