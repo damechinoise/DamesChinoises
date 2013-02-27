@@ -5,13 +5,14 @@ public class Partie {
 /*##############*/
 	private Plateau plateau;
 	private Joueur lesJoueurs[];
+	private int tourDe;
 	
 /*###CONSTRUCTEURS###*/
 /*##################*/
 	public Partie(){
 		int taillePlateau=5;
 		int nbpionparjoueur;
-	
+		
 		plateau = new Plateau(taillePlateau);
 		
 		lesJoueurs = new Joueur[6];
@@ -22,6 +23,8 @@ public class Partie {
 		au tour de..
 		taille plateau
 	*/
+	
+		setPremierJoueur();
 		lesJoueurs[0] = new JoueurHumain(taillePlateau,0,"bleu",0);
 		lesJoueurs[1] = new JoueurHumain(taillePlateau,1,"rouge",1);
 		lesJoueurs[2] = new JoueurHumain(taillePlateau,2,"orange",2);
@@ -57,6 +60,14 @@ public class Partie {
 		return plateau;
 	}
 	
+	public int getTourDe(){
+		return tourDe;
+	}
+	
+	public void setTourDe( int tour){
+		tourDe=tour;
+	}
+	
 	public Joueur getJoueur(int numjoueur){
 		try{
 			return lesJoueurs[numjoueur];
@@ -66,6 +77,23 @@ public class Partie {
 			return null;
 		}
     }
+	
+	public void setPremierJoueur(){
+		int lower = 0;
+		int higher = this.getNbJoueurs();
+
+		int random = (int)(Math.random() * (higher-lower));
+		tourDe=random;
+	}
+	
+	public void setNextJoueur(){
+		if (tourDe == (this.getNbJoueurs()-1)){
+			tourDe= 0;
+		}
+		else{
+			tourDe++;
+		}
+	}
 
 	public int getNbJoueurs(){
 		int nbj=lesJoueurs.length;

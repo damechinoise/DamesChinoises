@@ -254,11 +254,12 @@ public class PlateauAffichage extends JPanel {
 		Case dep, arr,saut;
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
+			System.out.println("tour de "+partie.getJoueur(partie.getTourDe()).getCouleur());
 			int x = arg0.getX();
 			int y = arg0.getY();
 			if (!select){
 				dep=selCase(x,y);
-				if (dep!=null && dep.getPion()!=null){
+				if (dep!=null && dep.getPion()!=null && dep.getPion().getCouleur().equals(partie.getJoueur(partie.getTourDe()).getCouleur())){
 					select = true;
 					highLight(dep.getX(),dep.getY(),24);
 				}
@@ -278,6 +279,8 @@ public class PlateauAffichage extends JPanel {
 							possible = false;
 							dep=null;
 							arr=null;
+							partie.setNextJoueur();
+							partie.getJoueur(partie.getTourDe()).setADejaBouger(false);
 							update();
 						}
 						else
@@ -289,7 +292,8 @@ public class PlateauAffichage extends JPanel {
 								// si il  a bien un pion par lequel on peut sauter
 								if(saut.getPion()!=null)
 								{
-									move(dep,arr);;
+									move(dep,arr);
+									partie.getJoueur(partie.getTourDe()).setADejaBouger(true);
 									dep=arr;
 									arr=null;
 									update();
@@ -306,6 +310,8 @@ public class PlateauAffichage extends JPanel {
 									}
 									if (!possible){
 										dep=null;
+										partie.setNextJoueur();
+										partie.getJoueur(partie.getTourDe()).setADejaBouger(false);
 										select = false;
 									}
 									else{
@@ -326,6 +332,8 @@ public class PlateauAffichage extends JPanel {
 								possible = false;
 								dep=null;
 								arr=null;
+								partie.setNextJoueur();
+								partie.getJoueur(partie.getTourDe()).setADejaBouger(false);
 								update();
 							}
 						}
@@ -336,7 +344,8 @@ public class PlateauAffichage extends JPanel {
 
 									// si il  a bien un pion par lequel on peut sauter
 									if(saut.getPion()!=null){
-										move(dep,arr);;
+										move(dep,arr);
+										partie.getJoueur(partie.getTourDe()).setADejaBouger(true);
 										dep=arr;
 										arr=null;
 										update();
@@ -353,6 +362,8 @@ public class PlateauAffichage extends JPanel {
 										}
 										if (!possible){
 											dep=null;
+											partie.setNextJoueur();
+											partie.getJoueur(partie.getTourDe()).setADejaBouger(false);
 											select = false;
 										}
 										else{
@@ -369,6 +380,12 @@ public class PlateauAffichage extends JPanel {
 					affCase(arr.getX(),arr.getY(),24,arr.getCouleur());
 					dep=null;
 					arr=null;
+					
+					if (partie.getJoueur(partie.getTourDe()).getADejaBouger() == true){
+						partie.setNextJoueur();
+						partie.getJoueur(partie.getTourDe()).setADejaBouger(false);;
+					}
+					
 				}
 			}
 			

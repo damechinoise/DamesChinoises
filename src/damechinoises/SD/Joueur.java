@@ -36,6 +36,7 @@ public abstract class Joueur {
 	private int numBrancheFin;
 	
 	
+	private boolean aDejaBouger;
 	
 /*###CONSTRUCTEURS###*/
 /*##################*/
@@ -157,6 +158,14 @@ public abstract class Joueur {
 	 */
 	public void setNumBrancheFin(int num){
 		this.numBrancheFin = num;
+	}
+	
+	public boolean getADejaBouger(){
+		return this.aDejaBouger;
+	}
+	
+	public void setADejaBouger(boolean aBouger){
+		this.aDejaBouger = aBouger;
 	}
 	
 	
