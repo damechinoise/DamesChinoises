@@ -10,7 +10,8 @@ public class Case{
 	private boolean occupe;
 	private Pion p;
 	private int x,y;
-	
+	private boolean branche;
+	private int angle,dist;
 /*###CONSTRUCTEURS###*/
 /*##################*/
 	/**
@@ -23,10 +24,14 @@ public class Case{
 		p=null;
 	}
 	
-	public Case(String couleur){
+	public Case(boolean b,int n,int d){
 		x=0;
 		y=0;
-		occupe = true;
+		occupe=false;
+		p=null;
+		branche=b;
+		angle=n;
+		dist=d;
 	}
 	
 	/**
@@ -82,6 +87,8 @@ public class Case{
 	}
 	
 	public void setPion(Pion p){
+		if(p!=null)
+				p.setPosition(this);
 		this.p = p;
 	}
 /*###METHODES###*/
@@ -99,5 +106,40 @@ public class Case{
 			c.setOccupe(false);
 		}
 		return move;
+	}
+	
+	public int value(int brancheDepart){
+		int value = 0;
+		if (branche){
+			if(brancheDepart == angle){
+				value = 0 - dist * 20;
+			} 
+			else if((brancheDepart+3)%6==angle){
+				value = dist * 20;
+			} else {
+				value = -100;
+			}
+		} else {
+			int aTemp = (brancheDepart-angle);
+			if (aTemp < 0)
+				aTemp = -aTemp;
+			if(aTemp == 4)
+				aTemp+=2;
+			switch(aTemp){
+			case(0):
+				value=20-dist;
+				break;
+			case(3):
+				value=20+dist;
+				break;
+			default:
+				value =10-dist;
+			}
+		}
+		return value;
+	}
+	
+	public boolean equals(Case c){
+		return (c.x==x && c.y==y);
 	}
 }

@@ -31,7 +31,7 @@ public class PartieAffichage extends JPanel {
 		partie = new Partie();
 		Plateau plateau = partie.getPlateau();
 		panelMenu.add(mb,BorderLayout.NORTH);
-		panelJeu = new PlateauAffichage(plateau);
+		panelJeu = new PlateauAffichage(partie);
 		mb.add(menu);
 		menu.add(newgame);
 		menu.add(mainmenu);

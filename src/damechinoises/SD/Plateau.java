@@ -33,10 +33,9 @@ public class Plateau {
 		for (int i =1 ; i<= taillePlateau ; i++)
 			nbPionParJoueur+=i;
 		for (int i = 1; i <= taillePlateau+1; i++)
-			anneaux.add(new AnneauCases(i));
+			anneaux.add(new AnneauCases(i,i-1));
 		for (int i = 0 ; i < 6 ; i++)
-			branches[i]=new BrancheCase(taillePlateau);
-
+			branches[i]=new BrancheCase(taillePlateau,i);
 	}
 	
 /*###ACCESSEURS###*/

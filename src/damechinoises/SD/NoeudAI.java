@@ -4,17 +4,20 @@ import java.util.Vector;
 
 public class NoeudAI {
 
-	private Plateau p;
+	private Partie p;
 	private Vector<NoeudAI> fils = new Vector<NoeudAI>();
 	private NoeudAI parent = null;
+	private int joueur;
 	
-	public NoeudAI(Plateau p){
+	public NoeudAI(Partie p,int joueur){
 		this.p = p;
+		this.joueur = joueur;
 	}
 	
-	public NoeudAI(Plateau p,NoeudAI parent){
+	public NoeudAI(Partie p,NoeudAI parent,int joueur){
 		this.parent=parent;
 		this.p = p;
+		this.joueur = joueur;
 	}
 	
 	public boolean ajoutFils(NoeudAI fils){
@@ -28,16 +31,19 @@ public class NoeudAI {
 		return ajout;
 	}
 	
-	public int getPoids(int joueur){
+	public int getPoids(){
 		int poids = 0;
 		if(fils.isEmpty()){
-			poids = 1;
-			//TODO - ajouter le cacul du poids en fonction du plateau donné (calcul fait uniquement pour les feuilles)//
+			for (int i = 0; i < p.getNbJoueurs(); i++)
+				if(i!=joueur)
+					poids -= p.etatJoueur(i);
+				else
+					poids += p.etatJoueur(i);
 		}
 		else{
-			int max = fils.firstElement().getPoids(joueur);
+			int max = fils.firstElement().getPoids();
 			for(int i = 1;i < fils.size(); i++){
-				int val=fils.get(i).getPoids(joueur);
+				int val=fils.get(i).getPoids();
 				if (val > max)
 					max = val;
 			}

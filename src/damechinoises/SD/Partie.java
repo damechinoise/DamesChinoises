@@ -71,5 +71,20 @@ public class Partie {
 		int nbj=lesJoueurs.length;
 		return nbj;
 	}
+	
+	public int etatJoueur(int numJoueur){
+		int etat = 0;
+		try {
+			for (int i = 0 ; i < lesJoueurs[numJoueur].nbPions() ; i++ ){
+				int val =lesJoueurs[numJoueur].getPion(i).getPosition().value(lesJoueurs[numJoueur].getNumBrancheDebut()); 
+				etat+=val;
+				//System.out.println("Valeur du pion "+i+" du joueur "+numJoueur+" : "+val);
+			}
+		}
+		catch (Exception e){
+			etat = 0;
+		}
+		return etat;
+	}
 		
 }

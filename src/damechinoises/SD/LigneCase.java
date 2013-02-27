@@ -14,6 +14,13 @@ public class LigneCase {
 			cases.add(new Case());
 	}
 	
+	public LigneCase(int taille,boolean branche, int dist, int angle){
+		tailleLigne = taille;
+		cases = new Vector<Case>();
+		for (int i = 0 ; i < tailleLigne ; i++)
+			cases.add(new Case(branche,angle,dist));
+	}
+	
 	public Case getCase(int numCase){
 		try{
 			return cases.get(numCase);

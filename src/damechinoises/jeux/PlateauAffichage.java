@@ -5,20 +5,26 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import damechinoises.SD.Case;
+import damechinoises.SD.NoeudAI;
+import damechinoises.SD.Partie;
 import damechinoises.SD.Plateau;
 
 public class PlateauAffichage extends JPanel {
 
 	private Plateau plateau;
 	private int taille;
-	public PlateauAffichage(Plateau p){
-		plateau = p;
+	private Partie partie;
+	
+	public PlateauAffichage(Partie p){
+		partie =p;
+		plateau = p.getPlateau();
 		this.setBackground(Color.BLACK);
 		this.addMouseListener(new ClicListener());
 	}
@@ -228,10 +234,23 @@ public class PlateauAffichage extends JPanel {
 	
 	public void move(Case d, Case a){
 		a.move(d);
+		int i = 0;
+		NoeudAI n = new NoeudAI(partie,i);
+		System.out.println("Etat du joueur "+i+" : "+partie.etatJoueur(i));
+		System.out.println("Valeur du plateau pour le joueur "+i+" : "+n.getPoids());
+	}
+	
+	public Vector<Case> scan(Case c){
+		Vector<Case> v = new Vector<Case>();
+		for(double angle = 0 ; angle < 2*Math.PI ; angle+=Math.PI/3){
+			v.add(selCase((int)(c.getX()+Math.cos(angle)*30),(int)(c.getY()+Math.sin(angle)*30)));
+		}
+		return v;
 	}
 	
 	class ClicListener extends MouseAdapter{
 		boolean select = false;
+		boolean possible = false;
 		Case dep, arr,saut;
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
@@ -248,17 +267,15 @@ public class PlateauAffichage extends JPanel {
 			}
 			else{
 				arr=selCase(x,y);
-				System.out.println("Case depart x : "+dep.getX() +" y : "+dep.getY());
-				System.out.println("Case arrivée x : "+arr.getX() +" y : "+arr.getY());
-				System.out.println("dep: "+dep);
-				System.out.println("arr: "+arr);
 				if (arr != null && arr.getPion()==null){
 					// Cas ou ils ont le meme ordonnée ( meme ligne)
 					if(arr.getY()==dep.getY()){
 						// Directement adjacente
 						if((arr.getX()==(dep.getX()+30))||(arr.getX()==(dep.getX()-30))){
 							select = false;
-							arr.move(dep);
+							if(!possible)
+								move(dep,arr);
+							possible = false;
 							dep=null;
 							arr=null;
 							update();
@@ -269,15 +286,31 @@ public class PlateauAffichage extends JPanel {
 							if((arr.getX()==(dep.getX()+60))||(arr.getX()==(dep.getX()-60))){
 								
 								saut=selCase(((arr.getX()+dep.getX())/2),arr.getY());
-								System.out.println("Case saut x : "+saut.getX() +" y : "+saut.getY());
 								// si il  a bien un pion par lequel on peut sauter
 								if(saut.getPion()!=null)
 								{
-									arr.move(dep);
+									move(dep,arr);;
 									dep=arr;
 									arr=null;
 									update();
-									
+									Vector<Case> possibilite = scan(dep);
+									possible = false;
+									for (int i = 0; i < possibilite.size(); i++){
+										Case temp = possibilite.get(i);
+										if (temp != null && !temp.equals(saut) && temp.getOccupe()){
+											Case temp2 = selCase(dep.getX()+2*(temp.getX()-dep.getX()),dep.getY()+2*(temp.getY()-dep.getY()));
+											if(temp2 != null && !temp2.getOccupe()){
+												possible = true;
+											}
+										}
+									}
+									if (!possible){
+										dep=null;
+										select = false;
+									}
+									else{
+										highLight(dep.getX(),dep.getY(),24);
+									}
 								}
 							}
 						}
@@ -288,7 +321,9 @@ public class PlateauAffichage extends JPanel {
 							// cas d'un simple deplacement d'une case
 							if((arr.getY()==dep.getY()+26)||(arr.getY()==dep.getY()-26)||(arr.getY()==dep.getY()-25)||(arr.getY()==dep.getY()+25)){
 								select = false;
-								arr.move(dep);
+								if(!possible)
+									move(dep,arr);
+								possible = false;
 								dep=null;
 								arr=null;
 								update();
@@ -298,13 +333,31 @@ public class PlateauAffichage extends JPanel {
 							
 								if((arr.getY()==dep.getY()+52)||(arr.getY()==dep.getY()-52)||(arr.getY()==dep.getY()-51)||(arr.getY()==dep.getY()+51)){
 									saut=selCase(((arr.getX()+dep.getX())/2),((arr.getY()+dep.getY())/2));
-									System.out.println("Case saut x : "+saut.getX() +" y : "+saut.getY());
+
 									// si il  a bien un pion par lequel on peut sauter
 									if(saut.getPion()!=null){
-										arr.move(dep);
+										move(dep,arr);;
 										dep=arr;
 										arr=null;
 										update();
+										Vector<Case> possibilite = scan(dep);
+										possible = false;
+										for (int i = 0; i < possibilite.size(); i++){
+											Case temp = possibilite.get(i);
+											if (temp != null && !temp.equals(saut) && temp.getOccupe()){
+												Case temp2 = selCase(dep.getX()+2*(temp.getX()-dep.getX()),dep.getY()+2*(temp.getY()-dep.getY()));
+												if(temp2 != null && !temp2.getOccupe()){
+													possible = true;
+												}
+											}
+										}
+										if (!possible){
+											dep=null;
+											select = false;
+										}
+										else{
+											highLight(dep.getX(),dep.getY(),24);
+										}
 									}
 							}
 						}

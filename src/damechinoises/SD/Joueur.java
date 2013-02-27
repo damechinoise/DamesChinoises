@@ -163,6 +163,9 @@ public abstract class Joueur {
 	
 /*###METHODES###*/
 /*#############*/
-	 public abstract void choisirPion();
+	public int nbPions(){
+		return lesPions.length;
+	}
+	public abstract void choisirPion();
 	
 }

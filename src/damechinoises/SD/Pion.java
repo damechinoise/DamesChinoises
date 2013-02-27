@@ -24,7 +24,7 @@ public class Pion{
 	 * Constructeur par défaut d'un pion.
 	 */
 	public Pion(){
-		position = new Case ();
+		position = null;
 	}
 	
 	/**
@@ -43,6 +43,14 @@ public class Pion{
 	
 	public void setCouleur(String couleur){
 		this.couleur=couleur;
+	}
+	
+	public Case getPosition(){
+		return position;
+	}
+	
+	public void setPosition(Case p){
+		position=p;
 	}
 /*###METHODES###*/
 /*#############*/

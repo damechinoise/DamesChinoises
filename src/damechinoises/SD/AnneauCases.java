@@ -16,6 +16,17 @@ public class AnneauCases {
 		}
 	}
 	
+	public AnneauCases(int taille,int dist){
+		tailleLigne = taille;
+		lignes = new LigneCase[6];
+		for (int i = 0 ; i < lignes.length; i++ )
+			lignes[i]=new LigneCase(tailleLigne,false,i,dist);
+		for (int i = 0 ; i < lignes.length; i++ ){
+			int j = (i+1)%lignes.length;
+			lignes[i].setCase(tailleLigne-1, lignes[j].getCase(0));
+		}
+	}
+	
 	public LigneCase getLigne(int numLigne){
 		try{
 			return lignes[numLigne];
