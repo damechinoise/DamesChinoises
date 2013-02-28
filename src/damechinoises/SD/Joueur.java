@@ -35,9 +35,6 @@ public abstract class Joueur {
 	 */
 	private int numBrancheFin;
 	
-	
-	private boolean aDejaBouger;
-	
 /*###CONSTRUCTEURS###*/
 /*##################*/
 	/**
@@ -160,16 +157,6 @@ public abstract class Joueur {
 		this.numBrancheFin = num;
 	}
 	
-	public boolean getADejaBouger(){
-		return this.aDejaBouger;
-	}
-	
-	public void setADejaBouger(boolean aBouger){
-		this.aDejaBouger = aBouger;
-	}
-	
-	
-	
 /*###METHODES###*/
 /*#############*/
 	public int nbPions(){
@@ -177,4 +164,10 @@ public abstract class Joueur {
 	}
 	public abstract void choisirPion();
 	
+	public boolean pionAppartient(Pion p){
+		for (int i = 0 ; i < nbPions() ; i++)
+			if(lesPions[i].getPosition().equals(p.getPosition()))
+				return true;
+		return false;
+		}
 }

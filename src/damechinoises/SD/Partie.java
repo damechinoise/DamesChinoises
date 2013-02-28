@@ -1,11 +1,16 @@
 package damechinoises.SD;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 public class Partie {
 /*###ATTRIBUTS###*/
 /*##############*/
 	private Plateau plateau;
 	private Joueur lesJoueurs[];
 	private int tourDe;
+	private List _listener = new ArrayList();
 	
 /*###CONSTRUCTEURS###*/
 /*##################*/
@@ -86,13 +91,10 @@ public class Partie {
 		tourDe=random;
 	}
 	
-	public void setNextJoueur(){
-		if (tourDe == (this.getNbJoueurs()-1)){
-			tourDe= 0;
-		}
-		else{
-			tourDe++;
-		}
+	public void nextJoueur(){
+		tourDe++;
+		tourDe=tourDe%getNbJoueurs();
+		fireEvent();
 	}
 
 	public int getNbJoueurs(){
@@ -114,5 +116,20 @@ public class Partie {
 		}
 		return etat;
 	}
-		
+	
+	 public synchronized void addEventListener(InterfaceTour listener)  {
+		     _listener.add(listener);
+		   }
+	 public synchronized void removeEventListener(InterfaceTour listener)  {
+	     _listener.remove(listener);
+	   }
+	 
+	 private synchronized void fireEvent(){
+		 TourEvent e = new TourEvent(this);
+		 Iterator i = _listener.iterator();
+		 while (i.hasNext()){
+			 ((InterfaceTour) i.next()).changementDeTour(e);
+		 }
+	 }
+  
 }

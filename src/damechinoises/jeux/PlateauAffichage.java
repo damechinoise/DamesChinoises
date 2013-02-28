@@ -232,12 +232,20 @@ public class PlateauAffichage extends JPanel {
 		return null;
 	}
 	
-	public void move(Case d, Case a){
-		a.move(d);
-		int i = 0;
-		NoeudAI n = new NoeudAI(partie,i);
-		System.out.println("Etat du joueur "+i+" : "+partie.etatJoueur(i));
-		System.out.println("Valeur du plateau pour le joueur "+i+" : "+n.getPoids());
+	public int move(Case d, Case a){
+		Vector<Case> poss = mvtpossibles(d);
+		for(int i = 0; i < poss.size(); i++)
+			if(poss.get(i).equals(a)){
+				Vector<Case> tour = scan(d);
+				a.move(d);
+				update();
+				for(int j = 0; j < tour.size(); j++)
+					if(tour.get(j)!=null && tour.get(j).equals(a))
+						return 0;
+				return 1;
+			}
+		return -1;
+				
 	}
 	
 	public Vector<Case> scan(Case c){
@@ -248,18 +256,47 @@ public class PlateauAffichage extends JPanel {
 		return v;
 	}
 	
+	public Vector<Case> mvtpossibles(Case c){
+		Vector<Case> v = new Vector<Case>();
+		Vector<Case> s = scan(c);
+		for(int i = 0 ; i < s.size(); i++)
+			if(s.get(i)!=null && !s.get(i).getOccupe())
+				v.add(s.get(i));
+			else if (s.get(i)!=null){
+				Case temp = saut(c,s.get(i));
+				if(temp != null && !temp.getOccupe())
+					v.add(temp);
+			}
+		return v;
+	}
+	
+	public Vector<Case> mvtpossibles(Case dep,Case arr){
+		Vector<Case> v = new Vector<Case>();
+		Vector<Case> s = scan(arr);
+		for(int i = 0 ; i < s.size(); i++)
+			if (s.get(i)!=null && s.get(i).getOccupe()){
+				Case temp = saut(arr,s.get(i));
+				if(temp != null && !temp.getOccupe() && !temp.equals(dep))
+					v.add(temp);
+			}
+		return v;
+	}
+	
+	public Case saut(Case d,Case s){
+		return selCase(d.getX()+2*(s.getX()-d.getX()),d.getY()+2*(s.getY()-d.getY()));
+	}
+	
 	class ClicListener extends MouseAdapter{
 		boolean select = false;
 		boolean possible = false;
 		Case dep, arr,saut;
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
-			System.out.println("tour de "+partie.getJoueur(partie.getTourDe()).getCouleur());
 			int x = arg0.getX();
 			int y = arg0.getY();
 			if (!select){
 				dep=selCase(x,y);
-				if (dep!=null && dep.getPion()!=null && dep.getPion().getCouleur().equals(partie.getJoueur(partie.getTourDe()).getCouleur())){
+				if (dep!=null && dep.getPion()!=null && partie.getJoueur(partie.getTourDe()).pionAppartient(dep.getPion())){
 					select = true;
 					highLight(dep.getX(),dep.getY(),24);
 				}
@@ -268,124 +305,32 @@ public class PlateauAffichage extends JPanel {
 			}
 			else{
 				arr=selCase(x,y);
-				if (arr != null && arr.getPion()==null){
-					// Cas ou ils ont le meme ordonnée ( meme ligne)
-					if(arr.getY()==dep.getY()){
-						// Directement adjacente
-						if((arr.getX()==(dep.getX()+30))||(arr.getX()==(dep.getX()-30))){
-							select = false;
-							if(!possible)
-								move(dep,arr);
-							possible = false;
-							dep=null;
-							arr=null;
-							partie.setNextJoueur();
-							partie.getJoueur(partie.getTourDe()).setADejaBouger(false);
-							update();
-						}
-						else
-						{
-							// saut vers la droite ou la gauche
-							if((arr.getX()==(dep.getX()+60))||(arr.getX()==(dep.getX()-60))){
-								
-								saut=selCase(((arr.getX()+dep.getX())/2),arr.getY());
-								// si il  a bien un pion par lequel on peut sauter
-								if(saut.getPion()!=null)
-								{
-									move(dep,arr);
-									partie.getJoueur(partie.getTourDe()).setADejaBouger(true);
-									dep=arr;
-									arr=null;
-									update();
-									Vector<Case> possibilite = scan(dep);
-									possible = false;
-									for (int i = 0; i < possibilite.size(); i++){
-										Case temp = possibilite.get(i);
-										if (temp != null && !temp.equals(saut) && temp.getOccupe()){
-											Case temp2 = selCase(dep.getX()+2*(temp.getX()-dep.getX()),dep.getY()+2*(temp.getY()-dep.getY()));
-											if(temp2 != null && !temp2.getOccupe()){
-												possible = true;
-											}
-										}
-									}
-									if (!possible){
-										dep=null;
-										partie.setNextJoueur();
-										partie.getJoueur(partie.getTourDe()).setADejaBouger(false);
-										select = false;
-									}
-									else{
-										highLight(dep.getX(),dep.getY(),24);
-									}
-								}
-							}
-						}
-						
+				switch (move(dep,arr)){
+				case(-1):
+					if(dep.equals(arr)){
+						dep=null;
+						select = false;
+						partie.nextJoueur();
 					}
-					else{
-						if((arr.getX()==dep.getX()+15)||(arr.getX()==dep.getX()-15)){
-							// cas d'un simple deplacement d'une case
-							if((arr.getY()==dep.getY()+26)||(arr.getY()==dep.getY()-26)||(arr.getY()==dep.getY()-25)||(arr.getY()==dep.getY()+25)){
-								select = false;
-								if(!possible)
-									move(dep,arr);
-								possible = false;
-								dep=null;
-								arr=null;
-								partie.setNextJoueur();
-								partie.getJoueur(partie.getTourDe()).setADejaBouger(false);
-								update();
-							}
-						}
-						else if((arr.getX()==dep.getX()+30)||(arr.getX()==dep.getX()-30)){
-							
-								if((arr.getY()==dep.getY()+52)||(arr.getY()==dep.getY()-52)||(arr.getY()==dep.getY()-51)||(arr.getY()==dep.getY()+51)){
-									saut=selCase(((arr.getX()+dep.getX())/2),((arr.getY()+dep.getY())/2));
-
-									// si il  a bien un pion par lequel on peut sauter
-									if(saut.getPion()!=null){
-										move(dep,arr);
-										partie.getJoueur(partie.getTourDe()).setADejaBouger(true);
-										dep=arr;
-										arr=null;
-										update();
-										Vector<Case> possibilite = scan(dep);
-										possible = false;
-										for (int i = 0; i < possibilite.size(); i++){
-											Case temp = possibilite.get(i);
-											if (temp != null && !temp.equals(saut) && temp.getOccupe()){
-												Case temp2 = selCase(dep.getX()+2*(temp.getX()-dep.getX()),dep.getY()+2*(temp.getY()-dep.getY()));
-												if(temp2 != null && !temp2.getOccupe()){
-													possible = true;
-												}
-											}
-										}
-										if (!possible){
-											dep=null;
-											partie.setNextJoueur();
-											partie.getJoueur(partie.getTourDe()).setADejaBouger(false);
-											select = false;
-										}
-										else{
-											highLight(dep.getX(),dep.getY(),24);
-										}
-									}
-							}
-						}
-					}
-					
-				}else
-				if (arr == dep){
-					select = false;
-					affCase(arr.getX(),arr.getY(),24,arr.getCouleur());
-					dep=null;
 					arr=null;
-					
-					if (partie.getJoueur(partie.getTourDe()).getADejaBouger() == true){
-						partie.setNextJoueur();
-						partie.getJoueur(partie.getTourDe()).setADejaBouger(false);;
+					break;
+				case(0):
+					arr = null;
+					dep = null;
+					select = false;
+					partie.nextJoueur();
+					break;
+				case(1):
+					if(mvtpossibles(dep,arr).size()> 0){
+						dep=arr;
+						arr = null;
+						highLight(dep.getX(),dep.getY(),24);
+					} else {
+						dep = null;
+						arr = null;
+						select = false;
+						partie.nextJoueur();
 					}
-					
 				}
 			}
 			
