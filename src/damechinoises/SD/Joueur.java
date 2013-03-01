@@ -35,6 +35,8 @@ public abstract class Joueur {
 	 */
 	private int numBrancheFin;
 	
+	private String type;
+	
 /*###CONSTRUCTEURS###*/
 /*##################*/
 	/**
@@ -170,4 +172,12 @@ public abstract class Joueur {
 				return true;
 		return false;
 		}
+
+	public String getType() {
+		return type;
+	}
+	
+	public void setType(String type){
+		this.type=type;
+	}
 }

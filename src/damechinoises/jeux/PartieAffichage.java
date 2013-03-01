@@ -33,7 +33,7 @@ public class PartieAffichage extends JPanel {
 	public PartieAffichage(FenetrePrincipale p){
 		parent = p;
 		this.setLayout(new BorderLayout());
-		partie = new Partie();
+		partie = new Partie("src/damechinoises/SD/Sauvegardes/vendredi 1 mars 2013 10 h 22 CET");
 		Plateau plateau = partie.getPlateau();
 		panelMenu.add(mb);
 		panelJeu = new PlateauAffichage(partie);

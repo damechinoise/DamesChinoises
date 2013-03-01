@@ -11,7 +11,7 @@ public class Case{
 	private Pion p;
 	private int x,y;
 	private boolean branche;
-	private int angle,dist;
+	private int angle,dist,num;
 /*###CONSTRUCTEURS###*/
 /*##################*/
 	/**
@@ -24,7 +24,7 @@ public class Case{
 		p=null;
 	}
 	
-	public Case(boolean b,int n,int d){
+	public Case(boolean b,int n,int d,int nu){
 		x=0;
 		y=0;
 		occupe=false;
@@ -32,6 +32,7 @@ public class Case{
 		branche=b;
 		angle=n;
 		dist=d;
+		num=nu;
 	}
 	
 	/**
@@ -59,6 +60,19 @@ public class Case{
 			return null;
 	}
 	
+	public boolean getBranch(){
+		return branche;
+	}
+	
+	public int getAngle(){
+		return angle;
+	}
+	
+	public int getDist(){
+		return dist;
+	}
+	
+	
 	public int getX(){
 		return x;
 	}
@@ -72,6 +86,18 @@ public class Case{
 	 */
 	public void setOccupe(boolean occ){
 		occupe=occ;
+	}
+	
+	public void setBranche(boolean b){
+		this.branche=b;
+	}
+	
+	public void setAngle(int n){
+		this.angle=n;
+	}
+	
+	public void setDist(int d){
+		this.dist=d;
 	}
 	
 	public void setX(int x){
@@ -141,5 +167,9 @@ public class Case{
 	
 	public boolean equals(Case c){
 		return (c.x==x && c.y==y);
+	}
+
+	public int getNum() {
+		return num;
 	}
 }

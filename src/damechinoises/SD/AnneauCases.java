@@ -20,7 +20,7 @@ public class AnneauCases {
 		tailleLigne = taille;
 		lignes = new LigneCase[6];
 		for (int i = 0 ; i < lignes.length; i++ )
-			lignes[i]=new LigneCase(tailleLigne,false,i,dist);
+			lignes[i]=new LigneCase(tailleLigne,false,dist,i);
 		for (int i = 0 ; i < lignes.length; i++ ){
 			int j = (i+1)%lignes.length;
 			lignes[i].setCase(tailleLigne-1, lignes[j].getCase(0));

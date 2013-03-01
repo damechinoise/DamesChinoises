@@ -1,8 +1,13 @@
 package damechinoises.SD;
 
+import java.io.*;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 
 public class Partie {
 /*###ATTRIBUTS###*/
@@ -16,10 +21,7 @@ public class Partie {
 /*##################*/
 public Partie(String nomFichier){
 		
-		int taillePlateau=5;
-		int nbpionparjoueur;
-		
-	
+
 		try{
 			InputStream ips=new FileInputStream(nomFichier); 
 			InputStreamReader ipsr=new InputStreamReader(ips);
@@ -55,8 +57,10 @@ public Partie(String nomFichier){
 				}
 			}
 			int ligneactuelle=3+(4*this.getNbJoueurs())+espacement;
-			int x;
-			int y;
+			boolean branche;
+			int angle;
+			int distance;
+			int num;
 			String couleur;
 			Hashtable<String,Integer> h = new Hashtable<String,Integer>();
 			for (i=0;i<this.getNbJoueurs();i++){
@@ -65,15 +69,30 @@ public Partie(String nomFichier){
 			
 			for (i=0;i<plateau.getNbPionParJoueur()*this.getNbJoueurs();i++)
 			{
-				x=Integer.parseInt(lignes.get(ligneactuelle+(i*3)));
-				y=Integer.parseInt(lignes.get(ligneactuelle+1+(i*3)));
-				couleur=lignes.get(ligneactuelle+2+(i*3));
-				System.out.println(x+" "+y+" "+couleur);
-
-				System.out.println(plateau.selCase(x,y));
-				plateau.selCase(x,y).setOccupe(true);
-				plateau.selCase(x,y).setPion(this.getJoueur(couleur).getPion(h.get(couleur)));
-				h.put(couleur,h.get(couleur)+1);
+				branche=Boolean.parseBoolean(lignes.get(ligneactuelle+(i*5)));
+				angle=Integer.parseInt(lignes.get(ligneactuelle+1+(i*5)));
+				distance=Integer.parseInt(lignes.get(ligneactuelle+2+(i*5)));
+				num=Integer.parseInt(lignes.get(ligneactuelle+3+(i*5)));
+				couleur=lignes.get(ligneactuelle+4+(i*5));
+				System.out.println("branche :"+branche+" angle : "+angle+" distance : "+distance+" numero : "+num+" couleur : "+couleur);
+				if (branche){
+					plateau.getBranche(angle).getLigne(distance-1).getCase(num).setOccupe(true);
+					plateau.getBranche(angle).getLigne(distance-1).getCase(num).setPion(this.getJoueur(couleur).getPion(h.get(couleur)));
+					h.put(couleur,h.get(couleur)+1);
+				}
+				else{
+					if (distance==0){
+						plateau.getAnneau(0).getLigne(0).getCase(0).setOccupe(true);
+						plateau.getAnneau(0).getLigne(0).getCase(0).setPion(this.getJoueur(couleur).getPion(h.get(couleur)));
+						h.put(couleur,h.get(couleur)+1);
+					}
+					else{
+						plateau.getAnneau(distance).getLigne(angle).getCase(num).setOccupe(true);
+						plateau.getAnneau(distance).getLigne(angle).getCase(num).setPion(this.getJoueur(couleur).getPion(h.get(couleur)));
+						h.put(couleur,h.get(couleur)+1);
+					}
+					
+				}
 			}
 			
 			
@@ -164,7 +183,7 @@ public Partie(String nomFichier){
 			//PARCOURS DES JOUEURS DE LA PARTIE
 			for (int i = 0; i < nbJoueur; i++){
 				bw.write("Joueur numero:"+this.getJoueur(i).getNumero() + "\r\nJoueur couleur:" + this.getJoueur(i).getCouleur() + "\r\nJoueur branche debut:" + this.getJoueur(i).getNumBrancheDebut()
-						+ "\r\n joueur type:"+this.getJoueur(i).getType());
+						+ "\r\nJoueur type:"+this.getJoueur(i).getType());
 				bw.write("\r\n");
 				if (this.getJoueur(i).getType().equals("ordinateur")){
 					bw.write("Joueur difficulte:"+((JoueurOrdinateur) this.getJoueur(i)).getDifficulte());
@@ -174,7 +193,6 @@ public Partie(String nomFichier){
 		
 						
 				
-						
 			//PARCOURS DES BRANCHES DU PLATEAU
 			int taillebranche = this.getPlateau().getTaille();
 						
@@ -182,9 +200,13 @@ public Partie(String nomFichier){
 				for (int cases = 0 ; cases < 6 ; cases ++){
 					for (int i = (branche-taillebranche)/2 +1 ; i < (branche+taillebranche)/2 +1 ; i++ ){
 						if(this.getPlateau().getBranche(cases).getLigne(branche-this.getPlateau().getTaille()-1).getCase(i-((branche-taillebranche)/2)-1).getPion() != null){
-							bw.write("X:"+this.getPlateau().getBranche(cases).getLigne(branche-this.getPlateau().getTaille()-1).getCase(i-((branche-taillebranche)/2)-1).getX());
+							bw.write("branche:"+this.getPlateau().getBranche(cases).getLigne(branche-this.getPlateau().getTaille()-1).getCase(i-((branche-taillebranche)/2)-1).getBranch());
 							bw.write("\r\n");
-							bw.write("Y:"+this.getPlateau().getBranche(cases).getLigne(branche-this.getPlateau().getTaille()-1).getCase(i-((branche-taillebranche)/2)-1).getY());
+							bw.write("angle:"+this.getPlateau().getBranche(cases).getLigne(branche-this.getPlateau().getTaille()-1).getCase(i-((branche-taillebranche)/2)-1).getAngle());
+							bw.write("\r\n");
+							bw.write("dist:"+this.getPlateau().getBranche(cases).getLigne(branche-this.getPlateau().getTaille()-1).getCase(i-((branche-taillebranche)/2)-1).getDist());
+							bw.write("\r\n");
+							bw.write("numero:"+this.getPlateau().getBranche(cases).getLigne(branche-this.getPlateau().getTaille()-1).getCase(i-((branche-taillebranche)/2)-1).getNum());
 							bw.write("\r\n");
 							bw.write("Couleur:"+this.getPlateau().getBranche(cases).getLigne(branche-this.getPlateau().getTaille()-1).getCase(i-((branche-taillebranche)/2)-1).getCouleur());
 							bw.write("\r\n");
@@ -199,9 +221,17 @@ public Partie(String nomFichier){
 			//PARCOURS DES ANNEAUX DU PLATEAU
 			//La case du centre
 			if(this.getPlateau().getAnneau(0).getLigne(0).getCase(0).getPion() != null){
-				bw.write("X:"+this.getPlateau().getAnneau(0).getLigne(1).getCase(0).getX());
-				bw.write(" Y:"+this.getPlateau().getAnneau(0).getLigne(0).getCase(0).getY());
-				bw.write(" Couleur:"+this.getPlateau().getAnneau(0).getLigne(0).getCase(0).getCouleur());
+				bw.write("Branche:"+this.getPlateau().getAnneau(0).getLigne(1).getCase(0).getBranch());
+				bw.write("\r\n");
+				bw.write("Angle:"+this.getPlateau().getAnneau(0).getLigne(0).getCase(0).getAngle());
+				bw.write("\r\n");
+				bw.write("Dist:"+this.getPlateau().getAnneau(0).getLigne(0).getCase(0).getDist());
+				bw.write("\r\n");
+				bw.write("numero:"+this.getPlateau().getAnneau(0).getLigne(0).getCase(0).getNum());
+				bw.write("\r\n");
+				bw.write("Couleur:"+this.getPlateau().getAnneau(0).getLigne(0).getCase(0).getCouleur());
+				bw.write("\r\n");
+
 			}
 						
 			//Les anneaux
@@ -209,13 +239,20 @@ public Partie(String nomFichier){
 				//On parcours les lignes des anneaux
 				for (int ligne = 0 ; ligne < 6 ; ligne ++){
 					//On parcours les cases des lignes
-					for (int i = 1 ; i < anneau ; i++){					
+					for (int i = 0 ; i < anneau ; i++){					
 						if(this.getPlateau().getAnneau(anneau).getLigne(ligne).getCase(i).getPion() != null){
 										
-							bw.write("X:"+this.getPlateau().getAnneau(anneau).getLigne(ligne).getCase(i).getX());
-							bw.write(" Y:"+this.getPlateau().getAnneau(anneau).getLigne(ligne).getCase(i).getY());
-							bw.write(" Couleur:"+this.getPlateau().getAnneau(anneau).getLigne(ligne).getCase(i).getCouleur());
+							bw.write("Branche:"+this.getPlateau().getAnneau(anneau).getLigne(ligne).getCase(i).getBranch());
 							bw.write("\r\n");
+							bw.write("Angle:"+this.getPlateau().getAnneau(anneau).getLigne(ligne).getCase(i).getAngle());
+							bw.write("\r\n");
+							bw.write("Dist:"+this.getPlateau().getAnneau(anneau).getLigne(ligne).getCase(i).getDist());
+							bw.write("\r\n");
+							bw.write("Numero:"+this.getPlateau().getAnneau(anneau).getLigne(ligne).getCase(i).getNum());
+							bw.write("\r\n");
+							bw.write("Couleur:"+this.getPlateau().getAnneau(anneau).getLigne(ligne).getCase(i).getCouleur());
+							bw.write("\r\n");
+
 						}
 					}
 				}

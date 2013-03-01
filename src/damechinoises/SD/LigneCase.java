@@ -18,7 +18,7 @@ public class LigneCase {
 		tailleLigne = taille;
 		cases = new Vector<Case>();
 		for (int i = 0 ; i < tailleLigne ; i++)
-			cases.add(new Case(branche,angle,dist));
+			cases.add(new Case(branche,angle,dist,i));
 	}
 	
 	public Case getCase(int numCase){

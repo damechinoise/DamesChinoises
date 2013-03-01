@@ -8,11 +8,13 @@ public class JoueurOrdinateur extends Joueur{
 /*##################*/
 		public JoueurOrdinateur(int taillePlateau){
 			super(taillePlateau);
+			super.setType("ordinateur");
 			difficulte = 1;
 		}
 		
 		public JoueurOrdinateur(int taillePlateau, int numero, String couleur,int difficulte, int numeroBrancheDebut){
 			super(taillePlateau, numero, couleur, numeroBrancheDebut);
+			super.setType("ordinateur");
 			this.difficulte = difficulte;
 		}
 		
