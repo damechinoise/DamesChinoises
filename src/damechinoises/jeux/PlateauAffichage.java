@@ -244,8 +244,7 @@ public class PlateauAffichage extends JPanel {
 						return 0;
 				return 1;
 			}
-		return -1;
-				
+		return -1;		
 	}
 	
 	public Vector<Case> scan(Case c){
@@ -264,9 +263,14 @@ public class PlateauAffichage extends JPanel {
 				v.add(s.get(i));
 			else if (s.get(i)!=null){
 				Case temp = saut(c,s.get(i));
-				if(temp != null && !temp.getOccupe())
+				if(temp != null && !temp.getOccupe()){
 					v.add(temp);
+					v.addAll(mvtpossibles(c, temp));
+				}
 			}
+		for(int i = 0 ; i < v.size(); i++)
+			if(v.get(i).equals(c))
+				v.remove(i);
 		return v;
 	}
 	
@@ -276,8 +280,11 @@ public class PlateauAffichage extends JPanel {
 		for(int i = 0 ; i < s.size(); i++)
 			if (s.get(i)!=null && s.get(i).getOccupe()){
 				Case temp = saut(arr,s.get(i));
-				if(temp != null && !temp.getOccupe() && !temp.equals(dep))
+				if(temp != null && !temp.getOccupe() && !temp.equals(dep)){
 					v.add(temp);
+					Vector<Case> suite = mvtpossibles(arr,temp);
+					v.addAll(suite);
+				}
 			}
 		return v;
 	}
@@ -306,30 +313,31 @@ public class PlateauAffichage extends JPanel {
 			}
 			else{
 				arr=selCase(x,y);
-				switch (move(dep,arr)){
-				case(-1):
-					if(dep.equals(arr) && !premierMvt){
-						dep=null;
-						premierMvt = true;
-						select = false;
-						update();
-						partie.nextJoueur();
-					}
+				if(dep.equals(arr)){
 					arr=null;
-					break;
-				case(0):
-					arr = null;
-					dep = null;
-					select = false;
-					partie.nextJoueur();
-					break;
-				case(1):
-					if(mvtpossibles(dep,arr).size()> 0){
-						dep=arr;
+					premierMvt = false ;
+					select = false ;
+					update();
+				}
+				else {
+					switch (move(dep,arr)){
+					case(-1):
+						if(dep.equals(arr) && !premierMvt){
+							dep=null;
+							premierMvt = true;
+							select = false;
+							update();
+							partie.nextJoueur();
+						}
+						arr=null;
+						break;
+					case(0):
 						arr = null;
-						premierMvt = false;
-						highLight(dep.getX(),dep.getY(),24);
-					} else {
+						dep = null;
+						select = false;
+						partie.nextJoueur();
+						break;
+					case(1):
 						dep = null;
 						arr = null;
 						select = false;
