@@ -152,6 +152,79 @@ public Partie(String nomFichier){
 		}
 	}
 	
+	public Partie(int taillePlateau,int nbjoueurs){
+		int nbpionparjoueur;
+		
+		plateau = new Plateau(taillePlateau);
+		
+		lesJoueurs = new Joueur[nbjoueurs];
+		nbpionparjoueur=plateau.getNbPionParJoueur();
+		/*
+		nb joueur
+		info des joueurs
+		position des pions
+		au tour de..
+		taille plateau
+	*/
+		int i,j,k,t,nbpion;
+		k=plateau.getTaille();
+		t=k;
+		j=0;
+		setPremierJoueur();
+		int numbranche=0;
+		if(nbjoueurs==6){
+			lesJoueurs[0] = new JoueurHumain(taillePlateau,0,"bleu",0);
+			lesJoueurs[1] = new JoueurHumain(taillePlateau,1,"rouge",1);
+			lesJoueurs[2] = new JoueurHumain(taillePlateau,2,"orange",2);
+			lesJoueurs[3] = new JoueurOrdinateur(taillePlateau,3,"vert",2,3);
+			lesJoueurs[4] = new JoueurOrdinateur(taillePlateau,4,"jaune",2,4);
+			lesJoueurs[5] = new JoueurOrdinateur(taillePlateau,5,"violet",2,5);
+		}
+		if(nbjoueurs==1){
+		lesJoueurs[0] = new JoueurHumain(taillePlateau,0,"bleu",4);
+		}
+		if(nbjoueurs==2){
+			lesJoueurs[0] = new JoueurHumain(taillePlateau,0,"bleu",4);
+			lesJoueurs[1] = new JoueurHumain(taillePlateau,1,"rouge",1);
+			
+		}
+		if(nbjoueurs==3){
+			lesJoueurs[0] = new JoueurHumain(taillePlateau,0,"bleu",1);
+			lesJoueurs[1] = new JoueurHumain(taillePlateau,1,"rouge",3);
+			lesJoueurs[2] = new JoueurHumain(taillePlateau,2,"orange",5);
+		}
+		if(nbjoueurs==4){
+			lesJoueurs[0] = new JoueurHumain(taillePlateau,0,"bleu",0);
+			lesJoueurs[1] = new JoueurHumain(taillePlateau,1,"rouge",1);
+			lesJoueurs[2] = new JoueurHumain(taillePlateau,2,"orange",3);
+			lesJoueurs[3] = new JoueurOrdinateur(taillePlateau,3,"vert",2,4);
+		}
+			k=0;
+			//parcours de branches
+			for (i=0;i<nbjoueurs;i++){
+				k=plateau.getTaille();
+				t=k;
+				j = 0;
+				
+				nbpion= nbpionparjoueur;
+				//parcours de pions
+				while (k>0){
+					if(j>0 && j%k==0){
+						k--;
+						j=0;
+					}
+					else{
+						numbranche=lesJoueurs[i].getNumBrancheDebut();
+						plateau.getBranche(numbranche).getLigne(t-k).getCase(j).setPion(lesJoueurs[i].getPion(--nbpion));
+						plateau.getBranche(numbranche).getLigne(t-k).getCase(j).setOccupe(true);
+						j++;
+					}
+				}
+			}
+		
+		
+	}
+	
 	public Plateau getPlateau(){
 		return plateau;
 	}
