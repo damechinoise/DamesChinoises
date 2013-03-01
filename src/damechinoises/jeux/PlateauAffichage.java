@@ -288,7 +288,7 @@ public class PlateauAffichage extends JPanel {
 	
 	class ClicListener extends MouseAdapter{
 		boolean select = false;
-		boolean possible = false;
+		boolean premierMvt = true;
 		Case dep, arr,saut;
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
@@ -298,6 +298,7 @@ public class PlateauAffichage extends JPanel {
 				dep=selCase(x,y);
 				if (dep!=null && dep.getPion()!=null && partie.getJoueur(partie.getTourDe()).pionAppartient(dep.getPion())){
 					select = true;
+					premierMvt = true;
 					highLight(dep.getX(),dep.getY(),24);
 				}
 				else
@@ -307,9 +308,11 @@ public class PlateauAffichage extends JPanel {
 				arr=selCase(x,y);
 				switch (move(dep,arr)){
 				case(-1):
-					if(dep.equals(arr)){
+					if(dep.equals(arr) && !premierMvt){
 						dep=null;
+						premierMvt = true;
 						select = false;
+						update();
 						partie.nextJoueur();
 					}
 					arr=null;
@@ -324,6 +327,7 @@ public class PlateauAffichage extends JPanel {
 					if(mvtpossibles(dep,arr).size()> 0){
 						dep=arr;
 						arr = null;
+						premierMvt = false;
 						highLight(dep.getX(),dep.getY(),24);
 					} else {
 						dep = null;
