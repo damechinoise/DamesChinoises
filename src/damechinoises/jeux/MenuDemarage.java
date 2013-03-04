@@ -3,8 +3,11 @@ package damechinoises.jeux;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileFilter;
 
 import javax.swing.*;
+
 
 public class MenuDemarage extends Menu {
 
@@ -32,7 +35,10 @@ public class MenuDemarage extends Menu {
 		content.add(charger);
 		content.add(quitter);
 		this.add(content,BorderLayout.CENTER);
+		
 		nouv.addActionListener(new NouvellePartieListener(this));
+		charger.addActionListener(new ChargerPartieListener(this));
+		
 		quitter.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				System.exit(0);
@@ -52,6 +58,39 @@ public class MenuDemarage extends Menu {
 		public void actionPerformed(ActionEvent e) {
 			m.getParent().setMain(new MenuNouvellePartie(m.getParent()));
 		}
+		
+	}
+	
+	class ChargerPartieListener implements ActionListener{
+
+		private MenuDemarage m;
+		
+		public ChargerPartieListener(MenuDemarage m){
+			this.m=m;
+		}
+		
+		public void actionPerformed(ActionEvent e) {
+			
+			JFileChooser choix = new JFileChooser("Sauvegardes");
+			FiltreSimple onlyTXT = new FiltreSimple("fichier dames chinoises", ".dc");
+			choix.removeChoosableFileFilter(choix.getAcceptAllFileFilter());
+			choix.setFileFilter(onlyTXT);
+			
+			int retour = choix.showOpenDialog(charger);
+
+			if (retour == JFileChooser.APPROVE_OPTION){
+				choix.getSelectedFile().getName();
+
+				PartieAffichage p = new PartieAffichage(m.getParent(), choix.getSelectedFile().getAbsolutePath());
+				m.getParent().setMain(p);
+				m.getParent().validate();
+				p.getPanelJeu().updateFirst();
+
+			}	
+		}
+			
+			
+		
 		
 	}
 }

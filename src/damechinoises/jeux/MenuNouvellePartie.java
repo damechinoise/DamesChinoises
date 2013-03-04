@@ -36,6 +36,7 @@ public class MenuNouvellePartie extends Menu {
 		}
 		
 	}
+	
 	class NouveauListener implements ActionListener{
 
 		private MenuNouvellePartie m;

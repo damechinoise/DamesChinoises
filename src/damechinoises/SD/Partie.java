@@ -244,7 +244,8 @@ public Partie(String nomFichier){
 			// le BufferedWriter bw auquel on donne comme argument un FileWriter
 			Date aujourdhui = new Date();
 			DateFormat fullDateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL,DateFormat.FULL);
-			BufferedWriter bw = new BufferedWriter(new FileWriter(fullDateFormat.format(aujourdhui)));
+			String path="Sauvegardes/";
+			BufferedWriter bw = new BufferedWriter(new FileWriter(path+fullDateFormat.format(aujourdhui)+".dc"));
 			
 			//on marque dans le fichier ou plutot dans le BufferedWriter qui sert comme un tampon(stream)
 			int nbJoueur = this.getNbJoueurs();
@@ -336,7 +337,7 @@ public Partie(String nomFichier){
 			
 			bw.close();
 			
-			System.out.println("fichier créé");
+			System.out.println("Partie sauvegardée");
 		}
 		catch(IOException ioe){
 			System.err.print("Erreur");

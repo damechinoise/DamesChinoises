@@ -303,8 +303,6 @@ public class PlateauAffichage extends JPanel {
 			int y = arg0.getY();
 			if (!select){
 				dep=selCase(x,y);
-				partie.save();
-				System.out.println("Partie sauvegardé");
 				if (dep!=null && dep.getPion()!=null && partie.getJoueur(partie.getTourDe()).pionAppartient(dep.getPion())){
 					select = true;
 					premierMvt = true;
