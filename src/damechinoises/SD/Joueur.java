@@ -37,6 +37,8 @@ public abstract class Joueur {
 	
 	private String type;
 	
+	private int nbCoup;
+	
 /*###CONSTRUCTEURS###*/
 /*##################*/
 	/**
@@ -53,6 +55,7 @@ public abstract class Joueur {
 		numero = 0;
 		couleur = new String("Blanc");
 		lesPions = new Pion[nbPionParJoueur];
+		nbCoup=0;
 		
 		for (int i = 0; i < nbPionParJoueur; i++){
 			lesPions[i] = new Pion();
@@ -65,7 +68,7 @@ public abstract class Joueur {
 	 * @param numero le numéro du joueur
 	 * @param couleur la couleur du joueur
 	 */
-	public Joueur(int taillePlateau, int numero, String couleur, int numBrancheDebut){
+	public Joueur(int taillePlateau, int numero, String couleur, int numBrancheDebut/*, int nbCoup*/){
 		int nbPionParJoueur = 0;
 		
 		for (int i = 1; i <= taillePlateau; i++){
@@ -77,9 +80,10 @@ public abstract class Joueur {
 		this.numBrancheDebut = numBrancheDebut;
 		this.numBrancheFin = (numBrancheDebut + 3)%6;
 		lesPions = new Pion[nbPionParJoueur];
+		//this.nbCoup = nbCoup;
 		
 		for (int i = 0; i < nbPionParJoueur; i++){
-			lesPions[i] = new Pion(couleur); //PLACER LES PIONS//
+			lesPions[i] = new Pion(couleur); 
 		}
 	}
 	
@@ -159,11 +163,24 @@ public abstract class Joueur {
 		this.numBrancheFin = num;
 	}
 	
+	public int getNbCoup(){
+		return this.nbCoup;
+	}
+	
+	public void setNbCoup(int n){
+		this.nbCoup = n;
+	}
+	
 /*###METHODES###*/
 /*#############*/
+	public void ajoutCoup(){
+		this.nbCoup++;
+	}
+	
 	public int nbPions(){
 		return lesPions.length;
 	}
+	
 	public abstract void choisirPion();
 	
 	public boolean pionAppartient(Pion p){
@@ -180,4 +197,5 @@ public abstract class Joueur {
 	public void setType(String type){
 		this.type=type;
 	}
+	
 }

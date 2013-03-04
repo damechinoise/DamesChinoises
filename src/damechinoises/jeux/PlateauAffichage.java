@@ -327,6 +327,9 @@ public class PlateauAffichage extends JPanel {
 							premierMvt = true;
 							select = false;
 							update();
+							partie.getJoueur(partie.getTourDe()).ajoutCoup();
+							//TEST
+							System.out.println("Nb coup joueur "+ partie.getJoueur(partie.getTourDe()).getCouleur() + ": "+partie.getJoueur(partie.getTourDe()).getNbCoup());
 							partie.nextJoueur();
 						}
 						arr=null;
@@ -335,12 +338,17 @@ public class PlateauAffichage extends JPanel {
 						arr = null;
 						dep = null;
 						select = false;
-						partie.nextJoueur();
+						partie.getJoueur(partie.getTourDe()).ajoutCoup();
+						//TEST
+						System.out.println("Nb coup joueur "+ partie.getJoueur(partie.getTourDe()).getCouleur() + ": "+partie.getJoueur(partie.getTourDe()).getNbCoup());						partie.nextJoueur();
 						break;
 					case(1):
 						dep = null;
 						arr = null;
 						select = false;
+						partie.getJoueur(partie.getTourDe()).ajoutCoup();
+						//TEST
+						System.out.println("Nb coup joueur "+ partie.getJoueur(partie.getTourDe()).getCouleur() + ": "+partie.getJoueur(partie.getTourDe()).getNbCoup());
 						partie.nextJoueur();
 					}
 				}
