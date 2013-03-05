@@ -265,7 +265,7 @@ public class PlateauAffichage extends JPanel {
 				Case temp = saut(c,s.get(i));
 				if(temp != null && !temp.getOccupe()){
 					v.add(temp);
-					v.addAll(mvtpossibles(c, temp));
+					v.addAll(mvtpossibles(c, temp,v));
 				}
 			}
 		for(int i = 0 ; i < v.size(); i++)
@@ -274,19 +274,23 @@ public class PlateauAffichage extends JPanel {
 		return v;
 	}
 	
-	public Vector<Case> mvtpossibles(Case dep,Case arr){
-		Vector<Case> v = new Vector<Case>();
+	public Vector<Case> mvtpossibles(Case dep,Case arr,Vector<Case> vec){
 		Vector<Case> s = scan(arr);
-		for(int i = 0 ; i < s.size(); i++)
+		Vector<Case> r = new Vector<Case>();
+		for(int i = 0 ; i < s.size(); i++){
 			if (s.get(i)!=null && s.get(i).getOccupe()){
 				Case temp = saut(arr,s.get(i));
-				if(temp != null && !temp.getOccupe() && !temp.equals(dep)){
-					v.add(temp);
-					Vector<Case> suite = mvtpossibles(arr,temp);
-					v.addAll(suite);
+				if(temp != null && !temp.getOccupe() && !temp.equals(dep) && !vec.contains(temp)){
+					vec.add(temp);
+					r.addAll(mvtpossibles(arr,temp,vec));
 				}
 			}
-		return v;
+		}
+		return r;
+	}
+	
+	public Case sautIntermediaire(Case d,Case a){
+		return selCase(d.getX()+(a.getX()-d.getX())/2,d.getY()+(a.getY()-d.getY())/2);
 	}
 	
 	public Case saut(Case d,Case s){
