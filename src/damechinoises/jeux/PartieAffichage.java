@@ -113,6 +113,49 @@ public class PartieAffichage extends JPanel {
 		
 	}
 	
+	public PartieAffichage(FenetrePrincipale p, int taillePlateau,int nbJoueurs){
+		parent = p;
+		this.setLayout(new BorderLayout());
+		partie = new Partie(taillePlateau,nbJoueurs);
+		Plateau plateau = partie.getPlateau();
+		panelMenu.add(mb);
+		panelJeu = new PlateauAffichage(partie);
+		mb.add(menu);
+		menu.add(newgame);
+		menu.add(save);
+		menu.add(mainmenu);
+		menu.add(quit);
+		this.add(panelMenu,BorderLayout.NORTH);
+		this.add(panelJeu,BorderLayout.CENTER);
+		panelMenu.add(new JLabel(""));
+		majTour();
+		panelMenu.add(tourDe);
+		
+		partie.addEventListener(new InterfaceTour() {
+				
+			@Override
+			public void changementDeTour(TourEvent e) {
+				majTour();
+			}
+		});
+		
+		quit.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				System.exit(0);
+			}
+		});
+			
+		save.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				partie.save();
+			}
+		});
+		
+	}
+	
+	public Partie getPartie(){
+		return partie;
+	}
 	
 	public PlateauAffichage getPanelJeu(){
 		return panelJeu;

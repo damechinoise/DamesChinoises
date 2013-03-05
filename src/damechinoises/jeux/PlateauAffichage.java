@@ -303,6 +303,7 @@ public class PlateauAffichage extends JPanel {
 			int y = arg0.getY();
 			if (!select){
 				dep=selCase(x,y);
+				
 				if (dep!=null && dep.getPion()!=null && partie.getJoueur(partie.getTourDe()).pionAppartient(dep.getPion())){
 					select = true;
 					premierMvt = true;
@@ -314,6 +315,13 @@ public class PlateauAffichage extends JPanel {
 			else{
 				arr=selCase(x,y);
 				if(dep.equals(arr)){
+					arr=null;
+					premierMvt = false ;
+					select = false ;
+					update();
+				}
+				else if(partie.getEditable()==true){
+					arr.move(dep);
 					arr=null;
 					premierMvt = false ;
 					select = false ;

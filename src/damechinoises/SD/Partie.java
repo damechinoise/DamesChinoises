@@ -12,10 +12,12 @@ import java.util.Vector;
 public class Partie {
 /*###ATTRIBUTS###*/
 /*##############*/
+	
 	private Plateau plateau;
 	private Joueur lesJoueurs[];
 	private int tourDe;
 	private List _listener = new ArrayList();
+	private boolean editable;
 	
 /*###CONSTRUCTEURS###*/
 /*##################*/
@@ -43,20 +45,22 @@ public Partie(String nomFichier){
 			this.setTourDe(Integer.parseInt(lignes.get(2)));
 			
 			setPremierJoueur();
-			
+			editable=false;
 			int espacement=0;
 			int i;
 			for (i = 0; i < this.getNbJoueurs(); i++){
 				
-				if((lignes.get(6+(4*i)+espacement)).equals("humain")){
-					lesJoueurs[i] = new JoueurHumain(plateau.getTaille(),Integer.parseInt(lignes.get(3+(4*i)+espacement)),lignes.get(4+(4*i)+espacement),Integer.parseInt(lignes.get(5+(4*i)+espacement)));
+				if((lignes.get(6+(5*i)+espacement)).equals("humain")){
+					lesJoueurs[i] = new JoueurHumain(plateau.getTaille(),Integer.parseInt(lignes.get(3+(5*i)+espacement)),lignes.get(4+(5*i)+espacement),Integer.parseInt(lignes.get(5+(5*i)+espacement)));
+					lesJoueurs[i].setNbCoup(Integer.parseInt(lignes.get(7+(5*i)+espacement)));
 				}
 				else{
-					lesJoueurs[i] = new JoueurOrdinateur(plateau.getTaille(),Integer.parseInt(lignes.get(3+(4*i)+espacement)),lignes.get(4+(4*i)+espacement),Integer.parseInt(lignes.get(7+(4*i)+espacement)),Integer.parseInt(lignes.get(5+(4*i)+espacement)));
+					lesJoueurs[i] = new JoueurOrdinateur(plateau.getTaille(),Integer.parseInt(lignes.get(3+(5*i)+espacement)),lignes.get(4+(5*i)+espacement),Integer.parseInt(lignes.get(8+(5*i)+espacement)),Integer.parseInt(lignes.get(5+(5*i)+espacement)));
+					lesJoueurs[i].setNbCoup(Integer.parseInt(lignes.get(7+(5*i)+espacement)));
 					espacement++;
 				}
 			}
-			int ligneactuelle=3+(4*this.getNbJoueurs())+espacement;
+			int ligneactuelle=3+(5*this.getNbJoueurs())+espacement;
 			boolean branche;
 			int angle;
 			int distance;
@@ -108,7 +112,7 @@ public Partie(String nomFichier){
 	public Partie(){
 		int taillePlateau=5;
 		int nbpionparjoueur;
-		
+		editable=false;
 		plateau = new Plateau(taillePlateau);
 		
 		lesJoueurs = new Joueur[6];
@@ -154,7 +158,8 @@ public Partie(String nomFichier){
 	
 	public Partie(int taillePlateau,int nbjoueurs){
 		int nbpionparjoueur;
-		
+		editable=false;
+
 		plateau = new Plateau(taillePlateau);
 		
 		lesJoueurs = new Joueur[nbjoueurs];
@@ -259,6 +264,7 @@ public Partie(String nomFichier){
 				bw.write("Joueur numero:"+this.getJoueur(i).getNumero() + "\r\nJoueur couleur:" + this.getJoueur(i).getCouleur() + "\r\nJoueur branche debut:" + this.getJoueur(i).getNumBrancheDebut()
 						+ "\r\nJoueur type:"+this.getJoueur(i).getType());
 				bw.write("\r\n");
+				bw.write("Joueur nbcoup:"+this.getJoueur(i).getNbCoup()+ "\r\n");
 				if (this.getJoueur(i).getType().equals("ordinateur")){
 					bw.write("Joueur difficulte:"+((JoueurOrdinateur) this.getJoueur(i)).getDifficulte());
 					bw.write("\r\n");
@@ -379,6 +385,14 @@ public Partie(String nomFichier){
 		fireEvent();
 	}
 
+	public void setEditable(boolean edit){
+		this.editable=edit;
+	}
+	
+	public boolean getEditable(){
+		return editable;
+	}
+	
 	public int getNbJoueurs(){
 		int nbj=lesJoueurs.length;
 		return nbj;
