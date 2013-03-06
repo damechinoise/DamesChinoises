@@ -112,9 +112,11 @@ public class PartieAffichage extends JPanel {
 					DifBot[i]=((JoueurOrdinateur) p.getPartie().getJoueur(i)).getDifficulte();
 				}
 			}
-
+			PartieAffichage nouv = new PartieAffichage(p.getParentt(),p.getPartie().getPlateau().getTaille(),p.getPartie().getNbJoueurs(),typeBot,DifBot);
+			p.getParentt().setMain(nouv);
+			nouv.getParentt().validate();
+			nouv.getPanelJeu().updateFirst();
 		
-			//p.getParentt().setMain(new PartieAffichage(p.getParentt(),p.getPartie().getPlateau().getTaille(),p.getPartie().getNbJoueurs(),typeBot,DifBot));
 		}
 		
 	}
@@ -135,7 +137,7 @@ public class PartieAffichage extends JPanel {
 		menu.add(quit);
 		this.add(panelMenu,BorderLayout.NORTH);
 		this.add(panelJeu,BorderLayout.CENTER);
-		
+		newgame.addActionListener(new NewGameListener(this));
 		mainmenu.addActionListener(new RetourMenuListener(this));
 		panelMenu.add(new JLabel(""));
 		majTour();
@@ -177,6 +179,7 @@ public class PartieAffichage extends JPanel {
 		menu.add(quit);
 		this.add(panelMenu,BorderLayout.NORTH);
 		this.add(panelJeu,BorderLayout.CENTER);
+		newgame.addActionListener(new NewGameListener(this));
 		mainmenu.addActionListener(new RetourMenuListener(this));
 		panelMenu.add(new JLabel(""));
 		majTour();
@@ -218,6 +221,7 @@ public class PartieAffichage extends JPanel {
 		menu.add(quit);
 		this.add(panelMenu,BorderLayout.NORTH);
 		this.add(panelJeu,BorderLayout.CENTER);
+		newgame.addActionListener(new NewGameListener(this));
 		mainmenu.addActionListener(new RetourMenuListener(this));
 		panelMenu.add(new JLabel(""));
 		majTour();

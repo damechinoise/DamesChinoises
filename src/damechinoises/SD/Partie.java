@@ -180,34 +180,49 @@ public Partie(String nomFichier){
 		t=k;
 		j=0;
 		setPremierJoueur();
+		String [] couleursBase={"bleu","rouge","orange","vert","jaune","violet"};
+		int[] basesDebut;
+		basesDebut = new int[nbjoueurs];
 		int numbranche=0;
-		if(nbjoueurs==6){
-			lesJoueurs[0] = new JoueurHumain(taillePlateau,0,"bleu",0);
-			lesJoueurs[1] = new JoueurHumain(taillePlateau,1,"rouge",1);
-			lesJoueurs[2] = new JoueurHumain(taillePlateau,2,"orange",2);
-			lesJoueurs[3] = new JoueurOrdinateur(taillePlateau,3,"vert",2,3);
-			lesJoueurs[4] = new JoueurOrdinateur(taillePlateau,4,"jaune",2,4);
-			lesJoueurs[5] = new JoueurOrdinateur(taillePlateau,5,"violet",2,5);
-		}
+		
 		if(nbjoueurs==1){
-		lesJoueurs[0] = new JoueurHumain(taillePlateau,0,"bleu",4);
-		type="optimisation";
+			basesDebut[0]=4;
+			type="optimisation";
 		}
 		if(nbjoueurs==2){
-			lesJoueurs[0] = new JoueurHumain(taillePlateau,0,"bleu",4);
-			lesJoueurs[1] = new JoueurHumain(taillePlateau,1,"rouge",1);
-			
+			basesDebut[0]=4;
+			basesDebut[1]=1;
 		}
+		
 		if(nbjoueurs==3){
-			lesJoueurs[0] = new JoueurHumain(taillePlateau,0,"bleu",1);
-			lesJoueurs[1] = new JoueurHumain(taillePlateau,1,"rouge",3);
-			lesJoueurs[2] = new JoueurHumain(taillePlateau,2,"orange",5);
+			basesDebut[0]=4;
+			basesDebut[1]=0;
+			basesDebut[2]=2;
+
 		}
+		
 		if(nbjoueurs==4){
-			lesJoueurs[0] = new JoueurHumain(taillePlateau,0,"bleu",0);
-			lesJoueurs[1] = new JoueurHumain(taillePlateau,1,"rouge",1);
-			lesJoueurs[2] = new JoueurHumain(taillePlateau,2,"orange",3);
-			lesJoueurs[3] = new JoueurOrdinateur(taillePlateau,3,"vert",2,4);
+			basesDebut[0]=4;
+			basesDebut[1]=0;
+			basesDebut[2]=1;
+			basesDebut[3]=3;
+		}
+		
+		if(nbjoueurs==6){
+
+			basesDebut[0]=4;
+			basesDebut[1]=5;
+			basesDebut[2]=0;
+			basesDebut[3]=1;
+			basesDebut[4]=2;
+			basesDebut[5]=3;
+		}
+			
+		for (i=0;i<nbjoueurs;i++){
+
+				lesJoueurs[i] = new JoueurHumain(taillePlateau,i,couleursBase[i],basesDebut[i]);
+		
+
 		}
 			k=0;
 			//parcours de branches
@@ -259,16 +274,7 @@ public Partie(String nomFichier){
 		int[] basesDebut;
 		basesDebut = new int[nbjoueurs];
 		int numbranche=0;
-		/*
-		if(nbjoueurs==6){
-			lesJoueurs[0] = new JoueurHumain(taillePlateau,0,"bleu",0);
-			lesJoueurs[1] = new JoueurHumain(taillePlateau,1,"rouge",1);
-			lesJoueurs[2] = new JoueurHumain(taillePlateau,2,"orange",2);
-			lesJoueurs[3] = new JoueurOrdinateur(taillePlateau,3,"vert",2,3);
-			lesJoueurs[4] = new JoueurOrdinateur(taillePlateau,4,"jaune",2,4);
-			lesJoueurs[5] = new JoueurOrdinateur(taillePlateau,5,"violet",2,5);
-		}
-		*/
+		
 		if(nbjoueurs==1){
 			basesDebut[0]=4;
 			type="optimisation";
