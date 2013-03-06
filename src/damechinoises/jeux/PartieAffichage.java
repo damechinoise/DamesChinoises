@@ -13,6 +13,7 @@ import java.awt.event.MouseListener;
 import javax.swing.*;
 
 import damechinoises.SD.InterfaceTour;
+import damechinoises.SD.JoueurOrdinateur;
 import damechinoises.SD.Partie;
 import damechinoises.SD.Plateau;
 import damechinoises.SD.TourEvent;
@@ -36,7 +37,8 @@ public class PartieAffichage extends JPanel {
 	public PartieAffichage(FenetrePrincipale p){
 		parent = p;
 		this.setLayout(new BorderLayout());
-		partie = new Partie();
+
+		partie = new Partie(4,3);
 		Plateau plateau = partie.getPlateau();
 		panelMenu.add(mb);
 		panelJeu = new PlateauAffichage(partie);
@@ -47,6 +49,8 @@ public class PartieAffichage extends JPanel {
 		menu.add(quit);
 		this.add(panelMenu,BorderLayout.NORTH);
 		this.add(panelJeu,BorderLayout.CENTER);
+		mainmenu.addActionListener(new RetourMenuListener(this));
+		newgame.addActionListener(new NewGameListener(this));
 		panelMenu.add(new JLabel(""));
 		majTour();
 		panelMenu.add(tourDe);
@@ -65,6 +69,8 @@ public class PartieAffichage extends JPanel {
 			}
 		});
 		
+		
+		
 		save.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				partie.save();
@@ -72,6 +78,48 @@ public class PartieAffichage extends JPanel {
 		});
 	
 	}
+	
+	class RetourMenuListener implements ActionListener{
+
+		private PartieAffichage p;
+		
+		public RetourMenuListener(PartieAffichage p){
+			this.p=p;
+		}
+		
+		public void actionPerformed(ActionEvent e) {
+			p.getParentt().setMain(new MenuDemarage(p.getParentt()));
+		}
+		
+	}
+	
+	class NewGameListener implements ActionListener{
+
+		private PartieAffichage p;
+		
+		public NewGameListener(PartieAffichage p){
+			this.p=p;
+		}
+		
+		public void actionPerformed(ActionEvent e) {
+			String[] typeBot;
+			typeBot=new String[6];
+			int[] DifBot;
+			DifBot = new int[6];
+			for (int i=0;i<p.getPartie().getNbJoueurs();i++){
+				typeBot[i]=p.getPartie().getJoueur(i).getType();
+				if(typeBot[i].equals("ordinateur")){
+					DifBot[i]=((JoueurOrdinateur) p.getPartie().getJoueur(i)).getDifficulte();
+				}
+			}
+
+		
+			//p.getParentt().setMain(new PartieAffichage(p.getParentt(),p.getPartie().getPlateau().getTaille(),p.getPartie().getNbJoueurs(),typeBot,DifBot));
+		}
+		
+	}
+	
+	
 	
 	public PartieAffichage(FenetrePrincipale p, String absolutePath){
 		parent = p;
@@ -87,6 +135,8 @@ public class PartieAffichage extends JPanel {
 		menu.add(quit);
 		this.add(panelMenu,BorderLayout.NORTH);
 		this.add(panelJeu,BorderLayout.CENTER);
+		
+		mainmenu.addActionListener(new RetourMenuListener(this));
 		panelMenu.add(new JLabel(""));
 		majTour();
 		panelMenu.add(tourDe);
@@ -127,6 +177,48 @@ public class PartieAffichage extends JPanel {
 		menu.add(quit);
 		this.add(panelMenu,BorderLayout.NORTH);
 		this.add(panelJeu,BorderLayout.CENTER);
+		mainmenu.addActionListener(new RetourMenuListener(this));
+		panelMenu.add(new JLabel(""));
+		majTour();
+		panelMenu.add(tourDe);
+		
+		partie.addEventListener(new InterfaceTour() {
+				
+			@Override
+			public void changementDeTour(TourEvent e) {
+				majTour();
+			}
+		});
+		
+		quit.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				System.exit(0);
+			}
+		});
+			
+		save.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				partie.save();
+			}
+		});
+		
+	}
+	
+	public PartieAffichage(FenetrePrincipale p, int taillePlateau,int nbJoueurs,String[] typeJoueur,int[] difficulteBots){
+		parent = p;
+		this.setLayout(new BorderLayout());
+		partie = new Partie(taillePlateau,nbJoueurs,typeJoueur,difficulteBots);
+		Plateau plateau = partie.getPlateau();
+		panelMenu.add(mb);
+		panelJeu = new PlateauAffichage(partie);
+		mb.add(menu);
+		menu.add(newgame);
+		menu.add(save);
+		menu.add(mainmenu);
+		menu.add(quit);
+		this.add(panelMenu,BorderLayout.NORTH);
+		this.add(panelJeu,BorderLayout.CENTER);
+		mainmenu.addActionListener(new RetourMenuListener(this));
 		panelMenu.add(new JLabel(""));
 		majTour();
 		panelMenu.add(tourDe);
@@ -166,6 +258,11 @@ public class PartieAffichage extends JPanel {
 		tourDe.setText("Tour du joueur "+couleur);
 	}
 	
+
+	public FenetrePrincipale getParentt(){
+		return parent;
+	}
+
 	
 	
 }
