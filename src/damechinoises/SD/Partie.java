@@ -18,7 +18,6 @@ public class Partie {
 	private int tourDe;
 	private List _listener = new ArrayList();
 	private boolean editable;
-	private String type;
 	
 /*###CONSTRUCTEURS###*/
 /*##################*/
@@ -99,9 +98,7 @@ public Partie(String nomFichier){
 					
 				}
 			}
-			ligneactuelle+=plateau.getNbPionParJoueur()*this.getNbJoueurs()*5;
-			type=lignes.get(ligneactuelle);
-			System.out.println(type);
+			
 			
 			
 			br.close(); 
@@ -113,7 +110,6 @@ public Partie(String nomFichier){
 	}
 
 	public Partie(){
-		type="normal";
 		int taillePlateau=5;
 		int nbpionparjoueur;
 		editable=false;
@@ -163,7 +159,7 @@ public Partie(String nomFichier){
 	public Partie(int taillePlateau,int nbjoueurs){
 		int nbpionparjoueur;
 		editable=false;
-		type="normal";
+
 		plateau = new Plateau(taillePlateau);
 		
 		lesJoueurs = new Joueur[nbjoueurs];
@@ -180,146 +176,34 @@ public Partie(String nomFichier){
 		t=k;
 		j=0;
 		setPremierJoueur();
-		String [] couleursBase={"bleu","rouge","orange","vert","jaune","violet"};
-		int[] basesDebut;
-		basesDebut = new int[nbjoueurs];
 		int numbranche=0;
-		
+		if(nbjoueurs==6){
+			lesJoueurs[0] = new JoueurHumain(taillePlateau,0,"bleu",0);
+			lesJoueurs[1] = new JoueurHumain(taillePlateau,1,"rouge",1);
+			lesJoueurs[2] = new JoueurHumain(taillePlateau,2,"orange",2);
+			lesJoueurs[3] = new JoueurOrdinateur(taillePlateau,3,"vert",2,3);
+			lesJoueurs[4] = new JoueurOrdinateur(taillePlateau,4,"jaune",2,4);
+			lesJoueurs[5] = new JoueurOrdinateur(taillePlateau,5,"violet",2,5);
+		}
 		if(nbjoueurs==1){
-			basesDebut[0]=4;
-			type="optimisation";
+		lesJoueurs[0] = new JoueurHumain(taillePlateau,0,"bleu",4);
 		}
 		if(nbjoueurs==2){
-			basesDebut[0]=4;
-			basesDebut[1]=1;
-		}
-		
-		if(nbjoueurs==3){
-			basesDebut[0]=4;
-			basesDebut[1]=0;
-			basesDebut[2]=2;
-
-		}
-		
-		if(nbjoueurs==4){
-			basesDebut[0]=4;
-			basesDebut[1]=0;
-			basesDebut[2]=1;
-			basesDebut[3]=3;
-		}
-		
-		if(nbjoueurs==6){
-
-			basesDebut[0]=4;
-			basesDebut[1]=5;
-			basesDebut[2]=0;
-			basesDebut[3]=1;
-			basesDebut[4]=2;
-			basesDebut[5]=3;
-		}
+			lesJoueurs[0] = new JoueurHumain(taillePlateau,0,"bleu",4);
+			lesJoueurs[1] = new JoueurHumain(taillePlateau,1,"rouge",1);
 			
-		for (i=0;i<nbjoueurs;i++){
-
-				lesJoueurs[i] = new JoueurHumain(taillePlateau,i,couleursBase[i],basesDebut[i]);
-		
-
 		}
-			k=0;
-			//parcours de branches
-			for (i=0;i<nbjoueurs;i++){
-				k=plateau.getTaille();
-				t=k;
-				j = 0;
-				
-				nbpion= nbpionparjoueur;
-				//parcours de pions
-				while (k>0){
-					if(j>0 && j%k==0){
-						k--;
-						j=0;
-					}
-					else{
-						numbranche=lesJoueurs[i].getNumBrancheDebut();
-						plateau.getBranche(numbranche).getLigne(t-k).getCase(j).setPion(lesJoueurs[i].getPion(--nbpion));
-						plateau.getBranche(numbranche).getLigne(t-k).getCase(j).setOccupe(true);
-						j++;
-					}
-				}
-			}
-		
-		
-	}
-	
-	public Partie(int taillePlateau,int nbjoueurs,String[] typeJoueur,int[] difficulteBots){
-		int nbpionparjoueur;
-		editable=false;
-		type="normal";
-		plateau = new Plateau(taillePlateau);
-		
-		lesJoueurs = new Joueur[nbjoueurs];
-		nbpionparjoueur=plateau.getNbPionParJoueur();
-		/*
-		nb joueur
-		info des joueurs
-		position des pions
-		au tour de..
-		taille plateau
-	*/
-		int i,j,k,t,nbpion;
-		String [] couleursBase={"bleu","rouge","orange","vert","jaune","violet"};
-		k=plateau.getTaille();
-		t=k;
-		j=0;
-		setPremierJoueur();
-		int[] basesDebut;
-		basesDebut = new int[nbjoueurs];
-		int numbranche=0;
-		
-		if(nbjoueurs==1){
-			basesDebut[0]=4;
-			type="optimisation";
-		}
-		if(nbjoueurs==2){
-			basesDebut[0]=4;
-			basesDebut[1]=1;
-		}
-		
 		if(nbjoueurs==3){
-			basesDebut[0]=4;
-			basesDebut[1]=0;
-			basesDebut[2]=2;
-
+			lesJoueurs[0] = new JoueurHumain(taillePlateau,0,"bleu",1);
+			lesJoueurs[1] = new JoueurHumain(taillePlateau,1,"rouge",3);
+			lesJoueurs[2] = new JoueurHumain(taillePlateau,2,"orange",5);
 		}
-		
 		if(nbjoueurs==4){
-			basesDebut[0]=4;
-			basesDebut[1]=0;
-			basesDebut[2]=1;
-			basesDebut[3]=3;
+			lesJoueurs[0] = new JoueurHumain(taillePlateau,0,"bleu",0);
+			lesJoueurs[1] = new JoueurHumain(taillePlateau,1,"rouge",1);
+			lesJoueurs[2] = new JoueurHumain(taillePlateau,2,"orange",3);
+			lesJoueurs[3] = new JoueurOrdinateur(taillePlateau,3,"vert",2,4);
 		}
-		
-		if(nbjoueurs==6){
-
-			basesDebut[0]=4;
-			basesDebut[1]=5;
-			basesDebut[2]=0;
-			basesDebut[3]=1;
-			basesDebut[4]=2;
-			basesDebut[5]=3;
-		}
-			
-		for (i=0;i<nbjoueurs;i++){
-			if(typeJoueur[i].equals("humain")){
-				lesJoueurs[i] = new JoueurHumain(taillePlateau,i,couleursBase[i],basesDebut[i]);
-			}
-			else{
-				lesJoueurs[i] = new JoueurOrdinateur(taillePlateau,i,couleursBase[i],difficulteBots[i],basesDebut[i]);
-			}
-
-		}
-
-	
-		
 			k=0;
 			//parcours de branches
 			for (i=0;i<nbjoueurs;i++){
@@ -365,24 +249,8 @@ public Partie(String nomFichier){
 			// le BufferedWriter bw auquel on donne comme argument un FileWriter
 			Date aujourdhui = new Date();
 			DateFormat fullDateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL,DateFormat.FULL);
-			String path=new String();
-			if(this.type.equals("normal")){
-				path="Sauvegardes/Partie normale ";
-			}
-			if(this.type.equals("optimisation")){
-				path="Plateaux/Partie Optimisation ";
-			}
-			if(this.type.equals("chronometre")){
-				path="Sauvegardes/Partie chronometree ";
-			}
-			path+="du "+fullDateFormat.format(aujourdhui);
-			if(this.type.equals("optimisation")){
-				path+=".pla";
-			}
-			else{
-				path+=".dc";
-			}
-			BufferedWriter bw = new BufferedWriter(new FileWriter(path));
+			String path="Sauvegardes/";
+			BufferedWriter bw = new BufferedWriter(new FileWriter(path+fullDateFormat.format(aujourdhui)+".dc"));
 			
 			//on marque dans le fichier ou plutot dans le BufferedWriter qui sert comme un tampon(stream)
 			int nbJoueur = this.getNbJoueurs();
@@ -469,7 +337,7 @@ public Partie(String nomFichier){
 					}
 				}
 			}
-			bw.write("Type:"+this.getType());
+						
 			//ensuite flush envoi dans le fichier
 			bw.flush();
 			
@@ -481,10 +349,6 @@ public Partie(String nomFichier){
 			System.err.print("Erreur");
 		}
 	}
-	public String getType() {
-		return type;
-	}
-
 	public Joueur getJoueur(int numjoueur){
 		try{
 			return lesJoueurs[numjoueur];
@@ -515,38 +379,12 @@ public Partie(String nomFichier){
 		tourDe=random;
 	}
 	
-	public boolean finPartie(){
-		for(int i = 0; i < getNbJoueurs() ; i++){
-			if(!lesJoueurs[tourDe].fini())
-				return false;
-		}
-		return true;
-	}
-	
 	public void nextJoueur(){
 		tourDe++;
 		tourDe=tourDe%getNbJoueurs();
-		if(!finPartie()){
-				while(lesJoueurs[tourDe].fini()){
-					tourDe++;
-					tourDe=tourDe%getNbJoueurs();
-				}
-			fireEvent();
-		} else {
-			fireEventFin();
-		}
+		fireEvent();
 	}
 
-	public int joueurSuivant(){
-		int jS = tourDe;
-		jS++;
-		jS=jS%getNbJoueurs();
-		while(lesJoueurs[jS].fini()){
-			jS++;
-			jS=jS%getNbJoueurs();
-		}
-		return jS;
-	}
 	public void setEditable(boolean edit){
 		this.editable=edit;
 	}
@@ -575,22 +413,6 @@ public Partie(String nomFichier){
 		return etat;
 	}
 	
-	public Partie tourJoueurAI(int joueur, int pion, int prio){
-		Partie suivant = this;
-		//TODO
-		/*
-		 * Méthode qui joue l'un des 3 coups décrit pour le joueur donné sur une copie de la partie
-		 * Sert juste à alimenter l'algorithme alpha-beta de l'AI
-		 * joueur : numéro du joueur
-		 * pion : numéro du pion
-		 * prio : 
-		 * 		0 - meilleur coup
-		 * 		1 - pire coup
-		 * 		2 - coup aléa
-		 */
-		return suivant;
-	}
-	
 	 public synchronized void addEventListener(InterfaceTour listener)  {
 		     _listener.add(listener);
 		   }
@@ -603,14 +425,6 @@ public Partie(String nomFichier){
 		 Iterator i = _listener.iterator();
 		 while (i.hasNext()){
 			 ((InterfaceTour) i.next()).changementDeTour(e);
-		 }
-	 }
-	 
-	 private synchronized void fireEventFin(){
-		 TourEvent e = new TourEvent(this,this.tourDe);
-		 Iterator i = _listener.iterator();
-		 while (i.hasNext()){
-			 ((InterfaceTour) i.next()).finJoueur(e);
 		 }
 	 }
   

@@ -31,17 +31,23 @@ public class NoeudAI {
 		return ajout;
 	}
 	
-	public Partie getPartie(){
-		return p;
-	}
-	
-	public int getPoids(int joueur){
+	public int getPoids(){
 		int poids = 0;
-		for (int i = 0; i < p.getNbJoueurs(); i++)
-			if(i!=joueur)
-				poids -= p.etatJoueur(i);
-			else
-				poids += p.etatJoueur(i);
+		if(fils.isEmpty()){
+			for (int i = 0; i < p.getNbJoueurs(); i++)
+				if(i!=joueur)
+					poids -= p.etatJoueur(i);
+				else
+					poids += p.etatJoueur(i);
+		}
+		else{
+			int max = fils.firstElement().getPoids();
+			for(int i = 1;i < fils.size(); i++){
+				int val=fils.get(i).getPoids();
+				if (val > max)
+					max = val;
+			}
+		}
 		return poids;
 	}
 	
@@ -52,45 +58,5 @@ public class NoeudAI {
 		catch(ArrayIndexOutOfBoundsException e){
 			return null;
 		}
-	}
-	
-	public int alphabeta(int joueurini, int alpha, int beta){
-		if(fils.isEmpty()){
-			return getPoids(joueurini);
-		} else {
-			int val = 0;;
-			if(joueur != joueurini){
-				val = 5000000;
-				for (int i = 0 ; i < fils.size(); i ++){
-					val = min(val,fils.get(i).alphabeta(joueurini,alpha,beta));
-					if (alpha >= val)
-						return val;
-					beta = min(beta,val);
-				}
-			} else {
-				val = -5000000;
-				for (int i = 0 ; i < fils.size(); i ++){
-					val = max(val,fils.get(i).alphabeta(joueurini,alpha,beta));
-					if (beta <= val)
-						return val;
-					alpha = max(alpha,val);
-				}
-			}
-			return val;
-		}
-	}
-	
-	public int max (int a, int b){
-		if (a<b)
-			return b;
-		else
-			return a;
-	}
-	
-	public int min (int a, int b){
-		if (a<b)
-			return a;
-		else
-			return b;
 	}
 }
