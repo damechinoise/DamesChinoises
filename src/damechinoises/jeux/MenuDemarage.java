@@ -61,6 +61,37 @@ public class MenuDemarage extends Menu {
 		
 	}
 	
+	// c'est le charger plateau de la partie personalisé.
+	class ChargerPlateauListener implements ActionListener{
+
+		private MenuDemarage m;
+		
+		public ChargerPlateauListener(MenuDemarage m){
+			this.m=m;
+		}
+		
+		public void actionPerformed(ActionEvent e) {
+			
+			JFileChooser choix = new JFileChooser("Plateaux");
+			FiltrePartiePerso isPlateautaille1 = new FiltrePartiePerso("fichier plateau", "plateau avec 1 joueur");
+			choix.removeChoosableFileFilter(choix.getAcceptAllFileFilter());
+			choix.setFileFilter(isPlateautaille1);
+			
+			int retour = choix.showOpenDialog(charger);
+
+			if (retour == JFileChooser.APPROVE_OPTION){
+				choix.getSelectedFile().getName();
+
+				PartieAffichage p = new PartieAffichage(m.getParent(), choix.getSelectedFile().getAbsolutePath());
+				m.getParent().setMain(p);
+				m.getParent().validate();
+				p.getPanelJeu().updateFirst();
+
+			}	
+		}
+			
+	}
+	
 	class ChargerPartieListener implements ActionListener{
 
 		private MenuDemarage m;
@@ -89,8 +120,5 @@ public class MenuDemarage extends Menu {
 			}	
 		}
 			
-			
-		
-		
 	}
 }

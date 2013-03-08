@@ -67,7 +67,7 @@ public class MenuNouvellePartie extends Menu {
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			PartieAffichage p = new PartieAffichage(m.getParent(),4,1);
+			PartieAffichage p = new PartieAffichage(m.getParent(),4,1,true);
 			p.getPartie().setEditable(true);
 			m.getParent().setMain(p);
 			m.getParent().validate();

@@ -112,6 +112,8 @@ public Partie(String nomFichier){
 
 	}
 
+
+
 	public Partie(){
 		type="normal";
 		int taillePlateau=5;
@@ -187,7 +189,7 @@ public Partie(String nomFichier){
 		
 		if(nbjoueurs==1){
 			basesDebut[0]=4;
-			type="optimisation";
+			type="personalise";
 		}
 		if(nbjoueurs==2){
 			basesDebut[0]=4;
@@ -217,12 +219,11 @@ public Partie(String nomFichier){
 			basesDebut[4]=2;
 			basesDebut[5]=3;
 		}
-			
-		for (i=0;i<nbjoueurs;i++){
+			lesJoueurs[0]=new JoueurHumain(taillePlateau,0,couleursBase[0],basesDebut[0]);
+		for (i=1;i<nbjoueurs;i++){
 
-				lesJoueurs[i] = new JoueurHumain(taillePlateau,i,couleursBase[i],basesDebut[i]);
+				lesJoueurs[i] = new JoueurOrdinateur(taillePlateau,i,couleursBase[i],2,basesDebut[i]);
 		
-
 		}
 			k=0;
 			//parcours de branches
@@ -247,12 +248,11 @@ public Partie(String nomFichier){
 				}
 			}
 		
-		
 	}
 	
-	public Partie(int taillePlateau,int nbjoueurs,String[] typeJoueur,int[] difficulteBots){
+	public Partie(int taillePlateau,int nbjoueurs,boolean editable){
 		int nbpionparjoueur;
-		editable=false;
+		this.editable=editable;
 		type="normal";
 		plateau = new Plateau(taillePlateau);
 		
@@ -266,18 +266,105 @@ public Partie(String nomFichier){
 		taille plateau
 	*/
 		int i,j,k,t,nbpion;
-		String [] couleursBase={"bleu","rouge","orange","vert","jaune","violet"};
 		k=plateau.getTaille();
 		t=k;
 		j=0;
 		setPremierJoueur();
+		String [] couleursBase={"bleu","rouge","orange","vert","jaune","violet"};
 		int[] basesDebut;
 		basesDebut = new int[nbjoueurs];
 		int numbranche=0;
 		
 		if(nbjoueurs==1){
 			basesDebut[0]=4;
-			type="optimisation";
+			type="personalise";
+		}
+		if(nbjoueurs==2){
+			basesDebut[0]=4;
+			basesDebut[1]=1;
+		}
+		
+		if(nbjoueurs==3){
+			basesDebut[0]=4;
+			basesDebut[1]=0;
+			basesDebut[2]=2;
+
+		}
+		
+		if(nbjoueurs==4){
+			basesDebut[0]=4;
+			basesDebut[1]=0;
+			basesDebut[2]=1;
+			basesDebut[3]=3;
+		}
+		
+		if(nbjoueurs==6){
+
+			basesDebut[0]=4;
+			basesDebut[1]=5;
+			basesDebut[2]=0;
+			basesDebut[3]=1;
+			basesDebut[4]=2;
+			basesDebut[5]=3;
+		}
+			lesJoueurs[0]=new JoueurHumain(taillePlateau,0,couleursBase[0],basesDebut[0]);
+		for (i=1;i<nbjoueurs;i++){
+
+				lesJoueurs[i] = new JoueurOrdinateur(taillePlateau,i,couleursBase[i],2,basesDebut[i]);
+		
+		}
+			k=0;
+			//parcours de branches
+			for (i=0;i<nbjoueurs;i++){
+				k=plateau.getTaille();
+				t=k;
+				j = 0;
+				
+				nbpion= nbpionparjoueur;
+				//parcours de pions
+				while (k>0){
+					if(j>0 && j%k==0){
+						k--;
+						j=0;
+					}
+					else{
+						numbranche=lesJoueurs[i].getNumBrancheDebut();
+						plateau.getBranche(numbranche).getLigne(t-k).getCase(j).setPion(lesJoueurs[i].getPion(--nbpion));
+						plateau.getBranche(numbranche).getLigne(t-k).getCase(j).setOccupe(true);
+						j++;
+					}
+				}
+			}
+		
+	}
+	
+	public Partie(int taillePlateau,int nbjoueurs,String type,boolean editable){
+		int nbpionparjoueur;
+		this.editable=editable;
+		this.type=type;
+		plateau = new Plateau(taillePlateau);
+		
+		lesJoueurs = new Joueur[nbjoueurs];
+		nbpionparjoueur=plateau.getNbPionParJoueur();
+		/*
+		nb joueur
+		info des joueurs
+		position des pions
+		au tour de..
+		taille plateau
+	*/
+		int i,j,k,t,nbpion;
+		k=plateau.getTaille();
+		t=k;
+		j=0;
+		setPremierJoueur();
+		String [] couleursBase={"bleu","rouge","orange","vert","jaune","violet"};
+		int[] basesDebut;
+		basesDebut = new int[nbjoueurs];
+		int numbranche=0;
+		
+		if(nbjoueurs==1){
+			basesDebut[0]=4;
 		}
 		if(nbjoueurs==2){
 			basesDebut[0]=4;
@@ -309,17 +396,10 @@ public Partie(String nomFichier){
 		}
 			
 		for (i=0;i<nbjoueurs;i++){
-			if(typeJoueur[i].equals("humain")){
+
 				lesJoueurs[i] = new JoueurHumain(taillePlateau,i,couleursBase[i],basesDebut[i]);
-			}
-			else{
-				lesJoueurs[i] = new JoueurOrdinateur(taillePlateau,i,couleursBase[i],difficulteBots[i],basesDebut[i]);
-			}
-
-		}
-
-	
 		
+		}
 			k=0;
 			//parcours de branches
 			for (i=0;i<nbjoueurs;i++){
@@ -343,9 +423,226 @@ public Partie(String nomFichier){
 				}
 			}
 		
+	}
+	
+	public Partie(int taillePlateau, int nbjoueurs, String type,boolean editable,Joueur[] joueurs,boolean plateauChargé) {
+		int nbpionparjoueur;
+		this.editable=editable;
+		this.type=type;
+		plateau = new Plateau(taillePlateau);
+		
+		lesJoueurs = new Joueur[nbjoueurs];
+		nbpionparjoueur=plateau.getNbPionParJoueur();
+
+		if(plateauChargé){
+			for (int i=0;i<nbjoueurs;i++){
+				lesJoueurs[i]=joueurs[i];
+			}
+			for (int i=0;i<nbjoueurs;i++){
+				for(int j=0;j<plateau.getNbPionParJoueur();j++){
+					if (lesJoueurs[i].getPion(j).getPosition().getBranch()){
+						plateau.getBranche(lesJoueurs[i].getPion(j).getPosition().getAngle()).getLigne(lesJoueurs[i].getPion(j).getPosition().getDist()-1).getCase(lesJoueurs[i].getPion(j).getPosition().getNum()).setOccupe(true);
+						plateau.getBranche(lesJoueurs[i].getPion(j).getPosition().getAngle()).getLigne(lesJoueurs[i].getPion(j).getPosition().getDist()-1).getCase(lesJoueurs[i].getPion(j).getPosition().getNum()).setPion(lesJoueurs[i].getPion(j));
+					}
+					else{
+						if (lesJoueurs[i].getPion(j).getPosition().getDist()==0){
+							plateau.getAnneau(0).getLigne(0).getCase(0).setOccupe(true);
+							plateau.getAnneau(0).getLigne(0).getCase(0).setPion(lesJoueurs[i].getPion(j));
+						}
+						else{
+							plateau.getAnneau(lesJoueurs[i].getPion(j).getPosition().getDist()).getLigne(lesJoueurs[i].getPion(j).getPosition().getAngle()).getCase(lesJoueurs[i].getPion(j).getPosition().getNum()).setOccupe(true);
+							plateau.getAnneau(lesJoueurs[i].getPion(j).getPosition().getDist()).getLigne(lesJoueurs[i].getPion(j).getPosition().getAngle()).getCase(lesJoueurs[i].getPion(j).getPosition().getNum()).setPion(lesJoueurs[i].getPion(j));
+						}
+						
+					}
+				}
+			}
+
+		}
+		else{
+			System.out.println("lol");
+			int i,j,k,t,nbpion;
+			k=plateau.getTaille();
+			t=k;
+			j=0;
+			setPremierJoueur();
+			String [] couleursBase;
+			couleursBase = new String[nbjoueurs];
+			for(i=0;i<nbjoueurs;i++){
+				couleursBase[i]=joueurs[i].getCouleur();
+			}
+			
+			int[] basesDebut;
+			basesDebut = new int[nbjoueurs];
+			int numbranche=0;
+			
+			if(nbjoueurs==1){
+				basesDebut[0]=4;
+			}
+			if(nbjoueurs==2){
+				basesDebut[0]=4;
+				basesDebut[1]=1;
+			}
+			
+			if(nbjoueurs==3){
+				basesDebut[0]=4;
+				basesDebut[1]=0;
+				basesDebut[2]=2;
+
+			}
+			
+			if(nbjoueurs==4){
+				basesDebut[0]=4;
+				basesDebut[1]=0;
+				basesDebut[2]=1;
+				basesDebut[3]=3;
+			}
+			
+			if(nbjoueurs==6){
+
+				basesDebut[0]=4;
+				basesDebut[1]=5;
+				basesDebut[2]=0;
+				basesDebut[3]=1;
+				basesDebut[4]=2;
+				basesDebut[5]=3;
+			}
+				
+			for (i=0;i<nbjoueurs;i++){
+				if(joueurs[i].getType().equals("humain")){
+					lesJoueurs[i] = new JoueurHumain(taillePlateau,i,couleursBase[i],basesDebut[i],joueurs[i].getNom());
+				}
+				else{
+					lesJoueurs[i] = new JoueurOrdinateur(taillePlateau,i,couleursBase[i],((JoueurOrdinateur) joueurs[i]).getDifficulte(),basesDebut[i],joueurs[i].getNom());
+				}
+
+			}
+				k=0;
+				//parcours de branches
+				for (i=0;i<nbjoueurs;i++){
+					k=plateau.getTaille();
+					t=k;
+					j = 0;
+					
+					nbpion= nbpionparjoueur;
+					//parcours de pions
+					while (k>0){
+						if(j>0 && j%k==0){
+							k--;
+							j=0;
+						}
+						else{
+							numbranche=lesJoueurs[i].getNumBrancheDebut();
+							plateau.getBranche(numbranche).getLigne(t-k).getCase(j).setPion(lesJoueurs[i].getPion(--nbpion));
+							plateau.getBranche(numbranche).getLigne(t-k).getCase(j).setOccupe(true);
+							j++;
+						}
+					}
+				}
+		}
+		
+			
 		
 	}
 	
+	public Partie(int taillePlateau, int nbjoueurs, String type,boolean editable,Joueur[] joueurs) {
+		int nbpionparjoueur;
+		this.editable=editable;
+		this.type=type;
+		plateau = new Plateau(taillePlateau);
+		
+		lesJoueurs = new Joueur[nbjoueurs];
+		nbpionparjoueur=plateau.getNbPionParJoueur();
+		/*
+		nb joueur
+		info des joueurs
+		position des pions
+		au tour de..
+		taille plateau
+	*/
+		int i,j,k,t,nbpion;
+		k=plateau.getTaille();
+		t=k;
+		j=0;
+		setPremierJoueur();
+		String [] couleursBase;
+		couleursBase = new String[nbjoueurs];
+		for(i=0;i<nbjoueurs;i++){
+			couleursBase[i]=joueurs[i].getCouleur();
+		}
+		
+		int[] basesDebut;
+		basesDebut = new int[nbjoueurs];
+		int numbranche=0;
+		
+		if(nbjoueurs==1){
+			basesDebut[0]=4;
+		}
+		if(nbjoueurs==2){
+			basesDebut[0]=4;
+			basesDebut[1]=1;
+		}
+		
+		if(nbjoueurs==3){
+			basesDebut[0]=4;
+			basesDebut[1]=0;
+			basesDebut[2]=2;
+
+		}
+		
+		if(nbjoueurs==4){
+			basesDebut[0]=4;
+			basesDebut[1]=0;
+			basesDebut[2]=1;
+			basesDebut[3]=3;
+		}
+		
+		if(nbjoueurs==6){
+
+			basesDebut[0]=4;
+			basesDebut[1]=5;
+			basesDebut[2]=0;
+			basesDebut[3]=1;
+			basesDebut[4]=2;
+			basesDebut[5]=3;
+		}
+			
+		for (i=0;i<nbjoueurs;i++){
+			if(joueurs[i].getType().equals("humain")){
+				lesJoueurs[i] = new JoueurHumain(taillePlateau,i,couleursBase[i],basesDebut[i],joueurs[i].getNom());
+			}
+			else{
+				lesJoueurs[i] = new JoueurOrdinateur(taillePlateau,i,couleursBase[i],((JoueurOrdinateur) joueurs[i]).getDifficulte(),basesDebut[i],joueurs[i].getNom());
+			}
+
+		}
+			k=0;
+			//parcours de branches
+			for (i=0;i<nbjoueurs;i++){
+				k=plateau.getTaille();
+				t=k;
+				j = 0;
+				
+				nbpion= nbpionparjoueur;
+				//parcours de pions
+				while (k>0){
+					if(j>0 && j%k==0){
+						k--;
+						j=0;
+					}
+					else{
+						numbranche=lesJoueurs[i].getNumBrancheDebut();
+						plateau.getBranche(numbranche).getLigne(t-k).getCase(j).setPion(lesJoueurs[i].getPion(--nbpion));
+						plateau.getBranche(numbranche).getLigne(t-k).getCase(j).setOccupe(true);
+						j++;
+					}
+				}
+			}
+			
+		
+	}
+
+
 	public Plateau getPlateau(){
 		return plateau;
 	}
@@ -362,6 +659,7 @@ public Partie(String nomFichier){
 
 		try
 		{
+			int nbJoueur = this.getNbJoueurs();
 			// le BufferedWriter bw auquel on donne comme argument un FileWriter
 			Date aujourdhui = new Date();
 			DateFormat fullDateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL,DateFormat.FULL);
@@ -369,14 +667,17 @@ public Partie(String nomFichier){
 			if(this.type.equals("normal")){
 				path="Sauvegardes/Partie normale ";
 			}
-			if(this.type.equals("optimisation")){
-				path="Plateaux/Partie Optimisation ";
+			if(this.type.equals("personalise")){
+				path="Sauvegardes/Partie Solo ";
+			}
+			if(this.editable==true){
+				path="Plateaux/Plateau avec "+nbJoueur+" joueur de taille "+this.getPlateau().getTaille()+" ";
 			}
 			if(this.type.equals("chronometre")){
 				path="Sauvegardes/Partie chronometree ";
 			}
 			path+="du "+fullDateFormat.format(aujourdhui);
-			if(this.type.equals("optimisation")){
+			if(this.editable==true){
 				path+=".pla";
 			}
 			else{
@@ -385,7 +686,7 @@ public Partie(String nomFichier){
 			BufferedWriter bw = new BufferedWriter(new FileWriter(path));
 			
 			//on marque dans le fichier ou plutot dans le BufferedWriter qui sert comme un tampon(stream)
-			int nbJoueur = this.getNbJoueurs();
+			
 			int nbPionParJoueur = this.getPlateau().getNbPionParJoueur();
 			
 			bw.write("Taille du plateau :"+this.getPlateau().getTaille() + "\r\nNombre de joueurs :" + nbJoueur+"\r\nTour de :"+this.getTourDe());
@@ -481,8 +782,13 @@ public Partie(String nomFichier){
 			System.err.print("Erreur");
 		}
 	}
+	
 	public String getType() {
 		return type;
+	}
+	
+	public void setType(String type){
+		this.type=type;
 	}
 
 	public Joueur getJoueur(int numjoueur){

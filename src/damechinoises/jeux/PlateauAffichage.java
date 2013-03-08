@@ -307,8 +307,12 @@ public class PlateauAffichage extends JPanel {
 			int y = arg0.getY();
 			if (!select){
 				dep=selCase(x,y);
-				
-				if (dep!=null && dep.getPion()!=null && partie.getJoueur(partie.getTourDe()).pionAppartient(dep.getPion())){
+				if(dep != null && dep.getPion()!=null && partie.getEditable()==true){
+					select = true;
+					premierMvt = true;
+					highLight(dep.getX(),dep.getY(),24);
+				}
+				else if (dep!=null && dep.getPion()!=null && partie.getJoueur(partie.getTourDe()).pionAppartient(dep.getPion())){
 					select = true;
 					premierMvt = true;
 					highLight(dep.getX(),dep.getY(),24);

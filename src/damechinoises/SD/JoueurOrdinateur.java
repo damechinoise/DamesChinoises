@@ -12,9 +12,19 @@ public class JoueurOrdinateur extends Joueur{
 			difficulte = 1;
 		}
 		
+		public JoueurOrdinateur(int taillePlateau,Joueur copie,String nom,int difficulte){
+			super(taillePlateau, copie,nom, "ordinateur");
+			this.difficulte = difficulte;
+		}
+		
 		public JoueurOrdinateur(int taillePlateau, int numero, String couleur,int difficulte, int numeroBrancheDebut){
 			super(taillePlateau, numero, couleur, numeroBrancheDebut);
 			super.setType("ordinateur");
+			this.difficulte = difficulte;
+		}
+		
+		public JoueurOrdinateur(int taillePlateau, int numero, String couleur,int difficulte, int numeroBrancheDebut,String nom){
+			super(taillePlateau, numero, couleur, numeroBrancheDebut,nom,"ordinateur");
 			this.difficulte = difficulte;
 		}
 		

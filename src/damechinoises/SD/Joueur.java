@@ -20,6 +20,7 @@ public abstract class Joueur {
 	 */
 	private String couleur;
 	
+	private String nom;
 	/**
 	 * Correspond aux pions du joueur.
 	 */
@@ -62,15 +63,57 @@ public abstract class Joueur {
 		}
 	}
 	
+	public Joueur(int taillePlateau,Joueur copie,String nom,String type){
+		int nbPionParJoueur = 0;
+		
+		for (int i = 0; i < taillePlateau; i++){
+			nbPionParJoueur += taillePlateau-i;
+		}
+		numero=copie.getNumero();
+		couleur=copie.getCouleur();
+		numBrancheDebut=copie.getNumBrancheDebut();
+		numBrancheFin=copie.getNumBrancheFin();
+		this.nom=nom;
+		this.type=type;
+		
+		nbCoup=copie.getNbCoup();
+		
+		lesPions = new Pion[nbPionParJoueur];
+		
+		for (int i = 0; i < nbPionParJoueur; i++){
+			lesPions[i] = new Pion(copie.getPion(i));
+		}
+	}
+	
 	/**
 	 * Constructeur d'un joueur prenant en paramètre un numéro et une couleur
 	 * @param taillePlateau la taille du plateau
 	 * @param numero le numéro du joueur
 	 * @param couleur la couleur du joueur
 	 */
-	public Joueur(int taillePlateau, int numero, String couleur, int numBrancheDebut/*, int nbCoup*/){
+	public Joueur(int taillePlateau, int numero, String couleur, int numBrancheDebut){
 		int nbPionParJoueur = 0;
 		
+		for (int i = 1; i <= taillePlateau; i++){
+			nbPionParJoueur += i;
+		}
+		
+		this.numero = numero;
+		this.couleur = couleur;
+		this.numBrancheDebut = numBrancheDebut;
+		this.numBrancheFin = (numBrancheDebut + 3)%6;
+		lesPions = new Pion[nbPionParJoueur];
+		//this.nbCoup = nbCoup;
+		
+		for (int i = 0; i < nbPionParJoueur; i++){
+			lesPions[i] = new Pion(couleur); 
+		}
+	}
+	
+	public Joueur(int taillePlateau, int numero, String couleur, int numBrancheDebut,String nom,String type){
+		int nbPionParJoueur = 0;
+		this.nom=nom;
+		this.type=type;
 		for (int i = 1; i <= taillePlateau; i++){
 			nbPionParJoueur += i;
 		}
@@ -196,6 +239,14 @@ public abstract class Joueur {
 	
 	public void setType(String type){
 		this.type=type;
+	}
+	
+	public String getNom() {
+		return nom;
+	}
+	
+	public void setNom(String nom){
+		this.nom=nom;
 	}
 
 	public boolean fini() {

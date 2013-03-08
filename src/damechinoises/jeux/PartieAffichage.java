@@ -13,6 +13,7 @@ import java.awt.event.MouseListener;
 import javax.swing.*;
 
 import damechinoises.SD.InterfaceTour;
+import damechinoises.SD.Joueur;
 import damechinoises.SD.JoueurOrdinateur;
 import damechinoises.SD.Partie;
 import damechinoises.SD.Plateau;
@@ -108,17 +109,12 @@ public class PartieAffichage extends JPanel {
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			String[] typeBot;
-			typeBot=new String[6];
-			int[] DifBot;
-			DifBot = new int[6];
+			Joueur lesJoueurs[];
+			lesJoueurs = new Joueur[p.getPartie().getNbJoueurs()];
 			for (int i=0;i<p.getPartie().getNbJoueurs();i++){
-				typeBot[i]=p.getPartie().getJoueur(i).getType();
-				if(typeBot[i].equals("ordinateur")){
-					DifBot[i]=((JoueurOrdinateur) p.getPartie().getJoueur(i)).getDifficulte();
-				}
+				lesJoueurs[i]=p.getPartie().getJoueur(i);
 			}
-			PartieAffichage nouv = new PartieAffichage(p.getParentt(),p.getPartie().getPlateau().getTaille(),p.getPartie().getNbJoueurs(),typeBot,DifBot);
+			PartieAffichage nouv = new PartieAffichage(p.getParentt(),p.getPartie().getPlateau().getTaille(),p.getPartie().getNbJoueurs(),p.getPartie().getType(),p.getPartie().getEditable(),lesJoueurs);
 			p.getParentt().setMain(nouv);
 			nouv.getParentt().validate();
 			nouv.getPanelJeu().updateFirst();
@@ -225,10 +221,10 @@ public class PartieAffichage extends JPanel {
 		
 	}
 	
-	public PartieAffichage(FenetrePrincipale p, int taillePlateau,int nbJoueurs,String[] typeJoueur,int[] difficulteBots){
+	public PartieAffichage(FenetrePrincipale p, int taillePlateau,int nbJoueurs,boolean editable){
 		parent = p;
 		this.setLayout(new BorderLayout());
-		partie = new Partie(taillePlateau,nbJoueurs,typeJoueur,difficulteBots);
+		partie = new Partie(taillePlateau,nbJoueurs,editable);
 		Plateau plateau = partie.getPlateau();
 		panelMenu.add(mb);
 		panelJeu = new PlateauAffichage(partie);
@@ -241,9 +237,11 @@ public class PartieAffichage extends JPanel {
 		this.add(panelJeu,BorderLayout.CENTER);
 		newgame.addActionListener(new NewGameListener(this));
 		mainmenu.addActionListener(new RetourMenuListener(this));
-		panelMenu.add(new JLabel(""));
-		majTour();
-		panelMenu.add(tourDe);
+		if(partie.getEditable()==false){
+			panelMenu.add(new JLabel(""));
+			majTour();
+			panelMenu.add(tourDe);
+		}
 		
 		partie.addEventListener(new InterfaceTour() {
 				
@@ -271,6 +269,152 @@ public class PartieAffichage extends JPanel {
 			}
 		});
 		
+	}
+	
+	public PartieAffichage(FenetrePrincipale p, int taillePlateau,int nbJoueurs,String type,boolean edit,Joueur[] joueurs){
+		parent = p;
+		this.setLayout(new BorderLayout());
+		partie = new Partie(taillePlateau,nbJoueurs,type,edit,joueurs);
+		Plateau plateau = partie.getPlateau();
+		panelMenu.add(mb);
+		panelJeu = new PlateauAffichage(partie);
+		mb.add(menu);
+		menu.add(newgame);
+		menu.add(save);
+		menu.add(mainmenu);
+		menu.add(quit);
+		this.add(panelMenu,BorderLayout.NORTH);
+		this.add(panelJeu,BorderLayout.CENTER);
+		newgame.addActionListener(new NewGameListener(this));
+		mainmenu.addActionListener(new RetourMenuListener(this));
+		if(partie.getEditable()==false){
+			panelMenu.add(new JLabel(""));
+			majTour();
+			panelMenu.add(tourDe);
+		}
+		partie.addEventListener(new InterfaceTour() {
+				
+			@Override
+			public void changementDeTour(TourEvent e) {
+				majTour();
+			}
+		
+			@Override
+			public void finJoueur(TourEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		quit.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				System.exit(0);
+			}
+		});
+			
+		save.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				partie.save();
+			}
+		});
+		
+	}
+	
+	public PartieAffichage(FenetrePrincipale p, int taillePlateau,int nbJoueurs,String type,boolean edit,Joueur[] joueurs,boolean plateauChargé){
+		parent = p;
+		this.setLayout(new BorderLayout());
+		partie = new Partie(taillePlateau,nbJoueurs,type,edit,joueurs,plateauChargé);
+		
+		Plateau plateau = partie.getPlateau();
+		panelMenu.add(mb);
+		panelJeu = new PlateauAffichage(partie);
+		mb.add(menu);
+		menu.add(newgame);
+		menu.add(save);
+		menu.add(mainmenu);
+		menu.add(quit);
+		this.add(panelMenu,BorderLayout.NORTH);
+		this.add(panelJeu,BorderLayout.CENTER);
+		newgame.addActionListener(new NewGameListener(this));
+		mainmenu.addActionListener(new RetourMenuListener(this));
+		if(partie.getEditable()==false){
+			panelMenu.add(new JLabel(""));
+			majTour();
+			panelMenu.add(tourDe);
+		}
+		partie.addEventListener(new InterfaceTour() {
+				
+			@Override
+			public void changementDeTour(TourEvent e) {
+				majTour();
+			}
+		
+			@Override
+			public void finJoueur(TourEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		quit.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				System.exit(0);
+			}
+		});
+			
+		save.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				partie.save();
+			}
+		});
+	}
+	
+	public PartieAffichage(FenetrePrincipale p,int taillePlateau,int nbjoueurs,String type,boolean editable){
+		parent = p;
+		this.setLayout(new BorderLayout());
+		partie = new Partie(taillePlateau,nbjoueurs,type,editable);
+		Plateau plateau = partie.getPlateau();
+		panelMenu.add(mb);
+		panelJeu = new PlateauAffichage(partie);
+		mb.add(menu);
+		menu.add(newgame);
+		menu.add(save);
+		menu.add(mainmenu);
+		menu.add(quit);
+		this.add(panelMenu,BorderLayout.NORTH);
+		this.add(panelJeu,BorderLayout.CENTER);
+		newgame.addActionListener(new NewGameListener(this));
+		mainmenu.addActionListener(new RetourMenuListener(this));
+		if(partie.getEditable()==false){
+			panelMenu.add(new JLabel(""));
+			majTour();
+			panelMenu.add(tourDe);
+		}
+		partie.addEventListener(new InterfaceTour() {
+				
+			@Override
+			public void changementDeTour(TourEvent e) {
+				majTour();
+			}
+		
+			@Override
+			public void finJoueur(TourEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		quit.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				System.exit(0);
+			}
+		});
+			
+		save.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				partie.save();
+			}
+		});
 	}
 	
 	public Partie getPartie(){

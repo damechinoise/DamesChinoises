@@ -27,6 +27,11 @@ public class Pion{
 		position = null;
 	}
 	
+	public Pion(Pion copie){
+		this.position=copie.getPosition();
+		this.couleur=copie.getCouleur();
+	}
+	
 	/**
 	 * Constructeur d'un pion.
 	 * @param position la position de ce pion

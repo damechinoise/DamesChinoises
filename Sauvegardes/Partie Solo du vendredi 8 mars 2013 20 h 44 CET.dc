@@ -1,15 +1,20 @@
-Taille du plateau :4
+Taille du plateau :5
 Nombre de joueurs :1
 Tour de :0
 Joueur numero:0
 Joueur couleur:bleu
 Joueur branche debut:4
 Joueur type:humain
-Joueur nbcoup:1
+Joueur nbcoup:0
 branche:true
 angle:4
 dist:1
 numero:0
+Couleur:bleu
+branche:true
+angle:4
+dist:1
+numero:1
 Couleur:bleu
 branche:true
 angle:4
@@ -23,6 +28,11 @@ numero:3
 Couleur:bleu
 branche:true
 angle:4
+dist:1
+numero:4
+Couleur:bleu
+branche:true
+angle:4
 dist:2
 numero:0
 Couleur:bleu
@@ -38,6 +48,11 @@ numero:2
 Couleur:bleu
 branche:true
 angle:4
+dist:2
+numero:3
+Couleur:bleu
+branche:true
+angle:4
 dist:3
 numero:0
 Couleur:bleu
@@ -48,12 +63,22 @@ numero:1
 Couleur:bleu
 branche:true
 angle:4
+dist:3
+numero:2
+Couleur:bleu
+branche:true
+angle:4
 dist:4
 numero:0
 Couleur:bleu
-Branche:false
-Angle:4
-Dist:4
-Numero:1
+branche:true
+angle:4
+dist:4
+numero:1
 Couleur:bleu
-Type:optimisation
+branche:true
+angle:4
+dist:5
+numero:0
+Couleur:bleu
+Type:personalise

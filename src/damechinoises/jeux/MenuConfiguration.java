@@ -15,7 +15,8 @@ import javax.swing.JTextField;
 
 import damechinoises.SD.Joueur;
 import damechinoises.SD.JoueurHumain;
-
+import damechinoises.SD.JoueurOrdinateur;
+import damechinoises.SD.Partie;
 
 public class MenuConfiguration extends MenuNouvellePartie{
 
@@ -313,10 +314,55 @@ public class MenuConfiguration extends MenuNouvellePartie{
 				typeJoueur[numJoueur] = new String("ordinateur");
 				numJoueur++;
 			}
-
-
+			Joueur lesJoueurs[];
+			//Plateau chargé + infos remplies
+			/*
 			
-			PartieAffichage p = new PartieAffichage(m.getParent(),5,4);
+			Partie pa=new Partie("Partie normale du vendredi 8 mars 2013 21 h 05 CET.dc");
+			String types[];
+			types = new String[3];
+			types[0]="humain";
+			types[1]="ordinateur";
+			types[2]="humain";
+			String noms[];
+			noms = new String[3];
+			noms[0]="lol";
+			noms[1]="salut";
+			noms[2]="lol";
+			int difficultes[];
+			difficultes = new int[3];
+			difficultes[1]=2;
+
+			int nbjoueurs=pa.getNbJoueurs();
+			lesJoueurs = new Joueur[nbjoueurs];
+			for (int i=0;i<nbjoueurs;i++){
+				if(types[i].equals("humain")){
+					lesJoueurs[i] = new JoueurHumain(pa.getPlateau().getTaille(),pa.getJoueur(i),noms[i]);
+				}
+				else{
+					lesJoueurs[i] = new JoueurOrdinateur(pa.getPlateau().getTaille(),pa.getJoueur(i),noms[i],difficultes[i]);
+				}
+				
+			}
+			PartieAffichage p = new PartieAffichage(m.getParent(),pa.getPlateau().getTaille(),nbjoueurs,"normal",false,lesJoueurs,true);
+			*/
+			
+			
+			// Pour partie normale
+			int nbjoueurs=3;
+			lesJoueurs = new Joueur[nbjoueurs];
+			int taillePlateau=5;
+			
+			lesJoueurs[0] = new JoueurHumain(taillePlateau,0,"bleu",0);
+			lesJoueurs[1] = new JoueurHumain(taillePlateau,1,"rouge",1);
+			lesJoueurs[2] = new JoueurHumain(taillePlateau,2,"orange",2);
+			
+			//normale :
+			
+			PartieAffichage p = new PartieAffichage(m.getParent(),taillePlateau,nbjoueurs,"normal",false,lesJoueurs);
+			
+			// perso : 
+			//PartieAffichage p = new PartieAffichage(m.getParent(),taillePlateau,1,"personalise",false);
 			m.getParent().setMain(p);
 			m.getParent().validate();
 			p.getPanelJeu().updateFirst();
