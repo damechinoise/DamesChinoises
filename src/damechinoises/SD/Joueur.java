@@ -197,5 +197,12 @@ public abstract class Joueur {
 	public void setType(String type){
 		this.type=type;
 	}
+
+	public boolean fini() {
+		for (int i = 0 ; i < lesPions.length ; i ++)
+			if (!lesPions[i].getPosition().getBranch() || lesPions[i].getPosition().getAngle() != getNumBrancheFin())
+				return false;
+		return true;
+	}
 	
 }

@@ -52,7 +52,7 @@ public class MenuNouvellePartie extends Menu {
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			PartieAffichage p = new PartieAffichage(m.getParent(),4,4);
+			PartieAffichage p = new PartieAffichage(m.getParent(),5,4);
 			m.getParent().setMain(p);
 			m.getParent().validate();
 			p.getPanelJeu().updateFirst();

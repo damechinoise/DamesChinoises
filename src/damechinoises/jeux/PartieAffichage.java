@@ -60,6 +60,12 @@ public class PartieAffichage extends JPanel {
 			public void changementDeTour(TourEvent e) {
 				majTour();
 			}
+
+			@Override
+			public void finJoueur(TourEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
 		});
 	
 	
@@ -149,6 +155,12 @@ public class PartieAffichage extends JPanel {
 			public void changementDeTour(TourEvent e) {
 				majTour();
 			}
+
+			@Override
+			public void finJoueur(TourEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
 		});
 		
 		quit.addActionListener(new ActionListener(){
@@ -191,6 +203,12 @@ public class PartieAffichage extends JPanel {
 			public void changementDeTour(TourEvent e) {
 				majTour();
 			}
+
+			@Override
+			public void finJoueur(TourEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
 		});
 		
 		quit.addActionListener(new ActionListener(){
@@ -232,6 +250,12 @@ public class PartieAffichage extends JPanel {
 			@Override
 			public void changementDeTour(TourEvent e) {
 				majTour();
+			}
+
+			@Override
+			public void finJoueur(TourEvent e) {
+				// TODO Auto-generated method stub
+				
 			}
 		});
 		

@@ -318,20 +318,20 @@ public class PlateauAffichage extends JPanel {
 			}
 			else{
 				arr=selCase(x,y);
-				if(dep.equals(arr)){
+				if(arr != null && dep.equals(arr)){
 					arr=null;
 					premierMvt = false ;
 					select = false ;
 					update();
 				}
-				else if(partie.getEditable()==true){
+				else if(arr != null && partie.getEditable()==true){
 					arr.move(dep);
 					arr=null;
 					premierMvt = false ;
 					select = false ;
 					update();
 				}
-				else {
+				else if (arr != null){
 					switch (move(dep,arr)){
 					case(-1):
 						if(dep.equals(arr) && !premierMvt){

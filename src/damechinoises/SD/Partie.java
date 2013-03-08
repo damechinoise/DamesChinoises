@@ -515,12 +515,38 @@ public Partie(String nomFichier){
 		tourDe=random;
 	}
 	
+	public boolean finPartie(){
+		for(int i = 0; i < getNbJoueurs() ; i++){
+			if(!lesJoueurs[tourDe].fini())
+				return false;
+		}
+		return true;
+	}
+	
 	public void nextJoueur(){
 		tourDe++;
 		tourDe=tourDe%getNbJoueurs();
-		fireEvent();
+		if(!finPartie()){
+				while(lesJoueurs[tourDe].fini()){
+					tourDe++;
+					tourDe=tourDe%getNbJoueurs();
+				}
+			fireEvent();
+		} else {
+			fireEventFin();
+		}
 	}
 
+	public int joueurSuivant(){
+		int jS = tourDe;
+		jS++;
+		jS=jS%getNbJoueurs();
+		while(lesJoueurs[jS].fini()){
+			jS++;
+			jS=jS%getNbJoueurs();
+		}
+		return jS;
+	}
 	public void setEditable(boolean edit){
 		this.editable=edit;
 	}
@@ -549,6 +575,12 @@ public Partie(String nomFichier){
 		return etat;
 	}
 	
+	public Partie tourJoueurAI(int joueur){
+		Partie suivant = this;
+		//TODO faire code pour pseudotour AI (renvoyer même partie mais avec un tour de joueur fait)
+		return suivant;
+	}
+	
 	 public synchronized void addEventListener(InterfaceTour listener)  {
 		     _listener.add(listener);
 		   }
@@ -561,6 +593,14 @@ public Partie(String nomFichier){
 		 Iterator i = _listener.iterator();
 		 while (i.hasNext()){
 			 ((InterfaceTour) i.next()).changementDeTour(e);
+		 }
+	 }
+	 
+	 private synchronized void fireEventFin(){
+		 TourEvent e = new TourEvent(this,this.tourDe);
+		 Iterator i = _listener.iterator();
+		 while (i.hasNext()){
+			 ((InterfaceTour) i.next()).finJoueur(e);
 		 }
 	 }
   
