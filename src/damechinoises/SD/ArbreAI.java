@@ -4,16 +4,18 @@ public class ArbreAI {
 	private NoeudAI root;
 	private int nbFils, profondeur ,joueur;
 	
-	public ArbreAI(Partie p,int nbFils, int profondeur, int joueur){
-		root = new NoeudAI(p,joueur);
-		this.nbFils=nbFils;
+	public ArbreAI(Partie p, int profondeur, int joueur){
+		this.root = new NoeudAI(p,joueur);
+		this.nbFils=p.getJoueur(0).nbPions()*3;
 		if(profondeur > 1)
 			this.profondeur = profondeur;
 		else
 			this.profondeur = 1;
 		this.joueur=joueur;
 		for (int i = 0 ; i < nbFils ; i++){
-			root.ajoutFils(ajoutNoeud(profondeur-1,p.tourJoueurAI(joueur),p.joueurSuivant()));
+			Partie tour = p.tourJoueurAI(joueur,i%p.getJoueur(0).nbPions(),i/p.getJoueur(0).nbPions());
+			if (tour!=null)
+				root.ajoutFils(ajoutNoeud(profondeur-1,tour,p.joueurSuivant()));
 		}
 	}
 	
@@ -21,7 +23,9 @@ public class ArbreAI {
 		NoeudAI node = new NoeudAI(p,joueur);
 		if(profondeur != 0){
 			for (int i = 0 ; i < nbFils ; i++){
-				node.ajoutFils(ajoutNoeud(profondeur-1,p.tourJoueurAI(joueur),p.joueurSuivant()));
+				Partie tour = p.tourJoueurAI(joueur,i%p.getJoueur(0).nbPions(),i/p.getJoueur(0).nbPions());
+				if (tour!=null)
+					node.ajoutFils(ajoutNoeud(profondeur-1,tour,p.joueurSuivant()));
 			}
 		}
 		return node;

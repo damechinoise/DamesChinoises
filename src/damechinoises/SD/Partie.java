@@ -575,9 +575,19 @@ public Partie(String nomFichier){
 		return etat;
 	}
 	
-	public Partie tourJoueurAI(int joueur){
+	public Partie tourJoueurAI(int joueur, int pion, int prio){
 		Partie suivant = this;
-		//TODO faire code pour pseudotour AI (renvoyer même partie mais avec un tour de joueur fait)
+		//TODO
+		/*
+		 * Méthode qui joue l'un des 3 coups décrit pour le joueur donné sur une copie de la partie
+		 * Sert juste à alimenter l'algorithme alpha-beta de l'AI
+		 * joueur : numéro du joueur
+		 * pion : numéro du pion
+		 * prio : 
+		 * 		0 - meilleur coup
+		 * 		1 - pire coup
+		 * 		2 - coup aléa
+		 */
 		return suivant;
 	}
 	
