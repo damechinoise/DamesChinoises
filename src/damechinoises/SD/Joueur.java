@@ -68,7 +68,7 @@ public abstract class Joueur {
 	 * @param numero le numéro du joueur
 	 * @param couleur la couleur du joueur
 	 */
-	public Joueur(int taillePlateau, int numero, String couleur, int numBrancheDebut){
+	public Joueur(int taillePlateau, int numero, String couleur, int numBrancheDebut/*, int nbCoup*/){
 		int nbPionParJoueur = 0;
 		
 		for (int i = 1; i <= taillePlateau; i++){
@@ -196,6 +196,13 @@ public abstract class Joueur {
 	
 	public void setType(String type){
 		this.type=type;
+	}
+
+	public boolean fini() {
+		for (int i = 0 ; i < lesPions.length ; i ++)
+			if (!lesPions[i].getPosition().getBranch() || lesPions[i].getPosition().getAngle() != getNumBrancheFin())
+				return false;
+		return true;
 	}
 	
 }

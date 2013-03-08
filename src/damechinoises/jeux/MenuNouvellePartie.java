@@ -37,7 +37,6 @@ public class MenuNouvellePartie extends Menu {
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			
 			m.getParent().setMain(new MenuDemarage(m.getParent()));
 		}
 		
@@ -53,8 +52,10 @@ public class MenuNouvellePartie extends Menu {
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			m.getParent().setMain(new MenuConfiguration(m.getParent()));
-
+			PartieAffichage p = new PartieAffichage(m.getParent(),5,4);
+			m.getParent().setMain(p);
+			m.getParent().validate();
+			p.getPanelJeu().updateFirst();
 		}
 		
 	}
