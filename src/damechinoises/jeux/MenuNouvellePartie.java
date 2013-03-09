@@ -61,7 +61,7 @@ public class MenuNouvellePartie extends JPanel {
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			m.getParentt().setMain(new MenuConfiguration(m.getParentt(),"normal"));
+			m.getParentt().setMain(new MenuConfiguration(m.getParentt(),"normale"));
 
 		}
 		

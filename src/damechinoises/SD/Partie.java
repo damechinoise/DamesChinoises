@@ -251,7 +251,7 @@ public Partie(String nomFichier){
 		
 	}
 	
-	public Partie(int taillePlateau,int nbjoueurs,boolean editable){
+	public Partie(int taillePlateau,int nbjoueurs,boolean editable, String[] couleurChoisi){
 		int nbpionparjoueur;
 		this.editable=editable;
 		type="normal";
@@ -271,7 +271,6 @@ public Partie(String nomFichier){
 		t=k;
 		j=0;
 		setPremierJoueur();
-		String [] couleursBase={"bleu","rouge","orange","vert","jaune","violet"};
 		int[] basesDebut;
 		basesDebut = new int[nbjoueurs];
 		int numbranche=0;
@@ -308,10 +307,10 @@ public Partie(String nomFichier){
 			basesDebut[4]=2;
 			basesDebut[5]=3;
 		}
-			lesJoueurs[0]=new JoueurHumain(taillePlateau,0,couleursBase[0],basesDebut[0]);
+			lesJoueurs[0]=new JoueurHumain(taillePlateau,0,couleurChoisi[0],basesDebut[0]);
 		for (i=1;i<nbjoueurs;i++){
 
-				lesJoueurs[i] = new JoueurOrdinateur(taillePlateau,i,couleursBase[i],2,basesDebut[i]);
+				lesJoueurs[i] = new JoueurOrdinateur(taillePlateau,i,couleurChoisi[i],2,basesDebut[i]);
 		
 		}
 			k=0;

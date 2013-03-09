@@ -220,10 +220,10 @@ public class PartieAffichage extends JPanel {
 		
 	}
 	
-	public PartieAffichage(FenetrePrincipale p, int taillePlateau,int nbJoueurs,boolean editable){
+	public PartieAffichage(FenetrePrincipale p, int taillePlateau,int nbJoueurs,boolean editable, String[] couleurChoisi){
 		parent = p;
 		this.setLayout(new BorderLayout());
-		partie = new Partie(taillePlateau,nbJoueurs,editable);
+		partie = new Partie(taillePlateau,nbJoueurs,editable, couleurChoisi);
 		Plateau plateau = partie.getPlateau();
 		panelMenu.add(mb);
 		panelJeu = new PlateauAffichage(partie);

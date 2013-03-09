@@ -77,11 +77,7 @@ public class MenuDemarage extends JPanel {
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			PartieAffichage p = new PartieAffichage(m.getParentt(),4,1,true);
-			p.getPartie().setEditable(true);
-			m.getParentt().setMain(p);
-			m.getParentt().validate();
-			p.getPanelJeu().updateFirst();
+			m.getParentt().setMain(new MenuConfiguration(m.getParentt(),"editeur"));
 		}
 		
 	}
