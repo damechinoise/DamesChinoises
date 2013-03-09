@@ -18,7 +18,6 @@ import damechinoises.SD.JoueurOrdinateur;
 import damechinoises.SD.Partie;
 import damechinoises.SD.Plateau;
 import damechinoises.SD.TourEvent;
-import damechinoises.jeux.MenuNouvellePartie.NouveauListener;
 import damechinoises.jeux.MenuNouvellePartie.RetourListener;
 
 public class PartieAffichage extends JPanel {

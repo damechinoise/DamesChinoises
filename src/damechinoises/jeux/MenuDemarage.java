@@ -15,7 +15,7 @@ public class MenuDemarage extends JPanel {
 	private FenetrePrincipale parent; 
 	private Font font = new Font("DejaVu Sans",Font.PLAIN,12);
 	private Font font2 = new Font("DejaVu Sans",Font.PLAIN,18);
-	private JButton nouv,charger,quitter;
+	private JButton nouv,charger,quitter,editeur;
 	private JLabel infos;
 	
 	public MenuDemarage(FenetrePrincipale p) {
@@ -31,17 +31,20 @@ public class MenuDemarage extends JPanel {
 		nouv.setFont(font2);
 		charger = new JButton("Charger une ancienne partie");
 		charger.setFont(font2);
+		editeur = new JButton("Editeur de plateaux");
+		editeur.setFont(font2);
 		quitter = new JButton("Quitter le jeu");
 		quitter.setFont(font2);
 		content = new JPanel(new GridLayout(0,1,0,10));
 		content.add(nouv);
 		content.add(charger);
+		content.add(editeur);
 		content.add(quitter);
 		this.add(content,BorderLayout.CENTER);
 		
 		nouv.addActionListener(new NouvellePartieListener(this));
 		charger.addActionListener(new ChargerPartieListener(this));
-		
+		editeur.addActionListener(new EditeurListener(this));
 		quitter.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				System.exit(0);
@@ -94,6 +97,25 @@ public class MenuDemarage extends JPanel {
 		}
 			
 	}
+	
+	class EditeurListener implements ActionListener{
+
+		private MenuDemarage m;
+		
+		public EditeurListener(MenuDemarage m){
+			this.m=m;
+		}
+		
+		public void actionPerformed(ActionEvent e) {
+			PartieAffichage p = new PartieAffichage(m.getParentt(),4,1,true);
+			p.getPartie().setEditable(true);
+			m.getParentt().setMain(p);
+			m.getParentt().validate();
+			p.getPanelJeu().updateFirst();
+		}
+		
+	}
+
 	
 	class ChargerPartieListener implements ActionListener{
 

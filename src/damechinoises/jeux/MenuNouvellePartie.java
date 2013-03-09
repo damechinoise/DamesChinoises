@@ -1,6 +1,7 @@
 package damechinoises.jeux;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,24 +11,29 @@ public class MenuNouvellePartie extends JPanel {
 	private FenetrePrincipale parent; 
 	private JPanel content;
 	private JButton retour;
-	private JButton lancer;
-	private JButton editeur;
+	private JButton normale;
+	private JButton chronometre;
+	private JButton personalise;
+	
 	
 	public MenuNouvellePartie(FenetrePrincipale p) {
 		//super(p);
 		parent=p;
 		this.setLayout(new BorderLayout());
 		content = new JPanel(new GridLayout(0,1,0,20));
-		lancer = new JButton("Lancer");
-		editeur = new JButton("Editeur de plateaux");
+		normale = new JButton("Partie normale");
+		chronometre = new JButton("Partie Chronometre");
+		personalise = new JButton("Partie Moins de coups possibles");
 		retour = new JButton("Retour au menu principal");
-		content.add(lancer);
-		content.add(editeur);
+		content.add(normale);
+		content.add(chronometre);
+		content.add(personalise);
 		content.add(retour);
 		this.add(content,BorderLayout.CENTER);
 		retour.addActionListener(new RetourListener(this));
-		lancer.addActionListener(new NouveauListener(this));
-		editeur.addActionListener(new EditeurListener(this));
+		normale.addActionListener(new NormaleListener(this));
+		chronometre.addActionListener(new ChronoListener(this));
+		personalise.addActionListener(new PersoListener(this));
 
 	}
 
@@ -46,38 +52,52 @@ public class MenuNouvellePartie extends JPanel {
 	}
 	
 	
-	class NouveauListener implements ActionListener{
+	class NormaleListener implements ActionListener{
 
 		private MenuNouvellePartie m;
 		
-		public NouveauListener(MenuNouvellePartie m){
+		public NormaleListener(MenuNouvellePartie m){
 			this.m=m;
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			m.getParentt().setMain(new MenuConfiguration(m.getParentt()));
+			m.getParentt().setMain(new MenuConfiguration(m.getParentt(),"normal"));
 
 		}
 		
 	}
 	
-	class EditeurListener implements ActionListener{
+	class ChronoListener implements ActionListener{
 
 		private MenuNouvellePartie m;
 		
-		public EditeurListener(MenuNouvellePartie m){
+		public ChronoListener(MenuNouvellePartie m){
 			this.m=m;
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			PartieAffichage p = new PartieAffichage(m.getParentt(),4,1,true);
-			p.getPartie().setEditable(true);
-			m.getParentt().setMain(p);
-			m.getParentt().validate();
-			p.getPanelJeu().updateFirst();
+			m.getParentt().setMain(new MenuConfiguration(m.getParentt(),"chrono"));
+
 		}
 		
 	}
+	
+	class PersoListener implements ActionListener{
+
+		private MenuNouvellePartie m;
+		
+		public PersoListener(MenuNouvellePartie m){
+			this.m=m;
+		}
+		
+		public void actionPerformed(ActionEvent e) {
+			m.getParentt().setMain(new MenuConfiguration(m.getParentt(),"personalise"));
+
+		}
+		
+	}
+	
+	
 	
 	public FenetrePrincipale getParentt(){
 		return parent;

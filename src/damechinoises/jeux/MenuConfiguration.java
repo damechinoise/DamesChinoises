@@ -39,7 +39,7 @@ public class MenuConfiguration extends JPanel{
 	private JRadioButton humainViolet, ordinateurViolet, inactifViolet;
 	private JLabel joueurBleu, joueurRouge, joueurOrange, joueurVert, joueurJaune, joueurViolet;
 	
-	public MenuConfiguration(FenetrePrincipale p) {
+	public MenuConfiguration(FenetrePrincipale p,String typePartie) {
 		//super(p);
 		parent=p;
 		this.setLayout(new BorderLayout());
