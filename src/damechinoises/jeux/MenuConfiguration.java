@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -28,7 +29,7 @@ public class MenuConfiguration extends JPanel{
 	private JPanel content;
 	private JPanel panelBouton, panelLesJoueurs, panelInformation, panelTaillePlateau;
 	private JPanel panelJoueurBleu, panelJoueurRouge, panelJoueurOrange, panelJoueurVert, panelJoueurJaune, panelJoueurViolet;
-	private JButton retour, lancer;
+	private JButton retour, lancer,charger;
 	private ButtonGroup taille, choixBleu, choixRouge, choixOrange, choixVert, choixJaune, choixViolet;
 	private JRadioButton taille2, taille3, taille4, taille5;
 	private JRadioButton humainBleu, ordinateurBleu, inactifBleu;
@@ -378,6 +379,69 @@ public class MenuConfiguration extends JPanel{
 		}
 		
 	}
+	
+
+	// c'est le charger plateau de la partie personalisé.
+	class ChargerPlateauSoloListener implements ActionListener{
+
+		private MenuConfiguration m;
+		
+		public ChargerPlateauSoloListener(MenuConfiguration m){
+			this.m=m;
+		}
+		
+		public void actionPerformed(ActionEvent e) {
+			
+			JFileChooser choix = new JFileChooser("Plateaux");
+			FiltrePlateauSolo isPlateautaille1 = new FiltrePlateauSolo();
+			choix.removeChoosableFileFilter(choix.getAcceptAllFileFilter());
+			choix.setFileFilter(isPlateautaille1);
+			
+			int retour = choix.showOpenDialog(charger);
+
+			if (retour == JFileChooser.APPROVE_OPTION){
+				choix.getSelectedFile().getName();
+
+				PartieAffichage p = new PartieAffichage(m.getParentt(), choix.getSelectedFile().getAbsolutePath());
+				m.getParentt().setMain(p);
+				m.getParentt().validate();
+				p.getPanelJeu().updateFirst();
+
+			}	
+		}
+			
+	}
+	
+	// c'est le charger plateau pour le type de partie chronometre et normale
+		class ChargerPlateauMultijoueurListener implements ActionListener{
+
+			private MenuConfiguration m;
+			
+			public ChargerPlateauMultijoueurListener(MenuConfiguration m){
+				this.m=m;
+			}
+			
+			public void actionPerformed(ActionEvent e) {
+				
+				JFileChooser choix = new JFileChooser("Plateaux");
+				FiltrePlateauMultijoueur isPlateautaillen = new FiltrePlateauMultijoueur();
+				choix.removeChoosableFileFilter(choix.getAcceptAllFileFilter());
+				choix.setFileFilter(isPlateautaillen);
+				
+				int retour = choix.showOpenDialog(charger);
+
+				if (retour == JFileChooser.APPROVE_OPTION){
+					choix.getSelectedFile().getName();
+
+					PartieAffichage p = new PartieAffichage(m.getParentt(), choix.getSelectedFile().getAbsolutePath());
+					m.getParentt().setMain(p);
+					m.getParentt().validate();
+					p.getPanelJeu().updateFirst();
+
+				}	
+			}
+				
+		}
 	
 	public FenetrePrincipale getParentt(){
 		return parent;

@@ -67,36 +67,6 @@ public class MenuDemarage extends JPanel {
 		
 	}
 	
-	// c'est le charger plateau de la partie personalisé.
-	class ChargerPlateauListener implements ActionListener{
-
-		private MenuDemarage m;
-		
-		public ChargerPlateauListener(MenuDemarage m){
-			this.m=m;
-		}
-		
-		public void actionPerformed(ActionEvent e) {
-			
-			JFileChooser choix = new JFileChooser("Plateaux");
-			FiltrePartiePerso isPlateautaille1 = new FiltrePartiePerso("fichier plateau", "plateau avec 1 joueur");
-			choix.removeChoosableFileFilter(choix.getAcceptAllFileFilter());
-			choix.setFileFilter(isPlateautaille1);
-			
-			int retour = choix.showOpenDialog(charger);
-
-			if (retour == JFileChooser.APPROVE_OPTION){
-				choix.getSelectedFile().getName();
-
-				PartieAffichage p = new PartieAffichage(m.getParentt(), choix.getSelectedFile().getAbsolutePath());
-				m.getParentt().setMain(p);
-				m.getParentt().validate();
-				p.getPanelJeu().updateFirst();
-
-			}	
-		}
-			
-	}
 	
 	class EditeurListener implements ActionListener{
 
@@ -128,7 +98,7 @@ public class MenuDemarage extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			
 			JFileChooser choix = new JFileChooser("Sauvegardes");
-			FiltreSimple onlyTXT = new FiltreSimple("fichier dames chinoises", ".dc");
+			FiltreSimple onlyTXT = new FiltreSimple();
 			choix.removeChoosableFileFilter(choix.getAcceptAllFileFilter());
 			choix.setFileFilter(onlyTXT);
 			

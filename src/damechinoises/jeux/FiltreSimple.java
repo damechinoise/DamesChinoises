@@ -9,12 +9,8 @@ public class FiltreSimple extends FileFilter{
 	   private String description;
 	   private String extension;
 	   //Constructeur à partir de la description et de l'extension acceptée
-	   public FiltreSimple(String description, String extension){
-	      if(description == null || extension ==null){
-	         throw new NullPointerException("La description (ou extension) ne peut être null.");
-	      }
-	      this.description = description;
-	      this.extension = extension;
+	   public FiltreSimple(){
+	      description="Fichiers .dc";
 	   }
 	   //Implémentation de FileFilter
 	   public boolean accept(File file){
@@ -23,7 +19,7 @@ public class FiltreSimple extends FileFilter{
 	      } 
 	      String nomFichier = file.getName().toLowerCase(); 
 	 
-	      return nomFichier.endsWith(extension);
+	      return nomFichier.endsWith(".dc");
 	   }
 	      public String getDescription(){
 	      return description;

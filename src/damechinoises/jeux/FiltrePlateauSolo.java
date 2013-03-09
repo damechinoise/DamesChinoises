@@ -4,17 +4,13 @@ import java.io.File;
 
 import javax.swing.filechooser.FileFilter;
 
-public class FiltrePartiePerso extends FileFilter{
+public class FiltrePlateauSolo extends FileFilter{
 	   //Description et extension acceptée par le filtre
 	   private String description;
-	   private String debut;
 	   //Constructeur à partir de la description et de l'extension acceptée
-	   public FiltrePartiePerso(String description, String debut){
-	      if(description == null ||debut ==null){
-	         throw new NullPointerException("La description (ou debut) ne peut être null.");
-	      }
-	      this.description = description;
-	      this.debut = debut;
+	   public FiltrePlateauSolo(){
+	      
+	      description="Plateau avec 1 joueur";
 	   }
 	   //Implémentation de FileFilter
 	   public boolean accept(File file){
@@ -22,7 +18,7 @@ public class FiltrePartiePerso extends FileFilter{
 	         return true; 
 	      } 
 	      String nomFichier = file.getName().toLowerCase(); 
-	      return (nomFichier.startsWith(debut)&&nomFichier.endsWith(".pla"));
+	      return (nomFichier.startsWith("plateau avec 1 joueur")&&nomFichier.endsWith(".pla"));
 	      
 	   }
 	      public String getDescription(){
