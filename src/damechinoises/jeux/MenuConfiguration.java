@@ -1,6 +1,9 @@
 package damechinoises.jeux;
 
+import damechinoises.SD.TextLimiter;
+
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -8,7 +11,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -17,9 +20,9 @@ import javax.swing.JTextField;
 import damechinoises.SD.Joueur;
 import damechinoises.SD.JoueurHumain;
 import damechinoises.SD.JoueurOrdinateur;
-import damechinoises.SD.Partie;
+import javax.swing.JFileChooser;
 
-public class MenuConfiguration extends JPanel{
+public class MenuConfiguration extends JPanel implements ActionListener{
 
 	private FenetrePrincipale parent; 
 	private int tailleChoisi;
@@ -29,7 +32,11 @@ public class MenuConfiguration extends JPanel{
 	private JPanel content;
 	private JPanel panelBouton, panelLesJoueurs, panelInformation, panelTaillePlateau;
 	private JPanel panelJoueurBleu, panelJoueurRouge, panelJoueurOrange, panelJoueurVert, panelJoueurJaune, panelJoueurViolet;
-	private JButton retour, lancer,charger;
+	private JPanel sousPanelJoueurBleu, sousPanelJoueurRouge, sousPanelJoueurOrange, sousPanelJoueurVert, sousPanelJoueurJaune, sousPanelJoueurViolet;
+	private JTextField pseudoBleu, pseudoRouge, pseudoOrange, pseudoVert, pseudoJaune, pseudoViolet;
+	private JComboBox<Object> listeDifficulteBleu, listeDifficulteRouge, listeDifficulteOrange, listeDifficulteVert, listeDifficulteJaune, listeDifficulteViolet;
+	private Object[] lesDifficultes = new Object[]{"1","2","3","4","5","6","7","8","9"} ;
+	private JButton retour, lancer, charger;
 	private ButtonGroup taille, choixBleu, choixRouge, choixOrange, choixVert, choixJaune, choixViolet;
 	private JRadioButton taille2, taille3, taille4, taille5;
 	private JRadioButton humainBleu, ordinateurBleu, inactifBleu;
@@ -39,6 +46,7 @@ public class MenuConfiguration extends JPanel{
 	private JRadioButton humainJaune, ordinateurJaune, inactifJaune;
 	private JRadioButton humainViolet, ordinateurViolet, inactifViolet;
 	private JLabel joueurBleu, joueurRouge, joueurOrange, joueurVert, joueurJaune, joueurViolet;
+	private JLabel compBleu, compRouge, compOrange, compVert, compJaune, compViolet;
 	
 	public MenuConfiguration(FenetrePrincipale p,String typePartie) {
 		//super(p);
@@ -49,13 +57,19 @@ public class MenuConfiguration extends JPanel{
 		panelInformation = new JPanel();
 		panelTaillePlateau = new JPanel(new FlowLayout());
 		panelBouton = new JPanel(new FlowLayout());
-		panelLesJoueurs = new JPanel(new GridLayout(3,2));
+		panelLesJoueurs = new JPanel(new GridLayout(6,2));
 		panelJoueurBleu = new JPanel(new FlowLayout());
 		panelJoueurRouge = new JPanel(new FlowLayout());
 		panelJoueurOrange = new JPanel(new FlowLayout());
 		panelJoueurVert = new JPanel(new FlowLayout());
 		panelJoueurJaune = new JPanel(new FlowLayout());
 		panelJoueurViolet = new JPanel(new FlowLayout());
+		sousPanelJoueurBleu = new JPanel(new FlowLayout());
+		sousPanelJoueurRouge = new JPanel(new FlowLayout());
+		sousPanelJoueurOrange = new JPanel(new FlowLayout());
+		sousPanelJoueurVert = new JPanel(new FlowLayout());
+		sousPanelJoueurJaune = new JPanel(new FlowLayout());
+		sousPanelJoueurViolet = new JPanel(new FlowLayout());
 		
 		
 		//LA TAILLE DU PLATEAU
@@ -111,10 +125,22 @@ public class MenuConfiguration extends JPanel{
 			choixBleu.add(humainBleu);
 			choixBleu.add(ordinateurBleu);
 			choixBleu.add(inactifBleu);
+			
+			compBleu = new JLabel("Pseudo: ");
+			pseudoBleu = new JTextField(15);
+			pseudoBleu.setDocument(new TextLimiter(20));
+			pseudoBleu.setHorizontalAlignment(JTextField.CENTER);
+			
+			listeDifficulteBleu = new JComboBox<Object>(lesDifficultes);
+			listeDifficulteBleu.setPreferredSize(new Dimension(50,25));
+			listeDifficulteBleu.setVisible(false);
 		
 			panelJoueurBleu.add(humainBleu);
 			panelJoueurBleu.add(ordinateurBleu);
 			panelJoueurBleu.add(inactifBleu);
+			sousPanelJoueurBleu.add(compBleu);
+			sousPanelJoueurBleu.add(pseudoBleu);
+			sousPanelJoueurBleu.add(listeDifficulteBleu);
 	
 			//Rouge
 			choixRouge = new ButtonGroup();
@@ -126,10 +152,23 @@ public class MenuConfiguration extends JPanel{
 			choixRouge.add(humainRouge);
 			choixRouge.add(ordinateurRouge);
 			choixRouge.add(inactifRouge);
+	
+			compRouge = new JLabel("Difficulte: ");
+			
+			pseudoRouge = new JTextField(15);
+			pseudoRouge.setDocument(new TextLimiter(20));
+			pseudoRouge.setHorizontalAlignment(JTextField.CENTER);
+			pseudoRouge.setVisible(false);
+			
+			listeDifficulteRouge = new JComboBox<Object>(lesDifficultes);
+			listeDifficulteRouge.setPreferredSize(new Dimension(50,25));
 			
 			panelJoueurRouge.add(humainRouge);
 			panelJoueurRouge.add(ordinateurRouge);
 			panelJoueurRouge.add(inactifRouge);
+			sousPanelJoueurRouge.add(compRouge);
+			sousPanelJoueurRouge.add(pseudoRouge);
+			sousPanelJoueurRouge.add(listeDifficulteRouge);
 		
 			//Orange
 			choixOrange = new ButtonGroup();
@@ -141,10 +180,23 @@ public class MenuConfiguration extends JPanel{
 			choixOrange.add(humainOrange);
 			choixOrange.add(ordinateurOrange);
 			choixOrange.add(inactifOrange);
+
+			compOrange = new JLabel("");
+			pseudoOrange = new JTextField(15);
+			pseudoOrange.setDocument(new TextLimiter(20));
+			pseudoOrange.setHorizontalAlignment(JTextField.CENTER);
+			pseudoOrange.setVisible(false);
+			
+			listeDifficulteOrange = new JComboBox<Object>(lesDifficultes);
+			listeDifficulteOrange.setPreferredSize(new Dimension(50,25));
+			listeDifficulteOrange.setVisible(false);
 			
 			panelJoueurOrange.add(humainOrange);
 			panelJoueurOrange.add(ordinateurOrange);
 			panelJoueurOrange.add(inactifOrange);
+			sousPanelJoueurOrange.add(compOrange);
+			sousPanelJoueurOrange.add(pseudoOrange);
+			sousPanelJoueurOrange.add(listeDifficulteOrange);
 		
 			//Vert
 			choixVert = new ButtonGroup();
@@ -156,10 +208,23 @@ public class MenuConfiguration extends JPanel{
 			choixVert.add(humainVert);
 			choixVert.add(ordinateurVert);
 			choixVert.add(inactifVert);
+
+			compVert = new JLabel("");
+			pseudoVert = new JTextField(15);
+			pseudoVert.setDocument(new TextLimiter(20));
+			pseudoVert.setHorizontalAlignment(JTextField.CENTER);
+			pseudoVert.setVisible(false);
+			
+			listeDifficulteVert = new JComboBox<Object>(lesDifficultes);
+			listeDifficulteVert.setPreferredSize(new Dimension(50,25));
+			listeDifficulteVert.setVisible(false);
 			
 			panelJoueurVert.add(humainVert);
 			panelJoueurVert.add(ordinateurVert);
 			panelJoueurVert.add(inactifVert);
+			sousPanelJoueurVert.add(compVert);
+			sousPanelJoueurVert.add(pseudoVert);
+			sousPanelJoueurVert.add(listeDifficulteVert);
 		
 			//Jaune
 			choixJaune = new ButtonGroup();
@@ -171,10 +236,23 @@ public class MenuConfiguration extends JPanel{
 			choixJaune.add(humainJaune);
 			choixJaune.add(ordinateurJaune);
 			choixJaune.add(inactifJaune);
+
+			compJaune = new JLabel("");
+			pseudoJaune = new JTextField(15);
+			pseudoJaune.setDocument(new TextLimiter(20));
+			pseudoJaune.setHorizontalAlignment(JTextField.CENTER);
+			pseudoJaune.setVisible(false);
+			
+			listeDifficulteJaune = new JComboBox<Object>(lesDifficultes);
+			listeDifficulteJaune.setPreferredSize(new Dimension(50,25));
+			listeDifficulteJaune.setVisible(false);
 			
 			panelJoueurJaune.add(humainJaune);
 			panelJoueurJaune.add(ordinateurJaune);
 			panelJoueurJaune.add(inactifJaune);
+			sousPanelJoueurJaune.add(compJaune);
+			sousPanelJoueurJaune.add(pseudoJaune);
+			sousPanelJoueurJaune.add(listeDifficulteJaune);
 		
 			//Violet
 			choixViolet = new ButtonGroup();
@@ -186,28 +264,74 @@ public class MenuConfiguration extends JPanel{
 			choixViolet.add(humainViolet);
 			choixViolet.add(ordinateurViolet);
 			choixViolet.add(inactifViolet);
+
+			compViolet = new JLabel("");
+			pseudoViolet = new JTextField(15);
+			pseudoViolet.setDocument(new TextLimiter(20));
+			pseudoViolet.setHorizontalAlignment(JTextField.CENTER);
+			pseudoViolet.setVisible(false);
+			
+			listeDifficulteViolet = new JComboBox<Object>(lesDifficultes);
+			listeDifficulteViolet.setPreferredSize(new Dimension(50,25));
+			listeDifficulteViolet.setVisible(false);
 			
 			panelJoueurViolet.add(humainViolet);
 			panelJoueurViolet.add(ordinateurViolet);
 			panelJoueurViolet.add(inactifViolet);
+			sousPanelJoueurViolet.add(compViolet);
+			sousPanelJoueurViolet.add(pseudoViolet);
+			sousPanelJoueurViolet.add(listeDifficulteViolet);
 		
 
 		//Ajout des panels joueur au panel LesJoueurs
 		panelLesJoueurs.add(panelJoueurBleu);
 		panelLesJoueurs.add(panelJoueurRouge);
+		panelLesJoueurs.add(sousPanelJoueurBleu);
+		panelLesJoueurs.add(sousPanelJoueurRouge);
 		panelLesJoueurs.add(panelJoueurOrange);
 		panelLesJoueurs.add(panelJoueurVert);
+		panelLesJoueurs.add(sousPanelJoueurOrange);
+		panelLesJoueurs.add(sousPanelJoueurVert);
 		panelLesJoueurs.add(panelJoueurJaune);
 		panelLesJoueurs.add(panelJoueurViolet);
+		panelLesJoueurs.add(sousPanelJoueurJaune);
+		panelLesJoueurs.add(sousPanelJoueurViolet);
 
 		//AJOUT DES PANELS AU PANEL PRINCIPAL
 		content.add(panelTaillePlateau, BorderLayout.NORTH);
 		content.add(panelLesJoueurs, BorderLayout.CENTER);
 		content.add(panelBouton, BorderLayout.SOUTH);
 		this.add(content,BorderLayout.CENTER);
-		//enregistrement à l'écouteur
+		
+		
+		
+		//enregistrement Ã  l'Ã©couteur
 		retour.addActionListener(new RetourListener(this));
 		lancer.addActionListener(new NouveauListener(this));
+		
+		humainBleu.addActionListener(this);
+		ordinateurBleu.addActionListener(this);
+		inactifBleu.addActionListener(this);
+		
+		humainRouge.addActionListener(this);
+		ordinateurRouge.addActionListener(this);
+		inactifRouge.addActionListener(this);
+		
+		humainOrange.addActionListener(this);
+		ordinateurOrange.addActionListener(this);
+		inactifOrange.addActionListener(this);
+		
+		humainVert.addActionListener(this);
+		ordinateurVert.addActionListener(this);
+		inactifVert.addActionListener(this);
+		
+		humainJaune.addActionListener(this);
+		ordinateurJaune.addActionListener(this);
+		inactifJaune.addActionListener(this);
+		
+		humainViolet.addActionListener(this);
+		ordinateurViolet.addActionListener(this);
+		inactifViolet.addActionListener(this);
 	}
 	
 	
@@ -222,7 +346,7 @@ public class MenuConfiguration extends JPanel{
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			m.getParentt().setMain(new MenuNouvellePartie(m.getParentt()));
+			m.getParentt().setMain(new MenuNouvellePartie(m.getParentt()));					
 		}
 		
 	}
@@ -258,73 +382,73 @@ public class MenuConfiguration extends JPanel{
 			
 			//JOUEUR BLEU
 			if(humainBleu.isSelected()){
-				lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"bleu",0, /*recup pseudo*/"Jean");
+				lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"bleu",0,pseudoBleu.getText());
 				numJoueur++;
 			}
 			else if(ordinateurBleu.isSelected()){
-				lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"bleu",/*recup difficulte*/1,0,"Ordinateur "+numOrdi);
+				lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"bleu",listeDifficulteBleu.getSelectedIndex()+1,0,"Ordinateur "+numOrdi);
 				numOrdi++;
 				numJoueur++;
 			}
 			
 			//JOUEUR ROUGE
 			if(humainRouge.isSelected()){
-				lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"rouge",0, /*recup pseudo*/"Jean");
+				lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"rouge",0, pseudoRouge.getText());
 				numJoueur++;
 			}
 			else if(ordinateurRouge.isSelected()){
-				lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"rouge",/*recup difficulte*/1,0,"Ordinateur "+numOrdi);
+				lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"rouge",listeDifficulteRouge.getSelectedIndex()+1,0,"Ordinateur "+numOrdi);
 				numOrdi++;
 				numJoueur++;
 			}
 			
 			//JOUEUR ORANGE
 			if(humainOrange.isSelected()){
-				lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"orange",0, /*recup pseudo*/"Jean");
+				lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"orange",0, pseudoOrange.getText());
 				numJoueur++;
 			}
 			else if(ordinateurOrange.isSelected()){
-				lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"orange",/*recup difficulte*/1,0,"Ordinateur "+numOrdi);
+				lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"orange",listeDifficulteOrange.getSelectedIndex()+1,0,"Ordinateur "+numOrdi);
 				numOrdi++;
 				numJoueur++;
 			}
 			
 			//JOUEUR VERT
 			if(humainVert.isSelected()){
-				lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"vert",0, /*recup pseudo*/"Jean");
+				lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"vert",0, pseudoVert.getText());
 				numJoueur++;
 			}
 			else if(ordinateurVert.isSelected()){
-				lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"vert",/*recup difficulte*/1,0,"Ordinateur "+numOrdi);
+				lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"vert",listeDifficulteVert.getSelectedIndex()+1,0,"Ordinateur "+numOrdi);
 				numOrdi++;
 				numJoueur++;
 			}
 
 			//JOUEUR JAUNE
 			if(humainJaune.isSelected()){
-				lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"jaune",0, /*recup pseudo*/"Jean");
+				lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"jaune",0, pseudoJaune.getText());
 				numJoueur++;
 			}
 			else if(ordinateurJaune.isSelected()){
-				lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"jaune",/*recup difficulte*/1,0,"Ordinateur "+numOrdi);
+				lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"jaune",listeDifficulteJaune.getSelectedIndex()+1,0,"Ordinateur "+numOrdi);
 				numOrdi++;
 				numJoueur++;
 			}
 
 			//JOUEUR VIOLET
 			if(humainViolet.isSelected()){
-				lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"violet",0, /*recup pseudo*/"Jean");
+				lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"violet",0, pseudoViolet.getText());
 				numJoueur++;;
 			}
 			else if(ordinateurViolet.isSelected()){
-				lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"violet",/*recup difficulte*/1,0,"Ordinateur "+numOrdi);
+				lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"violet",listeDifficulteViolet.getSelectedIndex()+1,0,"Ordinateur "+numOrdi);
 				numOrdi++;
 				numJoueur++;
 			}
 			
 			
 			
-			//Plateau chargé + infos remplies
+			//Plateau chargÃ© + infos remplies
 			/*
 			
 			Partie pa=new Partie("Partie normale du vendredi 8 mars 2013 21 h 05 CET.dc");
@@ -380,70 +504,168 @@ public class MenuConfiguration extends JPanel{
 		
 	}
 	
-
-	// c'est le charger plateau de la partie personalisé.
+	
+	
+	// c'est le charger plateau de la partie personalisï¿½.
 	class ChargerPlateauSoloListener implements ActionListener{
-
+	
 		private MenuConfiguration m;
-		
+			
 		public ChargerPlateauSoloListener(MenuConfiguration m){
 			this.m=m;
 		}
-		
-		public void actionPerformed(ActionEvent e) {
 			
+		public void actionPerformed(ActionEvent e) {
+				
 			JFileChooser choix = new JFileChooser("Plateaux");
 			FiltrePlateauSolo isPlateautaille1 = new FiltrePlateauSolo();
 			choix.removeChoosableFileFilter(choix.getAcceptAllFileFilter());
 			choix.setFileFilter(isPlateautaille1);
-			
+				
 			int retour = choix.showOpenDialog(charger);
-
+	
 			if (retour == JFileChooser.APPROVE_OPTION){
 				choix.getSelectedFile().getName();
-
+	
 				PartieAffichage p = new PartieAffichage(m.getParentt(), choix.getSelectedFile().getAbsolutePath());
 				m.getParentt().setMain(p);
 				m.getParentt().validate();
 				p.getPanelJeu().updateFirst();
-
+	
+			}	
+		}		
+	}
+		
+	
+		
+	// c'est le charger plateau pour le type de partie chronometre et normale
+	class ChargerPlateauMultijoueurListener implements ActionListener{
+	
+		private MenuConfiguration m;
+				
+		public ChargerPlateauMultijoueurListener(MenuConfiguration m){
+			this.m=m;
+		}
+				
+		public void actionPerformed(ActionEvent e) {
+					
+			JFileChooser choix = new JFileChooser("Plateaux");
+			FiltrePlateauMultijoueur isPlateautaillen = new FiltrePlateauMultijoueur();
+			choix.removeChoosableFileFilter(choix.getAcceptAllFileFilter());
+			choix.setFileFilter(isPlateautaillen);
+					
+			int retour = choix.showOpenDialog(charger);
+	
+			if (retour == JFileChooser.APPROVE_OPTION){
+				choix.getSelectedFile().getName();
+	
+				PartieAffichage p = new PartieAffichage(m.getParentt(), choix.getSelectedFile().getAbsolutePath());
+				m.getParentt().setMain(p);
+				m.getParentt().validate();
+				p.getPanelJeu().updateFirst();
+	
 			}	
 		}
-			
+					
 	}
 	
-	// c'est le charger plateau pour le type de partie chronometre et normale
-		class ChargerPlateauMultijoueurListener implements ActionListener{
-
-			private MenuConfiguration m;
-			
-			public ChargerPlateauMultijoueurListener(MenuConfiguration m){
-				this.m=m;
-			}
-			
-			public void actionPerformed(ActionEvent e) {
-				
-				JFileChooser choix = new JFileChooser("Plateaux");
-				FiltrePlateauMultijoueur isPlateautaillen = new FiltrePlateauMultijoueur();
-				choix.removeChoosableFileFilter(choix.getAcceptAllFileFilter());
-				choix.setFileFilter(isPlateautaillen);
-				
-				int retour = choix.showOpenDialog(charger);
-
-				if (retour == JFileChooser.APPROVE_OPTION){
-					choix.getSelectedFile().getName();
-
-					PartieAffichage p = new PartieAffichage(m.getParentt(), choix.getSelectedFile().getAbsolutePath());
-					m.getParentt().setMain(p);
-					m.getParentt().validate();
-					p.getPanelJeu().updateFirst();
-
-				}	
-			}
-				
-		}
 	
 	public FenetrePrincipale getParentt(){
 		return parent;
+	}
+
+
+	
+	public void actionPerformed(ActionEvent e) {
+		if((e.getSource()) == humainBleu){
+			compBleu.setText("Pseudo: ");
+			pseudoBleu.setVisible(true);
+			listeDifficulteBleu.setVisible(false);
+		}
+		else if((e.getSource()) == ordinateurBleu){
+			compBleu.setText("Difficulte: ");
+			pseudoBleu.setVisible(false);
+			listeDifficulteBleu.setVisible(true);
+		}
+		else if((e.getSource()) == inactifBleu){
+			compBleu.setText("");
+			pseudoBleu.setVisible(false);
+			listeDifficulteBleu.setVisible(false);
+		}
+		else if((e.getSource()) == humainRouge){
+			compRouge.setText("Pseudo: ");
+			pseudoRouge.setVisible(true);
+			listeDifficulteRouge.setVisible(false);
+		}
+		else if((e.getSource()) == ordinateurRouge){
+			compRouge.setText("Difficulte: ");
+			pseudoRouge.setVisible(false);
+			listeDifficulteRouge.setVisible(true);
+		}
+		else if((e.getSource()) == inactifRouge){
+			compRouge.setText("");
+			pseudoRouge.setVisible(false);
+			listeDifficulteRouge.setVisible(false);
+		}
+		else if((e.getSource()) == humainOrange){
+			compOrange.setText("Pseudo: ");
+			pseudoOrange.setVisible(true);
+			listeDifficulteOrange.setVisible(false);
+		}
+		else if((e.getSource()) == ordinateurOrange){
+			compOrange.setText("Difficulte: ");
+			pseudoOrange.setVisible(false);
+			listeDifficulteOrange.setVisible(true);
+		}
+		else if((e.getSource()) == inactifOrange){
+			compOrange.setText("");
+			pseudoOrange.setVisible(false);
+			listeDifficulteOrange.setVisible(false);
+		}
+		else if((e.getSource()) == humainVert){
+			compVert.setText("Pseudo: ");
+			pseudoVert.setVisible(true);
+			listeDifficulteVert.setVisible(false);
+		}
+		else if((e.getSource()) == ordinateurVert){
+			compVert.setText("Difficulte: ");
+			pseudoVert.setVisible(false);
+			listeDifficulteVert.setVisible(true);
+		}
+		else if((e.getSource()) == inactifVert){
+			compVert.setText("");
+			pseudoVert.setVisible(false);
+			listeDifficulteVert.setVisible(false);
+		}
+		else if((e.getSource()) == humainJaune){
+			compJaune.setText("Pseudo: ");
+			pseudoJaune.setVisible(true);
+			listeDifficulteJaune.setVisible(false);
+		}
+		else if((e.getSource()) == ordinateurJaune){
+			compJaune.setText("Difficulte: ");
+			pseudoJaune.setVisible(false);
+			listeDifficulteJaune.setVisible(true);
+		}
+		else if((e.getSource()) == inactifJaune){
+			compJaune.setText("");
+			pseudoJaune.setVisible(false);
+			listeDifficulteJaune.setVisible(false);
+		}
+		else if((e.getSource()) == humainViolet){
+			compViolet.setText("Pseudo: ");
+			pseudoViolet.setVisible(true);
+			listeDifficulteViolet.setVisible(false);
+		}
+		else if((e.getSource()) == ordinateurViolet){
+			compViolet.setText("Difficulte: ");
+			pseudoViolet.setVisible(false);
+			listeDifficulteViolet.setVisible(true);
+		}
+		else if((e.getSource()) == inactifViolet){
+			compViolet.setText("");
+			pseudoViolet.setVisible(false);
+			listeDifficulteViolet.setVisible(false);
+		}
 	}
 }
