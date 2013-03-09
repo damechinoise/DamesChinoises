@@ -51,17 +51,18 @@ public Partie(String nomFichier){
 			int i;
 			for (i = 0; i < this.getNbJoueurs(); i++){
 				
-				if((lignes.get(6+(5*i)+espacement)).equals("humain")){
-					lesJoueurs[i] = new JoueurHumain(plateau.getTaille(),Integer.parseInt(lignes.get(3+(5*i)+espacement)),lignes.get(4+(5*i)+espacement),Integer.parseInt(lignes.get(5+(5*i)+espacement)));
-					lesJoueurs[i].setNbCoup(Integer.parseInt(lignes.get(7+(5*i)+espacement)));
+				if((lignes.get(6+(6*i)+espacement)).equals("humain")){
+					lesJoueurs[i] = new JoueurHumain(plateau.getTaille(),Integer.parseInt(lignes.get(3+(6*i)+espacement)),lignes.get(4+(6*i)+espacement),Integer.parseInt(lignes.get(5+(6*i)+espacement)));
+					lesJoueurs[i].setNbCoup(Integer.parseInt(lignes.get(7+(6*i)+espacement)));
 				}
 				else{
-					lesJoueurs[i] = new JoueurOrdinateur(plateau.getTaille(),Integer.parseInt(lignes.get(3+(5*i)+espacement)),lignes.get(4+(5*i)+espacement),Integer.parseInt(lignes.get(8+(5*i)+espacement)),Integer.parseInt(lignes.get(5+(5*i)+espacement)));
-					lesJoueurs[i].setNbCoup(Integer.parseInt(lignes.get(7+(5*i)+espacement)));
+					lesJoueurs[i] = new JoueurOrdinateur(plateau.getTaille(),Integer.parseInt(lignes.get(3+(6*i)+espacement)),lignes.get(4+(6*i)+espacement),Integer.parseInt(lignes.get(9+(6*i)+espacement)),Integer.parseInt(lignes.get(5+(6*i)+espacement)));
+					lesJoueurs[i].setNbCoup(Integer.parseInt(lignes.get(7+(6*i)+espacement)));
+					lesJoueurs[i].setNom(lignes.get(8+(6*i)+espacement));
 					espacement++;
 				}
 			}
-			int ligneactuelle=3+(5*this.getNbJoueurs())+espacement;
+			int ligneactuelle=3+(6*this.getNbJoueurs())+espacement;
 			boolean branche;
 			int angle;
 			int distance;
@@ -698,6 +699,7 @@ public Partie(String nomFichier){
 						+ "\r\nJoueur type:"+this.getJoueur(i).getType());
 				bw.write("\r\n");
 				bw.write("Joueur nbcoup:"+this.getJoueur(i).getNbCoup()+ "\r\n");
+				bw.write("Joueur nom:"+this.getJoueur(i).getNom()+ "\r\n");
 				if (this.getJoueur(i).getType().equals("ordinateur")){
 					bw.write("Joueur difficulte:"+((JoueurOrdinateur) this.getJoueur(i)).getDifficulte());
 					bw.write("\r\n");
