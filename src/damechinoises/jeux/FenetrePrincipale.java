@@ -1,6 +1,7 @@
 package damechinoises.jeux;
 
 import java.awt.GridLayout;
+import java.awt.Point;
 
 import javax.swing.*;
 
@@ -9,14 +10,15 @@ public class FenetrePrincipale extends JFrame {
 	private JPanel content;
 	
 	public FenetrePrincipale(){
-		this.setTitle("Dames chinoises");
+		super();
 		this.setSize(800,600);
+		this.setTitle("Dames chinoises");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
-		content = new JPanel(new GridLayout(0,1));
+		content = new JPanel(new GridLayout(0,1,100,100));
 		this.setContentPane(content);
-		content.add(new MenuDemarage(this));
+		setMain(new MenuDemarage(this));
 		this.setVisible(true);
 	}
 	

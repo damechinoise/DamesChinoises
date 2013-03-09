@@ -9,16 +9,19 @@ import java.io.FileFilter;
 import javax.swing.*;
 
 
-public class MenuDemarage extends Menu {
+public class MenuDemarage extends JPanel {
 
 	private JPanel content,foot;
+	private FenetrePrincipale parent; 
 	private Font font = new Font("DejaVu Sans",Font.PLAIN,12);
 	private Font font2 = new Font("DejaVu Sans",Font.PLAIN,18);
 	private JButton nouv,charger,quitter;
 	private JLabel infos;
 	
 	public MenuDemarage(FenetrePrincipale p) {
-		super(p);
+		//super(p);
+		parent=p;
+		this.setLayout(new BorderLayout());
 		infos = new JLabel("Dames chinoises, 2013");
 		infos.setFont(font);
 		foot = new JPanel(new FlowLayout());
@@ -56,7 +59,7 @@ public class MenuDemarage extends Menu {
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			m.getParent().setMain(new MenuNouvellePartie(m.getParent()));
+			m.getParentt().setMain(new MenuNouvellePartie(m.getParentt()));
 		}
 		
 	}
@@ -82,9 +85,9 @@ public class MenuDemarage extends Menu {
 			if (retour == JFileChooser.APPROVE_OPTION){
 				choix.getSelectedFile().getName();
 
-				PartieAffichage p = new PartieAffichage(m.getParent(), choix.getSelectedFile().getAbsolutePath());
-				m.getParent().setMain(p);
-				m.getParent().validate();
+				PartieAffichage p = new PartieAffichage(m.getParentt(), choix.getSelectedFile().getAbsolutePath());
+				m.getParentt().setMain(p);
+				m.getParentt().validate();
 				p.getPanelJeu().updateFirst();
 
 			}	
@@ -112,13 +115,17 @@ public class MenuDemarage extends Menu {
 			if (retour == JFileChooser.APPROVE_OPTION){
 				choix.getSelectedFile().getName();
 
-				PartieAffichage p = new PartieAffichage(m.getParent(), choix.getSelectedFile().getAbsolutePath());
-				m.getParent().setMain(p);
-				m.getParent().validate();
+				PartieAffichage p = new PartieAffichage(m.getParentt(), choix.getSelectedFile().getAbsolutePath());
+				m.getParentt().setMain(p);
+				m.getParentt().validate();
 				p.getPanelJeu().updateFirst();
 
 			}	
 		}
 			
+	}
+	
+	public FenetrePrincipale getParentt(){
+		return parent;
 	}
 }

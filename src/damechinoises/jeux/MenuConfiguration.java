@@ -18,8 +18,9 @@ import damechinoises.SD.JoueurHumain;
 import damechinoises.SD.JoueurOrdinateur;
 import damechinoises.SD.Partie;
 
-public class MenuConfiguration extends MenuNouvellePartie{
+public class MenuConfiguration extends JPanel{
 
+	private FenetrePrincipale parent; 
 	private int tailleChoisi;
 	private int nbJoueur;
 	private String[] typeJoueur;
@@ -40,10 +41,11 @@ public class MenuConfiguration extends MenuNouvellePartie{
 	private JLabel joueurBleu, joueurRouge, joueurOrange, joueurVert, joueurJaune, joueurViolet;
 	
 	public MenuConfiguration(FenetrePrincipale p) {
-		super(p);
-		
+		//super(p);
+		parent=p;
+		this.setLayout(new BorderLayout());
 		//LES PANELS
-		content = new JPanel(/*new BorderLayout()*/new GridLayout(3,1));
+		content = new JPanel(/*new BorderLayout()*/new GridLayout(3,2));
 		panelInformation = new JPanel();
 		panelTaillePlateau = new JPanel(new FlowLayout());
 		panelBouton = new JPanel(new FlowLayout());
@@ -80,8 +82,8 @@ public class MenuConfiguration extends MenuNouvellePartie{
 		lancer = new JButton("Lancer");
 		retour = new JButton("Retour");
 		
-		/*panelBouton*/content.add(lancer);
-		/*panelBouton*/content.add(retour);
+		panelBouton.add(lancer);
+		panelBouton.add(retour);
 		
 		//LES JOUEURS
 		joueurBleu = new JLabel("Joueur Bleu:");
@@ -202,8 +204,7 @@ public class MenuConfiguration extends MenuNouvellePartie{
 		content.add(panelTaillePlateau, BorderLayout.NORTH);
 		content.add(panelLesJoueurs, BorderLayout.CENTER);
 		content.add(panelBouton, BorderLayout.SOUTH);
-		add(content);
-		
+		this.add(content,BorderLayout.CENTER);
 		//enregistrement à l'écouteur
 		retour.addActionListener(new RetourListener(this));
 		lancer.addActionListener(new NouveauListener(this));
@@ -221,7 +222,7 @@ public class MenuConfiguration extends MenuNouvellePartie{
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			m.getParent().setMain(new MenuNouvellePartie(m.getParent()));
+			m.getParentt().setMain(new MenuNouvellePartie(m.getParentt()));
 		}
 		
 	}
@@ -359,14 +360,18 @@ public class MenuConfiguration extends MenuNouvellePartie{
 			
 			//normale :
 			
-			PartieAffichage p = new PartieAffichage(m.getParent(),taillePlateau,nbjoueurs,"normal",false,lesJoueurs);
+			PartieAffichage p = new PartieAffichage(m.getParentt(),taillePlateau,nbjoueurs,"normal",false,lesJoueurs);
 			
 			// perso : 
 			//PartieAffichage p = new PartieAffichage(m.getParent(),taillePlateau,1,"personalise",false);
-			m.getParent().setMain(p);
-			m.getParent().validate();
+			m.getParentt().setMain(p);
+			m.getParentt().validate();
 			p.getPanelJeu().updateFirst();
 		}
 		
+	}
+	
+	public FenetrePrincipale getParentt(){
+		return parent;
 	}
 }

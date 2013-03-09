@@ -5,15 +5,18 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MenuNouvellePartie extends Menu {
+public class MenuNouvellePartie extends JPanel {
 
+	private FenetrePrincipale parent; 
 	private JPanel content;
 	private JButton retour;
 	private JButton lancer;
 	private JButton editeur;
 	
 	public MenuNouvellePartie(FenetrePrincipale p) {
-		super(p);
+		//super(p);
+		parent=p;
+		this.setLayout(new BorderLayout());
 		content = new JPanel(new GridLayout(0,1,0,20));
 		lancer = new JButton("Lancer");
 		editeur = new JButton("Editeur de plateaux");
@@ -37,7 +40,7 @@ public class MenuNouvellePartie extends Menu {
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			m.getParent().setMain(new MenuDemarage(m.getParent()));
+			m.getParentt().setMain(new MenuDemarage(m.getParentt()));
 		}
 		
 	}
@@ -52,7 +55,7 @@ public class MenuNouvellePartie extends Menu {
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			m.getParent().setMain(new MenuConfiguration(m.getParent()));
+			m.getParentt().setMain(new MenuConfiguration(m.getParentt()));
 
 		}
 		
@@ -67,12 +70,16 @@ public class MenuNouvellePartie extends Menu {
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			PartieAffichage p = new PartieAffichage(m.getParent(),4,1,true);
+			PartieAffichage p = new PartieAffichage(m.getParentt(),4,1,true);
 			p.getPartie().setEditable(true);
-			m.getParent().setMain(p);
-			m.getParent().validate();
+			m.getParentt().setMain(p);
+			m.getParentt().validate();
 			p.getPanelJeu().updateFirst();
 		}
 		
+	}
+	
+	public FenetrePrincipale getParentt(){
+		return parent;
 	}
 }
