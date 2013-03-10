@@ -89,7 +89,6 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 		
 		//LA TAILLE DU PLATEAU
 		JLabel taillePlateau = new JLabel("Taille du plateau:");
-		
 		taille = new ButtonGroup();
 		taille2 = new JRadioButton("2");
 		taille3 = new JRadioButton("3");
@@ -112,11 +111,10 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 		retour = new JButton("Retour");
 		
 		panelBouton.add(lancer);
-		if(typePartie.equals("normale")){
-			charger = new JButton("Charger un plateau");
-			panelBouton.add(charger);
-		}
+		charger = new JButton("Charger un plateau");
+		panelBouton.add(charger);
 		panelBouton.add(retour);
+		
 		
 		
 		//LES JOUEURS
@@ -398,7 +396,9 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 
 		//AJOUT DES PANELS AU PANEL PRINCIPAL
 		content.add(panelTaillePlateau, BorderLayout.NORTH);
-		content.add(panelLesJoueurs, BorderLayout.CENTER);
+		if(typePartie!="personalise"){
+			content.add(panelLesJoueurs, BorderLayout.CENTER);
+		}
 		content.add(panelBouton, BorderLayout.SOUTH);
 		this.add(content,BorderLayout.CENTER);
 		
@@ -407,7 +407,11 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 		//enregistrement à l'écouteur
 		retour.addActionListener(new RetourListener(this));
 		lancer.addActionListener(new NouveauListener(this));
-
+		
+		if(typePartie.equals("personalise")){
+			charger.addActionListener(new ChargerPlateauSoloListener(this));
+		}
+		
 		if(typePartie.equals("normale")){
 			charger.addActionListener(new ChargerPartieListener(this));
 			
@@ -551,6 +555,8 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 		}
 		
 		public void actionPerformed(ActionEvent e) {
+			
+	
 			if(chargement == true){
 								
 				int numordi = 1;
@@ -642,18 +648,19 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 				else if (taille3.isSelected()){tailleChoisi = 3;}
 				else if (taille4.isSelected()){tailleChoisi = 4;}
 				else if (taille5.isSelected()){tailleChoisi = 5;}	
-				
 				nbJoueur = 6;
-				//compter le nb de joueur
-				if(inactifBleu.isSelected()){nbJoueur--;}
-				if(inactifRouge.isSelected()){nbJoueur--;}
-				if(inactifOrange.isSelected()){nbJoueur--;}
-				if(inactifVert.isSelected()){nbJoueur--;}
-				if(inactifJaune.isSelected()){nbJoueur--;}
-				if(inactifViolet.isSelected()){nbJoueur--;}
+					if(typePartie!="personalise"){
+					//compter le nb de joueur
+						if(inactifBleu.isSelected()){nbJoueur--;}
+					if(inactifRouge.isSelected()){nbJoueur--;}
+					if(inactifOrange.isSelected()){nbJoueur--;}
+					if(inactifVert.isSelected()){nbJoueur--;}
+					if(inactifJaune.isSelected()){nbJoueur--;}
+					if(inactifViolet.isSelected()){nbJoueur--;}
 				
+					
+				}
 				int numJoueur = 0;
-				
 				if(typePartie.equals("editeur")){
 					couleurChoisi = new String[nbJoueur];
 					
@@ -690,6 +697,14 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 				
 				}
 				
+				else if(typePartie.equals("personalise")){
+					
+					PartieAffichage p = new PartieAffichage(m.getParentt(),tailleChoisi,1,"personalise",false);
+					m.getParentt().setMain(p);
+					m.getParentt().validate();
+					p.getPanelJeu().updateFirst();
+				
+				}
 				else if(typePartie.equals("normale")){
 					
 					lesJoueurs = new Joueur[nbJoueur];
@@ -813,7 +828,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 	
 			if (retour == JFileChooser.APPROVE_OPTION){
 				choix.getSelectedFile().getName();
-	
+				chargement = true;
 				PartieAffichage p = new PartieAffichage(m.getParentt(), choix.getSelectedFile().getAbsolutePath());
 				m.getParentt().setMain(p);
 				m.getParentt().validate();
@@ -845,7 +860,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 	
 			if (retour == JFileChooser.APPROVE_OPTION){
 				choix.getSelectedFile().getName();
-	
+				chargement = true;
 				PartieAffichage p = new PartieAffichage(m.getParentt(), choix.getSelectedFile().getAbsolutePath());
 				m.getParentt().setMain(p);
 				m.getParentt().validate();

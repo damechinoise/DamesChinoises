@@ -33,6 +33,7 @@ public class PartieAffichage extends JPanel {
 	private JPanel panelMenu = new JPanel(new GridLayout(1,0));
 	private PlateauAffichage panelJeu;
 	private JLabel tourDe = new JLabel("");
+	private JLabel chrono;
 	
 	public PartieAffichage(FenetrePrincipale p){
 		parent = p;
@@ -236,6 +237,7 @@ public class PartieAffichage extends JPanel {
 		this.add(panelJeu,BorderLayout.CENTER);
 		newgame.addActionListener(new NewGameListener(this));
 		mainmenu.addActionListener(new RetourMenuListener(this));
+	
 		if(partie.getEditable()==false){
 			panelMenu.add(new JLabel(""));
 			majTour();
