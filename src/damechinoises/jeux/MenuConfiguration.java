@@ -498,29 +498,45 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 					panelJoueurBleu.setVisible(false);
 					sousPanelJoueurBleu.setVisible(false);
 				}
+				else{
+					inactifBleu.setVisible(false);
+				}
 				if(rougeChoisi == false){
 					panelJoueurRouge.setVisible(false);
 					sousPanelJoueurRouge.setVisible(false);
+				}
+				else{
+					inactifRouge.setVisible(false);
 				}
 				if(orangeChoisi == false){
 					panelJoueurOrange.setVisible(false);
 					sousPanelJoueurOrange.setVisible(false);
 				}
+				else{
+					inactifOrange.setVisible(false);
+				}
 				if(vertChoisi == false){
 					panelJoueurVert.setVisible(false);
 					sousPanelJoueurVert.setVisible(false);
+				}
+				else{
+					inactifVert.setVisible(false);
 				}
 				if(jauneChoisi == false){
 					panelJoueurJaune.setVisible(false);
 					sousPanelJoueurJaune.setVisible(false);
 				}
+				else{
+					inactifJaune.setVisible(false);
+				}
 				if(violetChoisi == false){
 					panelJoueurViolet.setVisible(false);
 					sousPanelJoueurViolet.setVisible(false);
 				}
-				
-				
-				
+				else{
+					inactifViolet.setVisible(false);
+				}
+	
 			}	
 		}	
 	}
