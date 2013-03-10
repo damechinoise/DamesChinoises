@@ -34,5 +34,19 @@ public class Chronometre{
 	  jolieTimer.start();
  
     }
- 
+    
+    public int getMinute (){
+    	return minute;
+    }
+    
+    public int getSeconde (){
+    	return seconde;
+    }
+    
+    public void setMinute (int min){
+    	minute=min;
+    }
+    public void setSeconde (int sec){
+    	seconde=sec;
+    }
 }

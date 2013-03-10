@@ -1,9 +1,11 @@
 package damechinoises.jeux;
 
 import java.awt.BorderLayout;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -19,7 +21,7 @@ import damechinoises.SD.Partie;
 import damechinoises.SD.Plateau;
 import damechinoises.SD.TourEvent;
 import damechinoises.jeux.MenuNouvellePartie.RetourListener;
-
+import damechinoises.SD.Chronometre;
 public class PartieAffichage extends JPanel {
 	
 	private Partie partie;
@@ -123,6 +125,58 @@ public class PartieAffichage extends JPanel {
 		
 	}
 	
+	
+	public PartieAffichage(FenetrePrincipale p, int taillePlateau,int nbJoueurs,String type,boolean edit,Joueur[] joueurs,boolean plateauChargé,Chronometre c){
+		parent = p;
+		this.setLayout(new BorderLayout());
+		partie = new Partie(taillePlateau,nbJoueurs,type,edit,joueurs,plateauChargé,c);
+		
+		Plateau plateau = partie.getPlateau();
+		panelMenu.add(mb);
+		panelJeu = new PlateauAffichage(partie);
+		mb.add(menu);
+		menu.add(newgame);
+		menu.add(save);
+		menu.add(mainmenu);
+		menu.add(quit);
+		this.add(panelMenu,BorderLayout.NORTH);
+		this.add(panelJeu,BorderLayout.CENTER);
+		newgame.addActionListener(new NewGameListener(this));
+		mainmenu.addActionListener(new RetourMenuListener(this));
+		if (partie.getType()=="chronometre"){
+			panelMenu.add(new PanelChronometre(c.getMinute(),c.getSeconde()));
+		}
+		if(partie.getEditable()==false){
+			majTour();
+			panelMenu.add(tourDe);
+		}
+		partie.addEventListener(new InterfaceTour() {
+				
+			@Override
+			public void changementDeTour(TourEvent e) {
+				majTour();
+			}
+		
+			@Override
+			public void finJoueur(TourEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		quit.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				System.exit(0);
+			}
+		});
+			
+		save.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				partie.save();
+			}
+		});
+	}
+
 	
 	
 	public PartieAffichage(FenetrePrincipale p, String absolutePath){
@@ -436,6 +490,44 @@ public class PartieAffichage extends JPanel {
 		return parent;
 	}
 
+	public class PanelChronometre extends JLabel{
+	    Timer jolieTimer;
+	    int minute,seconde;
+	    
+	    public PanelChronometre(int minutes,int secondes) throws HeadlessException
+	    {
+	    	super();
+	    	minute=minutes;
+	    	seconde=secondes;
+	    	int delay = 1000; //milliseconds
+	    	ActionListener tache_timer;
+	    	
+	    	/* Action réalisé par le timer */
+	    	tache_timer = new ActionListener() {
+	    		public void actionPerformed(ActionEvent e1) {
+	    			if (seconde == 00) {
+	    				seconde = 60;
+	    				minute--;
+	    			}
+	    			seconde--;
+	    			setText(minute+":"+seconde);
+	    		}
+	    	};
+		 
+		  jolieTimer = new Timer(delay, tache_timer);
+		  jolieTimer.start();
+	 
+	    }
+	    	
+	    public int getMinute(){
+	    	return minute;
+	    }
+	    
+	    public int getSeconde(){
+	    	return seconde;
+	    }
+	 
+	}
 	
 	
 }

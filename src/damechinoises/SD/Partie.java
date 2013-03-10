@@ -103,7 +103,10 @@ public Partie(String nomFichier){
 			}
 			ligneactuelle+=plateau.getNbPionParJoueur()*this.getNbJoueurs()*5;
 			type=lignes.get(ligneactuelle);
-			System.out.println(type);
+			ligneactuelle++;
+			if(type=="chronometre"){
+				chrono=new Chronometre(Integer.parseInt(lignes.get(ligneactuelle)),Integer.parseInt(lignes.get(ligneactuelle++)));
+			}
 			
 			
 			br.close(); 
@@ -426,126 +429,7 @@ public Partie(String nomFichier){
 		
 	}
 	
-	public Partie(int taillePlateau, int nbjoueurs, String type,boolean editable,Joueur[] joueurs,boolean plateauChargé,Chronometre chrono) {
-		int nbpionparjoueur;
-		this.editable=editable;
-		this.type=type;
-		this.chrono=chrono;
-		plateau = new Plateau(taillePlateau);
-		
-		lesJoueurs = new Joueur[nbjoueurs];
-		nbpionparjoueur=plateau.getNbPionParJoueur();
 
-		if(plateauChargé){
-			for (int i=0;i<nbjoueurs;i++){
-				lesJoueurs[i]=joueurs[i];
-			}
-			for (int i=0;i<nbjoueurs;i++){
-				for(int j=0;j<plateau.getNbPionParJoueur();j++){
-					if (lesJoueurs[i].getPion(j).getPosition().getBranch()){
-						plateau.getBranche(lesJoueurs[i].getPion(j).getPosition().getAngle()).getLigne(lesJoueurs[i].getPion(j).getPosition().getDist()-1).getCase(lesJoueurs[i].getPion(j).getPosition().getNum()).setOccupe(true);
-						plateau.getBranche(lesJoueurs[i].getPion(j).getPosition().getAngle()).getLigne(lesJoueurs[i].getPion(j).getPosition().getDist()-1).getCase(lesJoueurs[i].getPion(j).getPosition().getNum()).setPion(lesJoueurs[i].getPion(j));
-					}
-					else{
-						if (lesJoueurs[i].getPion(j).getPosition().getDist()==0){
-							plateau.getAnneau(0).getLigne(0).getCase(0).setOccupe(true);
-							plateau.getAnneau(0).getLigne(0).getCase(0).setPion(lesJoueurs[i].getPion(j));
-						}
-						else{
-							plateau.getAnneau(lesJoueurs[i].getPion(j).getPosition().getDist()).getLigne(lesJoueurs[i].getPion(j).getPosition().getAngle()).getCase(lesJoueurs[i].getPion(j).getPosition().getNum()).setOccupe(true);
-							plateau.getAnneau(lesJoueurs[i].getPion(j).getPosition().getDist()).getLigne(lesJoueurs[i].getPion(j).getPosition().getAngle()).getCase(lesJoueurs[i].getPion(j).getPosition().getNum()).setPion(lesJoueurs[i].getPion(j));
-						}
-						
-					}
-				}
-			}
-
-		}
-		else{
-			System.out.println("lol");
-			int i,j,k,t,nbpion;
-			k=plateau.getTaille();
-			t=k;
-			j=0;
-			setPremierJoueur();
-			String [] couleursBase;
-			couleursBase = new String[nbjoueurs];
-			for(i=0;i<nbjoueurs;i++){
-				couleursBase[i]=joueurs[i].getCouleur();
-			}
-			
-			int[] basesDebut;
-			basesDebut = new int[nbjoueurs];
-			int numbranche=0;
-			
-			if(nbjoueurs==1){
-				basesDebut[0]=4;
-			}
-			if(nbjoueurs==2){
-				basesDebut[0]=4;
-				basesDebut[1]=1;
-			}
-			
-			if(nbjoueurs==3){
-				basesDebut[0]=4;
-				basesDebut[1]=0;
-				basesDebut[2]=2;
-
-			}
-			
-			if(nbjoueurs==4){
-				basesDebut[0]=4;
-				basesDebut[1]=0;
-				basesDebut[2]=1;
-				basesDebut[3]=3;
-			}
-			
-			if(nbjoueurs==6){
-
-				basesDebut[0]=4;
-				basesDebut[1]=5;
-				basesDebut[2]=0;
-				basesDebut[3]=1;
-				basesDebut[4]=2;
-				basesDebut[5]=3;
-			}
-				
-			for (i=0;i<nbjoueurs;i++){
-				if(joueurs[i].getType().equals("humain")){
-					lesJoueurs[i] = new JoueurHumain(taillePlateau,i,couleursBase[i],basesDebut[i],joueurs[i].getNom());
-				}
-				else{
-					lesJoueurs[i] = new JoueurOrdinateur(taillePlateau,i,couleursBase[i],((JoueurOrdinateur) joueurs[i]).getDifficulte(),basesDebut[i],joueurs[i].getNom());
-				}
-
-			}
-				k=0;
-				//parcours de branches
-				for (i=0;i<nbjoueurs;i++){
-					k=plateau.getTaille();
-					t=k;
-					j = 0;
-					
-					nbpion= nbpionparjoueur;
-					//parcours de pions
-					while (k>0){
-						if(j>0 && j%k==0){
-							k--;
-							j=0;
-						}
-						else{
-							numbranche=lesJoueurs[i].getNumBrancheDebut();
-							plateau.getBranche(numbranche).getLigne(t-k).getCase(j).setPion(lesJoueurs[i].getPion(--nbpion));
-							plateau.getBranche(numbranche).getLigne(t-k).getCase(j).setOccupe(true);
-							j++;
-						}
-					}
-				}
-		}
-		
-			
-		
-	}
 	
 	public Partie(int taillePlateau, int nbjoueurs, String type,boolean editable,Joueur[] joueurs,boolean plateauChargé) {
 		int nbpionparjoueur;
@@ -763,6 +647,133 @@ public Partie(String nomFichier){
 			
 		
 	}
+	
+	public Partie(int taillePlateau, int nbjoueurs, String type,boolean editable,Joueur[] joueurs,boolean plateauChargé,Chronometre chrono) {
+		int nbpionparjoueur;
+		this.editable=editable;
+		this.type=type;
+		this.chrono=new Chronometre(chrono.getMinute(),chrono.getSeconde());
+		plateau = new Plateau(taillePlateau);
+		
+		lesJoueurs = new Joueur[nbjoueurs];
+		nbpionparjoueur=plateau.getNbPionParJoueur();
+
+		if(plateauChargé){
+			for (int i=0;i<nbjoueurs;i++){
+				lesJoueurs[i]=joueurs[i];
+			}
+			for (int i=0;i<nbjoueurs;i++){
+				for(int j=0;j<plateau.getNbPionParJoueur();j++){
+					if (lesJoueurs[i].getPion(j).getPosition().getBranch()){
+						plateau.getBranche(lesJoueurs[i].getPion(j).getPosition().getAngle()).getLigne(lesJoueurs[i].getPion(j).getPosition().getDist()-1).getCase(lesJoueurs[i].getPion(j).getPosition().getNum()).setOccupe(true);
+						plateau.getBranche(lesJoueurs[i].getPion(j).getPosition().getAngle()).getLigne(lesJoueurs[i].getPion(j).getPosition().getDist()-1).getCase(lesJoueurs[i].getPion(j).getPosition().getNum()).setPion(lesJoueurs[i].getPion(j));
+					}
+					else{
+						if (lesJoueurs[i].getPion(j).getPosition().getDist()==0){
+							plateau.getAnneau(0).getLigne(0).getCase(0).setOccupe(true);
+							plateau.getAnneau(0).getLigne(0).getCase(0).setPion(lesJoueurs[i].getPion(j));
+						}
+						else{
+							plateau.getAnneau(lesJoueurs[i].getPion(j).getPosition().getDist()).getLigne(lesJoueurs[i].getPion(j).getPosition().getAngle()).getCase(lesJoueurs[i].getPion(j).getPosition().getNum()).setOccupe(true);
+							plateau.getAnneau(lesJoueurs[i].getPion(j).getPosition().getDist()).getLigne(lesJoueurs[i].getPion(j).getPosition().getAngle()).getCase(lesJoueurs[i].getPion(j).getPosition().getNum()).setPion(lesJoueurs[i].getPion(j));
+						}
+						
+					}
+				}
+			}
+
+		}
+		else{
+			System.out.println("lol");
+			int i,j,k,t,nbpion;
+			k=plateau.getTaille();
+			t=k;
+			j=0;
+			setPremierJoueur();
+			String [] couleursBase;
+			couleursBase = new String[nbjoueurs];
+			for(i=0;i<nbjoueurs;i++){
+				couleursBase[i]=joueurs[i].getCouleur();
+			}
+			
+			int[] basesDebut;
+			basesDebut = new int[nbjoueurs];
+			int numbranche=0;
+			
+			if(nbjoueurs==1){
+				basesDebut[0]=4;
+			}
+			if(nbjoueurs==2){
+				basesDebut[0]=4;
+				basesDebut[1]=1;
+			}
+			
+			if(nbjoueurs==3){
+				basesDebut[0]=4;
+				basesDebut[1]=0;
+				basesDebut[2]=2;
+
+			}
+			
+			if(nbjoueurs==4){
+				basesDebut[0]=4;
+				basesDebut[1]=0;
+				basesDebut[2]=1;
+				basesDebut[3]=3;
+			}
+			
+			if(nbjoueurs==6){
+
+				basesDebut[0]=4;
+				basesDebut[1]=5;
+				basesDebut[2]=0;
+				basesDebut[3]=1;
+				basesDebut[4]=2;
+				basesDebut[5]=3;
+			}
+				
+			for (i=0;i<nbjoueurs;i++){
+				if(joueurs[i].getType().equals("humain")){
+					lesJoueurs[i] = new JoueurHumain(taillePlateau,i,couleursBase[i],basesDebut[i],joueurs[i].getNom());
+				}
+				else{
+					lesJoueurs[i] = new JoueurOrdinateur(taillePlateau,i,couleursBase[i],((JoueurOrdinateur) joueurs[i]).getDifficulte(),basesDebut[i],joueurs[i].getNom());
+				}
+
+			}
+				k=0;
+				//parcours de branches
+				for (i=0;i<nbjoueurs;i++){
+					k=plateau.getTaille();
+					t=k;
+					j = 0;
+					
+					nbpion= nbpionparjoueur;
+					//parcours de pions
+					while (k>0){
+						if(j>0 && j%k==0){
+							k--;
+							j=0;
+						}
+						else{
+							numbranche=lesJoueurs[i].getNumBrancheDebut();
+							plateau.getBranche(numbranche).getLigne(t-k).getCase(j).setPion(lesJoueurs[i].getPion(--nbpion));
+							plateau.getBranche(numbranche).getLigne(t-k).getCase(j).setOccupe(true);
+							j++;
+						}
+					}
+				}
+		}
+		
+			
+		
+	}
+	
+
+
+	public Chronometre getChrono() {
+		return chrono;
+	}
 
 
 	public Plateau getPlateau(){
@@ -894,6 +905,13 @@ public Partie(String nomFichier){
 				}
 			}
 			bw.write("Type:"+this.getType());
+			bw.write("\r\n");
+			if(type=="chronometre"){
+				bw.write("MinuteChrono:"+this.getChrono().getMinute());
+				bw.write("\r\n");
+				bw.write("SecondeChrono:"+this.getChrono().getSeconde());
+				bw.write("\r\n");
+			}
 			//ensuite flush envoi dans le fichier
 			bw.flush();
 			

@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import damechinoises.SD.Chronometre;
 import damechinoises.SD.Joueur;
 import damechinoises.SD.JoueurHumain;
 import damechinoises.SD.JoueurOrdinateur;
@@ -792,8 +793,11 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 					
 					//normale :
 					
-					PartieAffichage p = new PartieAffichage(m.getParentt(),tailleChoisi,nbJoueur,"normal",false,lesJoueurs);
+					//PartieAffichage p = new PartieAffichage(m.getParentt(),tailleChoisi,nbJoueur,"normal",false,lesJoueurs);
 					
+					//Chrono
+					Chronometre c=new Chronometre(2,0);
+					PartieAffichage p = new PartieAffichage(m.getParentt(),tailleChoisi,nbJoueur,"chronometre",false,lesJoueurs,false,c);
 					// perso : 
 					//PartieAffichage p = new PartieAffichage(m.getParent(),taillePlateau,1,"personalise",false);
 					
