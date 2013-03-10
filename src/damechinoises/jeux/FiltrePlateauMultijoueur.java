@@ -17,14 +17,22 @@ public class FiltrePlateauMultijoueur extends FileFilter{
 	         return true; 
 	      } 
 	      String nomFichier = file.getName().toLowerCase(); 
-	      char nbjoueur=nomFichier.charAt(13);
 	      
-	      String nbj=String.valueOf(nbjoueur);
-	      int nbjou=Integer.parseInt(nbj);
+	      String debut=new String("plateau avec ");
+	      debut=debut.concat(""+nomFichier.charAt(13));
+	      System.out.println(debut);
+	      
+	      int nbjou=0;
+	      
+	      if(nomFichier.startsWith(debut)){
+	    	  try{
+	    		  nbjou=Integer.parseInt(""+nomFichier.charAt(13));
+	    	  }catch(NumberFormatException e){//Si la partie commence par Plateau avec s joueur (impossible de parseInt un "s")
+	    		  nbjou = 0;
+	    	  }
+	      }
+
 	      if(nbjou>1){
-	    	  String debut=new String("plateau avec ");
-		      debut=debut.concat(nbj);
-		      System.out.println(debut);
 		      return (nomFichier.startsWith(debut)&&nomFichier.endsWith(".pla"));
 	      }
 	      else{

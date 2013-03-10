@@ -20,6 +20,8 @@ import javax.swing.JTextField;
 import damechinoises.SD.Joueur;
 import damechinoises.SD.JoueurHumain;
 import damechinoises.SD.JoueurOrdinateur;
+import damechinoises.SD.Partie;
+
 import javax.swing.JFileChooser;
 
 public class MenuConfiguration extends JPanel implements ActionListener{
@@ -31,6 +33,12 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 	private int nbJoueur;
 	private Joueur lesJoueurs[];
 	private String couleurChoisi[];
+	
+	private boolean chargement;
+	private int nbJoueurCharger;
+	private boolean bleuChoisi, rougeChoisi, orangeChoisi, vertChoisi, jauneChoisi, violetChoisi;
+	private Joueur lesJoueursCharger[];
+	private Partie partieCharger;
 	
 	private JPanel content;
 	private JPanel panelBouton, panelLesJoueurs, panelInformation, panelTaillePlateau;
@@ -51,11 +59,14 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 	private JLabel joueurBleu, joueurRouge, joueurOrange, joueurVert, joueurJaune, joueurViolet;
 	private JLabel compBleu, compRouge, compOrange, compVert, compJaune, compViolet;
 	
+	private JFileChooser choix;
+	
 	public MenuConfiguration(FenetrePrincipale p,String typePartie) {
 		//super(p);
 		parent=p;
 		this.typePartie = typePartie;
 		this.setLayout(new BorderLayout());
+		this.chargement = false;
 		//LES PANELS
 		content = new JPanel(new BorderLayout());
 		panelInformation = new JPanel();
@@ -101,7 +112,12 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 		retour = new JButton("Retour");
 		
 		panelBouton.add(lancer);
+		if(typePartie.equals("normale")){
+			charger = new JButton("Charger un plateau");
+			panelBouton.add(charger);
+		}
 		panelBouton.add(retour);
+		
 		
 		//LES JOUEURS
 		joueurBleu = new JLabel("Joueur Bleu:");
@@ -121,8 +137,9 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 		//LES CHOIX
 			//Bleu
 			choixBleu = new ButtonGroup();
-
+			
 			if(typePartie.equals("normale")){
+				
 				humainBleu = new JRadioButton("Humain", true);
 				ordinateurBleu = new JRadioButton("Ordinateur");
 				inactifBleu = new JRadioButton("Inactif");
@@ -390,8 +407,10 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 		//enregistrement à l'écouteur
 		retour.addActionListener(new RetourListener(this));
 		lancer.addActionListener(new NouveauListener(this));
-		
+
 		if(typePartie.equals("normale")){
+			charger.addActionListener(new ChargerPartieListener(this));
+			
 			humainBleu.addActionListener(this);
 			ordinateurBleu.addActionListener(this);
 			inactifBleu.addActionListener(this);
@@ -430,9 +449,80 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			m.getParentt().setMain(new MenuNouvellePartie(m.getParentt()));					
+			if(typePartie.equals("normale") || typePartie.equals("chrono") || typePartie.equals("personalise")){
+				m.getParentt().setMain(new MenuNouvellePartie(m.getParentt()));
+			}
+			else if(typePartie.equals("editeur")){
+				m.getParentt().setMain(new MenuDemarage(m.getParentt()));
+			}
 		}
 		
+	}
+	
+	
+	class ChargerPartieListener implements ActionListener{
+
+		private MenuConfiguration m;
+		
+		public ChargerPartieListener(MenuConfiguration m){
+			this.m=m;
+		}
+		
+		public void actionPerformed(ActionEvent e) {
+			
+			choix = new JFileChooser("Plateaux");
+			FiltrePlateauMultijoueur onlyPlateau = new FiltrePlateauMultijoueur();
+			choix.removeChoosableFileFilter(choix.getAcceptAllFileFilter());
+			choix.setFileFilter(onlyPlateau);
+			
+			int retour = choix.showOpenDialog(charger);
+
+			if (retour == JFileChooser.APPROVE_OPTION){
+				choix.getSelectedFile().getName();
+				chargement = true;
+				
+				partieCharger = new Partie(choix.getSelectedFile().getAbsolutePath());
+				nbJoueurCharger = partieCharger.getNbJoueurs();
+				lesJoueursCharger = new Joueur[nbJoueurCharger];
+																
+				for(int i = 0; i < nbJoueurCharger; i++){
+					if (partieCharger.getJoueur(i).getCouleur().equals("bleu")){bleuChoisi = true;}
+					else if (partieCharger.getJoueur(i).getCouleur().equals("rouge")){rougeChoisi = true;}
+					else if (partieCharger.getJoueur(i).getCouleur().equals("orange")){orangeChoisi = true;}
+					else if (partieCharger.getJoueur(i).getCouleur().equals("vert")){vertChoisi = true;}
+					else if (partieCharger.getJoueur(i).getCouleur().equals("jaune")){jauneChoisi = true;}
+					else if (partieCharger.getJoueur(i).getCouleur().equals("violet")){violetChoisi = true;}
+				}
+				
+				if(bleuChoisi == false){
+					panelJoueurBleu.setVisible(false);
+					sousPanelJoueurBleu.setVisible(false);
+				}
+				if(rougeChoisi == false){
+					panelJoueurRouge.setVisible(false);
+					sousPanelJoueurRouge.setVisible(false);
+				}
+				if(orangeChoisi == false){
+					panelJoueurOrange.setVisible(false);
+					sousPanelJoueurOrange.setVisible(false);
+				}
+				if(vertChoisi == false){
+					panelJoueurVert.setVisible(false);
+					sousPanelJoueurVert.setVisible(false);
+				}
+				if(jauneChoisi == false){
+					panelJoueurJaune.setVisible(false);
+					sousPanelJoueurJaune.setVisible(false);
+				}
+				if(violetChoisi == false){
+					panelJoueurViolet.setVisible(false);
+					sousPanelJoueurViolet.setVisible(false);
+				}
+				
+				
+				
+			}	
+		}	
 	}
 	
 	
@@ -445,185 +535,241 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			
-			//Calcul de la taille
-			if (taille2.isSelected()){tailleChoisi = 2;}
-			else if (taille3.isSelected()){tailleChoisi = 3;}
-			else if (taille4.isSelected()){tailleChoisi = 4;}
-			else if (taille5.isSelected()){tailleChoisi = 5;}	
-			
-			nbJoueur = 6;
-			//compter le nb de joueur
-			if(inactifBleu.isSelected()){nbJoueur--;}
-			if(inactifRouge.isSelected()){nbJoueur--;}
-			if(inactifOrange.isSelected()){nbJoueur--;}
-			if(inactifVert.isSelected()){nbJoueur--;}
-			if(inactifJaune.isSelected()){nbJoueur--;}
-			if(inactifViolet.isSelected()){nbJoueur--;}
-			
-			int numJoueur = 0;
-			
-			if(typePartie.equals("editeur")){
-				couleurChoisi = new String[nbJoueur];
+			if(chargement == true){
+								
+				int numordi = 1;
+				int numJoueur = 0;
 				
-				if(actifBleu.isSelected()){
-					couleurChoisi[numJoueur] = new String("bleu");
-					numJoueur++;
+	
+				if(bleuChoisi == true){
+					if(humainBleu.isSelected() == true){
+						lesJoueursCharger[numJoueur] = new JoueurHumain(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), pseudoBleu.getText());	
+						numJoueur++;
+					}
+					else if(ordinateurBleu.isSelected() == true){
+						lesJoueursCharger[numJoueur] = new JoueurOrdinateur(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), "Ordinateur "+numordi, listeDifficulteBleu.getSelectedIndex()+1);
+						numJoueur++;
+						numordi++;
+					}
 				}
-				if(actifRouge.isSelected()){
-					couleurChoisi[numJoueur] = new String("rouge");
-					numJoueur++;
+						
+				if(rougeChoisi == true){
+					if(humainRouge.isSelected() == true){
+						lesJoueursCharger[numJoueur] = new JoueurHumain(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), pseudoRouge.getText());
+						numJoueur++;
+					}
+					else if(ordinateurRouge.isSelected() == true){
+						lesJoueursCharger[numJoueur] = new JoueurOrdinateur(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), "Ordinateur "+numordi, listeDifficulteRouge.getSelectedIndex()+1);
+						numJoueur++;
+						numordi++;
+					}
 				}
-				if(actifOrange.isSelected()){
-					couleurChoisi[numJoueur] = new String("orange");
-					numJoueur++;
+					
+				if(orangeChoisi == true){
+					if(humainOrange.isSelected() == true){
+						lesJoueursCharger[numJoueur] = new JoueurHumain(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), pseudoOrange.getText());
+						numJoueur++;
+					}
+					else if(ordinateurOrange.isSelected() == true){
+						lesJoueursCharger[numJoueur] = new JoueurOrdinateur(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), "Ordinateur "+numordi, listeDifficulteOrange.getSelectedIndex()+1);
+						numJoueur++;
+						numordi++;
+					}
 				}
-				if(actifVert.isSelected()){
-					couleurChoisi[numJoueur] = new String("vert");
-					numJoueur++;
+					
+				if(vertChoisi == true){
+					if(humainVert.isSelected() == true){
+						lesJoueursCharger[numJoueur] = new JoueurHumain(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), pseudoVert.getText());
+						numJoueur++;
+					}
+					else if(ordinateurVert.isSelected() == true){
+						lesJoueursCharger[numJoueur] = new JoueurOrdinateur(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), "Ordinateur "+numordi, listeDifficulteVert.getSelectedIndex()+1);
+						numordi++;
+						numJoueur++;
+					}
 				}
-				if(actifJaune.isSelected()){
-					couleurChoisi[numJoueur] = new String("jaune");
-					numJoueur++;
+					
+				if(jauneChoisi == true){
+					if(humainJaune.isSelected() == true){
+						lesJoueursCharger[numJoueur] = new JoueurHumain(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), pseudoJaune.getText());
+						numJoueur++;
+					}
+					else if(ordinateurJaune.isSelected() == true){
+						lesJoueursCharger[numJoueur] = new JoueurOrdinateur(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), "Ordinateur "+numordi, listeDifficulteJaune.getSelectedIndex()+1);
+						numordi++;
+						numJoueur++;
+					}
 				}
-				if(actifViolet.isSelected()){
-					couleurChoisi[numJoueur] = new String("violet");
-					numJoueur++;
+					
+				if(violetChoisi == true){
+					if(humainViolet.isSelected() == true){
+						lesJoueursCharger[numJoueur] = new JoueurHumain(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), pseudoViolet.getText());
+						numJoueur++;
+					}
+					else if(ordinateurViolet.isSelected() == true){
+						lesJoueursCharger[numJoueur] = new JoueurOrdinateur(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), "Ordinateur "+numordi, listeDifficulteViolet.getSelectedIndex()+1);
+						numordi++;
+						numJoueur++;
+					}
 				}
 				
-				PartieAffichage p = new PartieAffichage(m.getParentt(),tailleChoisi,nbJoueur,true, couleurChoisi);
-				p.getPartie().setEditable(true);
+
+				PartieAffichage p = new PartieAffichage(m.getParentt(), partieCharger.getPlateau().getTaille(),nbJoueurCharger,"normal",false,lesJoueursCharger,true);
 				m.getParentt().setMain(p);
 				m.getParentt().validate();
 				p.getPanelJeu().updateFirst();
 			}
 			
-			else if(typePartie.equals("normale")){
+			else{
+				//Calcul de la taille
+				if (taille2.isSelected()){tailleChoisi = 2;}
+				else if (taille3.isSelected()){tailleChoisi = 3;}
+				else if (taille4.isSelected()){tailleChoisi = 4;}
+				else if (taille5.isSelected()){tailleChoisi = 5;}	
 				
-				lesJoueurs = new Joueur[nbJoueur];
-
-				int numOrdi = 1;
+				nbJoueur = 6;
+				//compter le nb de joueur
+				if(inactifBleu.isSelected()){nbJoueur--;}
+				if(inactifRouge.isSelected()){nbJoueur--;}
+				if(inactifOrange.isSelected()){nbJoueur--;}
+				if(inactifVert.isSelected()){nbJoueur--;}
+				if(inactifJaune.isSelected()){nbJoueur--;}
+				if(inactifViolet.isSelected()){nbJoueur--;}
 				
-				//JOUEUR BLEU
-				if(humainBleu.isSelected()){
-					lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"bleu",0,pseudoBleu.getText());
-					numJoueur++;
-				}
-				else if(ordinateurBleu.isSelected()){
-					lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"bleu",listeDifficulteBleu.getSelectedIndex()+1,0,"Ordinateur "+numOrdi);
-					numOrdi++;
-					numJoueur++;
-				}
+				int numJoueur = 0;
 				
-				//JOUEUR ROUGE
-				if(humainRouge.isSelected()){
-					lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"rouge",0, pseudoRouge.getText());
-					numJoueur++;
-				}
-				else if(ordinateurRouge.isSelected()){
-					lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"rouge",listeDifficulteRouge.getSelectedIndex()+1,0,"Ordinateur "+numOrdi);
-					numOrdi++;
-					numJoueur++;
-				}
-				
-				//JOUEUR ORANGE
-				if(humainOrange.isSelected()){
-					lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"orange",0, pseudoOrange.getText());
-					numJoueur++;
-				}
-				else if(ordinateurOrange.isSelected()){
-					lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"orange",listeDifficulteOrange.getSelectedIndex()+1,0,"Ordinateur "+numOrdi);
-					numOrdi++;
-					numJoueur++;
-				}
-				
-				//JOUEUR VERT
-				if(humainVert.isSelected()){
-					lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"vert",0, pseudoVert.getText());
-					numJoueur++;
-				}
-				else if(ordinateurVert.isSelected()){
-					lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"vert",listeDifficulteVert.getSelectedIndex()+1,0,"Ordinateur "+numOrdi);
-					numOrdi++;
-					numJoueur++;
-				}
-	
-				//JOUEUR JAUNE
-				if(humainJaune.isSelected()){
-					lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"jaune",0, pseudoJaune.getText());
-					numJoueur++;
-				}
-				else if(ordinateurJaune.isSelected()){
-					lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"jaune",listeDifficulteJaune.getSelectedIndex()+1,0,"Ordinateur "+numOrdi);
-					numOrdi++;
-					numJoueur++;
-				}
-	
-				//JOUEUR VIOLET
-				if(humainViolet.isSelected()){
-					lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"violet",0, pseudoViolet.getText());
-					numJoueur++;;
-				}
-				else if(ordinateurViolet.isSelected()){
-					lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"violet",listeDifficulteViolet.getSelectedIndex()+1,0,"Ordinateur "+numOrdi);
-					numOrdi++;
-					numJoueur++;
-				}
-				
-				
-				
-				//Plateau chargé + infos remplies
-				/*
-				
-				Partie pa=new Partie("Partie normale du vendredi 8 mars 2013 21 h 05 CET.dc");
-				String types[];
-				types = new String[3];
-				types[0]="humain";
-				types[1]="ordinateur";
-				types[2]="humain";
-				String noms[];
-				noms = new String[3];
-				noms[0]="lol";
-				noms[1]="salut";
-				noms[2]="lol";
-				int difficultes[];
-				difficultes = new int[3];
-				difficultes[1]=2;
-	
-				int nbjoueurs=pa.getNbJoueurs();
-				lesJoueurs = new Joueur[nbjoueurs];
-				for (int i=0;i<nbjoueurs;i++){
-					if(types[i].equals("humain")){
-						lesJoueurs[i] = new JoueurHumain(pa.getPlateau().getTaille(),pa.getJoueur(i),noms[i]);
+				if(typePartie.equals("editeur")){
+					couleurChoisi = new String[nbJoueur];
+					
+					if(actifBleu.isSelected()){
+						couleurChoisi[numJoueur] = new String("bleu");
+						numJoueur++;
 					}
-					else{
-						lesJoueurs[i] = new JoueurOrdinateur(pa.getPlateau().getTaille(),pa.getJoueur(i),noms[i],difficultes[i]);
+					if(actifRouge.isSelected()){
+						couleurChoisi[numJoueur] = new String("rouge");
+						numJoueur++;
+					}
+					if(actifOrange.isSelected()){
+						couleurChoisi[numJoueur] = new String("orange");
+						numJoueur++;
+					}
+					if(actifVert.isSelected()){
+						couleurChoisi[numJoueur] = new String("vert");
+						numJoueur++;
+					}
+					if(actifJaune.isSelected()){
+						couleurChoisi[numJoueur] = new String("jaune");
+						numJoueur++;
+					}
+					if(actifViolet.isSelected()){
+						couleurChoisi[numJoueur] = new String("violet");
+						numJoueur++;
 					}
 					
+					PartieAffichage p = new PartieAffichage(m.getParentt(),tailleChoisi,nbJoueur,true, couleurChoisi);
+					p.getPartie().setEditable(true);
+					m.getParentt().setMain(p);
+					m.getParentt().validate();
+					p.getPanelJeu().updateFirst();
+				
 				}
-				PartieAffichage p = new PartieAffichage(m.getParent(),pa.getPlateau().getTaille(),nbjoueurs,"normal",false,lesJoueurs,true);
-				*/
 				
-				
-				// Pour partie normale
-	//			int nbjoueurs=3;
-	//			lesJoueurs = new Joueur[nbjoueurs];
-	//			int taillePlateau=5;
-	//			
-	//			lesJoueurs[0] = new JoueurHumain(taillePlateau,0,"bleu",0);
-	//			lesJoueurs[1] = new JoueurHumain(taillePlateau,1,"rouge",1);
-	//			lesJoueurs[2] = new JoueurHumain(taillePlateau,2,"orange",2);
-				
-				//normale :
-				
-				PartieAffichage p = new PartieAffichage(m.getParentt(),tailleChoisi,nbJoueur,"normal",false,lesJoueurs);
-				
-				// perso : 
-				//PartieAffichage p = new PartieAffichage(m.getParent(),taillePlateau,1,"personalise",false);
-				
-				m.getParentt().setMain(p);
-				m.getParentt().validate();
-				p.getPanelJeu().updateFirst();
+				else if(typePartie.equals("normale")){
+					
+					lesJoueurs = new Joueur[nbJoueur];
+	
+					int numOrdi = 1;
+					
+					//JOUEUR BLEU
+					if(humainBleu.isSelected()){
+						lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"bleu",0,pseudoBleu.getText());
+						numJoueur++;
+					}
+					else if(ordinateurBleu.isSelected()){
+						lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"bleu",listeDifficulteBleu.getSelectedIndex()+1,0,"Ordinateur "+numOrdi);
+						numOrdi++;
+						numJoueur++;
+					}
+					
+					//JOUEUR ROUGE
+					if(humainRouge.isSelected()){
+						lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"rouge",0, pseudoRouge.getText());
+						numJoueur++;
+					}
+					else if(ordinateurRouge.isSelected()){
+						lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"rouge",listeDifficulteRouge.getSelectedIndex()+1,0,"Ordinateur "+numOrdi);
+						numOrdi++;
+						numJoueur++;
+					}
+					
+					//JOUEUR ORANGE
+					if(humainOrange.isSelected()){
+						lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"orange",0, pseudoOrange.getText());
+						numJoueur++;
+					}
+					else if(ordinateurOrange.isSelected()){
+						lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"orange",listeDifficulteOrange.getSelectedIndex()+1,0,"Ordinateur "+numOrdi);
+						numOrdi++;
+						numJoueur++;
+					}
+					
+					//JOUEUR VERT
+					if(humainVert.isSelected()){
+						lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"vert",0, pseudoVert.getText());
+						numJoueur++;
+					}
+					else if(ordinateurVert.isSelected()){
+						lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"vert",listeDifficulteVert.getSelectedIndex()+1,0,"Ordinateur "+numOrdi);
+						numOrdi++;
+						numJoueur++;
+					}
+		
+					//JOUEUR JAUNE
+					if(humainJaune.isSelected()){
+						lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"jaune",0, pseudoJaune.getText());
+						numJoueur++;
+					}
+					else if(ordinateurJaune.isSelected()){
+						lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"jaune",listeDifficulteJaune.getSelectedIndex()+1,0,"Ordinateur "+numOrdi);
+						numOrdi++;
+						numJoueur++;
+					}
+		
+					//JOUEUR VIOLET
+					if(humainViolet.isSelected()){
+						lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"violet",0, pseudoViolet.getText());
+						numJoueur++;;
+					}
+					else if(ordinateurViolet.isSelected()){
+						lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"violet",listeDifficulteViolet.getSelectedIndex()+1,0,"Ordinateur "+numOrdi);
+						numOrdi++;
+						numJoueur++;
+					}
+					
+					
+					
+					
+					
+					// Pour partie normale
+		//			int nbjoueurs=3;
+		//			lesJoueurs = new Joueur[nbjoueurs];
+		//			int taillePlateau=5;
+		//			
+		//			lesJoueurs[0] = new JoueurHumain(taillePlateau,0,"bleu",0);
+		//			lesJoueurs[1] = new JoueurHumain(taillePlateau,1,"rouge",1);
+		//			lesJoueurs[2] = new JoueurHumain(taillePlateau,2,"orange",2);
+					
+					//normale :
+					
+					PartieAffichage p = new PartieAffichage(m.getParentt(),tailleChoisi,nbJoueur,"normal",false,lesJoueurs);
+					
+					// perso : 
+					//PartieAffichage p = new PartieAffichage(m.getParent(),taillePlateau,1,"personalise",false);
+					
+					m.getParentt().setMain(p);
+					m.getParentt().validate();
+					p.getPanelJeu().updateFirst();
+				}
 			}
 		}
 		
