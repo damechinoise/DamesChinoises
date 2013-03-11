@@ -81,7 +81,6 @@ public Partie(String nomFichier){
 				distance=Integer.parseInt(lignes.get(ligneactuelle+2+(i*5)));
 				num=Integer.parseInt(lignes.get(ligneactuelle+3+(i*5)));
 				couleur=lignes.get(ligneactuelle+4+(i*5));
-				System.out.println("branche :"+branche+" angle : "+angle+" distance : "+distance+" numero : "+num+" couleur : "+couleur);
 				if (branche){
 					plateau.getBranche(angle).getLigne(distance-1).getCase(num).setOccupe(true);
 					plateau.getBranche(angle).getLigne(distance-1).getCase(num).setPion(this.getJoueur(couleur).getPion(h.get(couleur)));
@@ -104,8 +103,11 @@ public Partie(String nomFichier){
 			ligneactuelle+=plateau.getNbPionParJoueur()*this.getNbJoueurs()*5;
 			type=lignes.get(ligneactuelle);
 			ligneactuelle++;
-			if(type=="chronometre"){
-				chrono=new Chronometre(Integer.parseInt(lignes.get(ligneactuelle)),Integer.parseInt(lignes.get(ligneactuelle++)));
+			if(type.equals("chronometre")){
+				int minute=Integer.parseInt(lignes.get(ligneactuelle));
+				ligneactuelle++;
+				int seconde=Integer.parseInt(lignes.get(ligneactuelle));
+				chrono=new Chronometre(minute,seconde);
 			}
 			
 			
@@ -906,7 +908,7 @@ public Partie(String nomFichier){
 			}
 			bw.write("Type:"+this.getType());
 			bw.write("\r\n");
-			if(type=="chronometre"){
+			if(type.equals("chronometre")){
 				bw.write("MinuteChrono:"+this.getChrono().getMinute());
 				bw.write("\r\n");
 				bw.write("SecondeChrono:"+this.getChrono().getSeconde());

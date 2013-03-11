@@ -195,6 +195,9 @@ public class PartieAffichage extends JPanel {
 		this.add(panelJeu,BorderLayout.CENTER);
 		newgame.addActionListener(new NewGameListener(this));
 		mainmenu.addActionListener(new RetourMenuListener(this));
+		if (partie.getType().equals("chronometre")){
+			panelMenu.add(new PanelChronometre(partie.getChrono().getMinute(),partie.getChrono().getSeconde()));
+		}
 		panelMenu.add(new JLabel(""));
 		majTour();
 		panelMenu.add(tourDe);
