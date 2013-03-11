@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -40,17 +41,19 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 	private boolean bleuChoisi, rougeChoisi, orangeChoisi, vertChoisi, jauneChoisi, violetChoisi;
 	private Joueur lesJoueursCharger[];
 	private Partie partieCharger;
+	private Chronometre c;
 	
 	private JPanel content;
-	private JPanel panelBouton, panelLesJoueurs, panelInformation, panelTaillePlateau;
+	private JPanel panelBouton, panelLesJoueurs, panelInformation, panelTaillePlateau, panelChrono;
 	private JPanel panelJoueurBleu, panelJoueurRouge, panelJoueurOrange, panelJoueurVert, panelJoueurJaune, panelJoueurViolet;
 	private JPanel sousPanelJoueurBleu, sousPanelJoueurRouge, sousPanelJoueurOrange, sousPanelJoueurVert, sousPanelJoueurJaune, sousPanelJoueurViolet;
 	private JTextField pseudoBleu, pseudoRouge, pseudoOrange, pseudoVert, pseudoJaune, pseudoViolet;
-	private JComboBox<Object> listeDifficulteBleu, listeDifficulteRouge, listeDifficulteOrange, listeDifficulteVert, listeDifficulteJaune, listeDifficulteViolet;
+	private JComboBox listeDifficulteBleu, listeDifficulteRouge, listeDifficulteOrange, listeDifficulteVert, listeDifficulteJaune, listeDifficulteViolet;
 	private Object[] lesDifficultes = new Object[]{"1","2","3","4","5","6","7","8","9"} ;
 	private JButton retour, lancer, charger;
 	private ButtonGroup taille, choixBleu, choixRouge, choixOrange, choixVert, choixJaune, choixViolet;
 	private JRadioButton taille2, taille3, taille4, taille5;
+	private JRadioButton chrono2, chrono3, chrono4, chrono5;
 	private JRadioButton humainBleu, ordinateurBleu, inactifBleu, actifBleu;
 	private JRadioButton humainRouge, ordinateurRouge, inactifRouge, actifRouge;
 	private JRadioButton humainOrange, ordinateurOrange, inactifOrange, actifOrange;
@@ -68,6 +71,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 		this.typePartie = typePartie;
 		this.setLayout(new BorderLayout());
 		this.chargement = false;
+		
 		//LES PANELS
 		content = new JPanel(new BorderLayout());
 		panelInformation = new JPanel();
@@ -86,7 +90,6 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 		sousPanelJoueurVert = new JPanel(new FlowLayout());
 		sousPanelJoueurJaune = new JPanel(new FlowLayout());
 		sousPanelJoueurViolet = new JPanel(new FlowLayout());
-		
 		
 		//LA TAILLE DU PLATEAU
 		JLabel taillePlateau = new JLabel("Taille du plateau:");
@@ -107,13 +110,37 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 		panelTaillePlateau.add(taille4);
 		panelTaillePlateau.add(taille5);
 		
+		if(typePartie.equals("chronometre")){
+			//LE CHRONO
+			panelChrono = new JPanel(new FlowLayout());
+			JLabel leChrono = new JLabel("Chronomètre:");
+			ButtonGroup chronoGroup = new ButtonGroup();
+			chrono2 = new JRadioButton("2 minutes");
+			chrono3 = new JRadioButton("3 minutes");
+			chrono4 = new JRadioButton("4 minutes");
+			chrono5 = new JRadioButton("5 minutes",true);
+	
+			chronoGroup.add(chrono2);
+			chronoGroup.add(chrono3);
+			chronoGroup.add(chrono4);
+			chronoGroup.add(chrono5);
+			
+			panelChrono.add(leChrono);
+			panelChrono.add(chrono2);
+			panelChrono.add(chrono3);
+			panelChrono.add(chrono4);
+			panelChrono.add(chrono5);
+		}
+		
 		//LES BOUTONS
 		lancer = new JButton("Lancer");
 		retour = new JButton("Retour");
 		
 		panelBouton.add(lancer);
-		charger = new JButton("Charger un plateau");
-		panelBouton.add(charger);
+		if(!typePartie.equals("editeur")){
+			charger = new JButton("Charger un plateau");
+			panelBouton.add(charger);
+		}
 		panelBouton.add(retour);
 		
 		
@@ -137,7 +164,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 			//Bleu
 			choixBleu = new ButtonGroup();
 			
-			if(typePartie.equals("normale")){
+			if(typePartie.equals("normale") || typePartie.equals("chronometre")){
 				
 				humainBleu = new JRadioButton("Humain", true);
 				ordinateurBleu = new JRadioButton("Ordinateur");
@@ -152,7 +179,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 				pseudoBleu.setDocument(new TextLimiter(20));
 				pseudoBleu.setHorizontalAlignment(JTextField.CENTER);
 				
-				listeDifficulteBleu = new JComboBox<Object>(lesDifficultes);
+				listeDifficulteBleu = new JComboBox(lesDifficultes);
 				listeDifficulteBleu.setPreferredSize(new Dimension(50,25));
 				listeDifficulteBleu.setVisible(false);
 			
@@ -178,7 +205,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 			//Rouge
 			choixRouge = new ButtonGroup();
 			
-			if(typePartie.equals("normale")){
+			if(typePartie.equals("normale") || typePartie.equals("chronometre")){
 				humainRouge = new JRadioButton("Humain");
 				ordinateurRouge = new JRadioButton("Ordinateur", true);
 				inactifRouge = new JRadioButton("Inactif");
@@ -194,7 +221,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 				pseudoRouge.setHorizontalAlignment(JTextField.CENTER);
 				pseudoRouge.setVisible(false);
 				
-				listeDifficulteRouge = new JComboBox<Object>(lesDifficultes);
+				listeDifficulteRouge = new JComboBox(lesDifficultes);
 				listeDifficulteRouge.setPreferredSize(new Dimension(50,25));
 				
 				panelJoueurRouge.add(humainRouge);
@@ -219,7 +246,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 			//Orange
 			choixOrange = new ButtonGroup();
 			
-			if(typePartie.equals("normale")){
+			if(typePartie.equals("normale") || typePartie.equals("chronometre")){
 				humainOrange = new JRadioButton("Humain");
 				ordinateurOrange = new JRadioButton("Ordinateur");
 				inactifOrange = new JRadioButton("Inactif", true);
@@ -234,7 +261,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 				pseudoOrange.setHorizontalAlignment(JTextField.CENTER);
 				pseudoOrange.setVisible(false);
 				
-				listeDifficulteOrange = new JComboBox<Object>(lesDifficultes);
+				listeDifficulteOrange = new JComboBox(lesDifficultes);
 				listeDifficulteOrange.setPreferredSize(new Dimension(50,25));
 				listeDifficulteOrange.setVisible(false);
 				
@@ -260,7 +287,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 			//Vert
 			choixVert = new ButtonGroup();
 			
-			if(typePartie.equals("normale")){
+			if(typePartie.equals("normale") || typePartie.equals("chronometre")){
 				humainVert = new JRadioButton("Humain");
 				ordinateurVert = new JRadioButton("Ordinateur");
 				inactifVert = new JRadioButton("Inactif", true);
@@ -275,7 +302,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 				pseudoVert.setHorizontalAlignment(JTextField.CENTER);
 				pseudoVert.setVisible(false);
 				
-				listeDifficulteVert = new JComboBox<Object>(lesDifficultes);
+				listeDifficulteVert = new JComboBox(lesDifficultes);
 				listeDifficulteVert.setPreferredSize(new Dimension(50,25));
 				listeDifficulteVert.setVisible(false);
 				
@@ -301,7 +328,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 			//Jaune
 			choixJaune = new ButtonGroup();
 			
-			if(typePartie.equals("normale")){
+			if(typePartie.equals("normale") || typePartie.equals("chronometre")){
 				humainJaune = new JRadioButton("Humain");
 				ordinateurJaune = new JRadioButton("Ordinateur");
 				inactifJaune = new JRadioButton("Inactif", true);
@@ -316,7 +343,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 				pseudoJaune.setHorizontalAlignment(JTextField.CENTER);
 				pseudoJaune.setVisible(false);
 				
-				listeDifficulteJaune = new JComboBox<Object>(lesDifficultes);
+				listeDifficulteJaune = new JComboBox(lesDifficultes);
 				listeDifficulteJaune.setPreferredSize(new Dimension(50,25));
 				listeDifficulteJaune.setVisible(false);
 				
@@ -342,7 +369,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 			//Violet
 			choixViolet = new ButtonGroup();
 			
-			if(typePartie.equals("normale")){
+			if(typePartie.equals("normale") || typePartie.equals("chronometre")){
 				humainViolet = new JRadioButton("Humain");
 				ordinateurViolet = new JRadioButton("Ordinateur");
 				inactifViolet = new JRadioButton("Inactif", true);
@@ -357,7 +384,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 				pseudoViolet.setHorizontalAlignment(JTextField.CENTER);
 				pseudoViolet.setVisible(false);
 				
-				listeDifficulteViolet = new JComboBox<Object>(lesDifficultes);
+				listeDifficulteViolet = new JComboBox(lesDifficultes);
 				listeDifficulteViolet.setPreferredSize(new Dimension(50,25));
 				listeDifficulteViolet.setVisible(false);
 				
@@ -397,7 +424,15 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 
 		//AJOUT DES PANELS AU PANEL PRINCIPAL
 		content.add(panelTaillePlateau, BorderLayout.NORTH);
-		if(typePartie!="personalise"){
+		if(typePartie.equals("chronometre")){
+			
+			JPanel panelNord = new JPanel();
+			panelNord.setLayout(new BoxLayout(panelNord,BoxLayout.Y_AXIS));
+			panelNord.add(panelTaillePlateau);
+			panelNord.add(panelChrono);
+			content.add(panelNord, BorderLayout.NORTH);
+		}
+		if(!typePartie.equals("personalise")){
 			content.add(panelLesJoueurs, BorderLayout.CENTER);
 		}
 		content.add(panelBouton, BorderLayout.SOUTH);
@@ -413,7 +448,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 			charger.addActionListener(new ChargerPlateauSoloListener(this));
 		}
 		
-		if(typePartie.equals("normale")){
+		if(typePartie.equals("normale") || typePartie.equals("chronometre")){
 			charger.addActionListener(new ChargerPartieListener(this));
 			
 			humainBleu.addActionListener(this);
@@ -445,6 +480,9 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 	
 	
 	/////////////////////////////////////////////////
+	////////////////////////////////////////////////
+	///////////////////////////////////////////////
+	//////////////////////////////////////////////
 	class RetourListener implements ActionListener{
 
 		private MenuConfiguration m;
@@ -454,7 +492,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			if(typePartie.equals("normale") || typePartie.equals("chrono") || typePartie.equals("personalise")){
+			if(typePartie.equals("normale") || typePartie.equals("chronometre") || typePartie.equals("personalise")){
 				m.getParentt().setMain(new MenuNouvellePartie(m.getParentt()));
 			}
 			else if(typePartie.equals("editeur")){
@@ -706,7 +744,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 					p.getPanelJeu().updateFirst();
 				
 				}
-				else if(typePartie.equals("normale")){
+				else if(typePartie.equals("normale") || typePartie.equals("chronometre")){
 					
 					lesJoueurs = new Joueur[nbJoueur];
 	
@@ -778,10 +816,6 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 						numJoueur++;
 					}
 					
-					
-					
-					
-					
 					// Pour partie normale
 		//			int nbjoueurs=3;
 		//			lesJoueurs = new Joueur[nbjoueurs];
@@ -791,19 +825,34 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 		//			lesJoueurs[1] = new JoueurHumain(taillePlateau,1,"rouge",1);
 		//			lesJoueurs[2] = new JoueurHumain(taillePlateau,2,"orange",2);
 					
-					//normale :
-					
-					//PartieAffichage p = new PartieAffichage(m.getParentt(),tailleChoisi,nbJoueur,"normal",false,lesJoueurs);
+					//normale 
+					if(typePartie.equals("normale")){
+						PartieAffichage p = new PartieAffichage(m.getParentt(),tailleChoisi,nbJoueur,"normal",false,lesJoueurs);
+						
+						m.getParentt().setMain(p);
+						m.getParentt().validate();
+						p.getPanelJeu().updateFirst();
+					}
 					
 					//Chrono
-					Chronometre c=new Chronometre(2,0);
-					PartieAffichage p = new PartieAffichage(m.getParentt(),tailleChoisi,nbJoueur,"chronometre",false,lesJoueurs,false,c);
+					if(typePartie.equals("chronometre")){
+						
+						if(chrono2.isSelected()){c=new Chronometre(2,0);}
+						else if(chrono3.isSelected()){c=new Chronometre(3,0);}
+						else if(chrono4.isSelected()){c=new Chronometre(4,0);}
+						else if(chrono5.isSelected()){c=new Chronometre(5,0);}						
+						
+						PartieAffichage p = new PartieAffichage(m.getParentt(),tailleChoisi,nbJoueur,"chronometre",false,lesJoueurs,false,c);
+						
+						m.getParentt().setMain(p);
+						m.getParentt().validate();
+						p.getPanelJeu().updateFirst();
+					}
+					
 					// perso : 
 					//PartieAffichage p = new PartieAffichage(m.getParent(),taillePlateau,1,"personalise",false);
 					
-					m.getParentt().setMain(p);
-					m.getParentt().validate();
-					p.getPanelJeu().updateFirst();
+					
 				}
 			}
 		}

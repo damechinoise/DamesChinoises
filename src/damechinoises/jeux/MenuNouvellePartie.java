@@ -76,7 +76,7 @@ public class MenuNouvellePartie extends JPanel {
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			m.getParentt().setMain(new MenuConfiguration(m.getParentt(),"chrono"));
+			m.getParentt().setMain(new MenuConfiguration(m.getParentt(),"chronometre"));
 
 		}
 		
