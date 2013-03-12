@@ -508,7 +508,20 @@ public class PartieAffichage extends JPanel {
 	    	/* Action réalisé par le timer */
 	    	tache_timer = new ActionListener() {
 	    		public void actionPerformed(ActionEvent e1) {
-	    			if (seconde == 00) {
+	    			if (seconde == 0) {
+	    					if(minute==0){
+	    						int[] nbpionfinis=new int[6];
+	    						for(int i=0;i<partie.getNbJoueurs();i++){
+	    							nbpionfinis[i]=0;
+	    							for(int j=0;j<partie.getPlateau().getNbPionParJoueur();j++){
+	    								if((partie.getJoueur(i).getPion(j).getPosition().getBranch())&&(partie.getJoueur(i).getPion(j).getPosition().getAngle() == partie.getJoueur(i).getNumBrancheFin())){
+	    									nbpionfinis[i]++;
+	    								}
+	    							}
+	    					}
+	    				
+	    					getParentt().setMain(new PartieFinie(getParentt(),partie,nbpionfinis));
+	    				}
 	    				seconde = 60;
 	    				minute--;
 	    			}
