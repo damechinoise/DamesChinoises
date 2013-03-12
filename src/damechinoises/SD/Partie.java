@@ -468,7 +468,6 @@ public Partie(String nomFichier){
 
 		}
 		else{
-			System.out.println("lol");
 			int i,j,k,t,nbpion;
 			k=plateau.getTaille();
 			t=k;
@@ -686,7 +685,6 @@ public Partie(String nomFichier){
 
 		}
 		else{
-			System.out.println("lol");
 			int i,j,k,t,nbpion;
 			k=plateau.getTaille();
 			t=k;
@@ -966,7 +964,7 @@ public Partie(String nomFichier){
 	
 	public boolean finPartie(){
 		for(int i = 0; i < getNbJoueurs() ; i++){
-			if(!lesJoueurs[tourDe].fini())
+			if(!lesJoueurs[i].fini())
 				return false;
 		}
 		return true;
@@ -982,6 +980,7 @@ public Partie(String nomFichier){
 				}
 			fireEvent();
 		} else {
+			System.out.println("Partie finie");
 			fireEventFin();
 		}
 	}

@@ -60,7 +60,6 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 	private JRadioButton humainVert, ordinateurVert, inactifVert, actifVert;
 	private JRadioButton humainJaune, ordinateurJaune, inactifJaune, actifJaune;
 	private JRadioButton humainViolet, ordinateurViolet, inactifViolet, actifViolet;
-	private JLabel informations;
 	private JLabel joueurBleu, joueurRouge, joueurOrange, joueurVert, joueurJaune, joueurViolet;
 	private JLabel compBleu, compRouge, compOrange, compVert, compJaune, compViolet;
 	
@@ -114,7 +113,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 		if(typePartie.equals("chronometre")){
 			//LE CHRONO
 			panelChrono = new JPanel(new FlowLayout());
-			JLabel leChrono = new JLabel("Chronom�tre:");
+			JLabel leChrono = new JLabel("Chronom�tre:");
 			ButtonGroup chronoGroup = new ButtonGroup();
 			chrono2 = new JRadioButton("2 minutes");
 			chrono3 = new JRadioButton("3 minutes");
@@ -132,13 +131,6 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 			panelChrono.add(chrono4);
 			panelChrono.add(chrono5);
 		}
-		
-		
-		//Les erreurs (informations)
-		informations = new JLabel("");
-		panelInformation.add(informations);
-		panelInformation.setVisible(false);
-		
 		
 		//LES BOUTONS
 		lancer = new JButton("Lancer");
@@ -431,6 +423,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 		panelLesJoueurs.add(sousPanelJoueurViolet);
 
 		//AJOUT DES PANELS AU PANEL PRINCIPAL
+		content.add(panelTaillePlateau, BorderLayout.NORTH);
 		if(typePartie.equals("chronometre")){
 			
 			JPanel panelNord = new JPanel();
@@ -439,22 +432,10 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 			panelNord.add(panelChrono);
 			content.add(panelNord, BorderLayout.NORTH);
 		}
-		else{
-			content.add(panelTaillePlateau, BorderLayout.NORTH);
-		}
-		
-		
 		if(!typePartie.equals("personalise")){
 			content.add(panelLesJoueurs, BorderLayout.CENTER);
 		}
-
-		JPanel panelSud = new JPanel();
-		panelSud.setLayout(new BoxLayout(panelSud, BoxLayout.Y_AXIS));
-		
-		panelSud.add(informations);
-		panelSud.add(panelBouton);
-		content.add(panelSud, BorderLayout.SOUTH);		
-		
+		content.add(panelBouton, BorderLayout.SOUTH);
 		this.add(content,BorderLayout.CENTER);
 		
 		
@@ -562,8 +543,6 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 				}
 				else{
 					inactifBleu.setVisible(false);
-					humainBleu.setSelected(true);
-
 				}
 				if(rougeChoisi == false){
 					panelJoueurRouge.setVisible(false);
@@ -571,7 +550,6 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 				}
 				else{
 					inactifRouge.setVisible(false);
-					listeDifficulteRouge.setVisible(true);
 				}
 				if(orangeChoisi == false){
 					panelJoueurOrange.setVisible(false);
@@ -579,8 +557,6 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 				}
 				else{
 					inactifOrange.setVisible(false);
-					humainOrange.setSelected(true);
-					pseudoOrange.setVisible(true);
 				}
 				if(vertChoisi == false){
 					panelJoueurVert.setVisible(false);
@@ -588,8 +564,6 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 				}
 				else{
 					inactifVert.setVisible(false);
-					ordinateurVert.setSelected(true);
-					listeDifficulteVert.setVisible(true);
 				}
 				if(jauneChoisi == false){
 					panelJoueurJaune.setVisible(false);
@@ -597,8 +571,6 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 				}
 				else{
 					inactifJaune.setVisible(false);
-					humainJaune.setSelected(true);
-					pseudoJaune.setVisible(true);
 				}
 				if(violetChoisi == false){
 					panelJoueurViolet.setVisible(false);
@@ -606,8 +578,6 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 				}
 				else{
 					inactifViolet.setVisible(false);
-					ordinateurViolet.setSelected(true);
-					listeDifficulteViolet.setVisible(true);
 				}
 	
 			}	
@@ -630,21 +600,12 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 								
 				int numordi = 1;
 				int numJoueur = 0;
-
-				informations.setText("");
-				informations.setVisible(false);
+				
 	
 				if(bleuChoisi == true){
 					if(humainBleu.isSelected() == true){
-						if(pseudoBleu.getText().equals("")){
-							informations.setText("Les pseudos des joueurs ne peuvent être vide !");
-							informations.setVisible(true);
-						}
-						
-						else{
-							lesJoueursCharger[numJoueur] = new JoueurHumain(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), pseudoBleu.getText());	
-							numJoueur++;
-						}
+						lesJoueursCharger[numJoueur] = new JoueurHumain(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), pseudoBleu.getText());	
+						numJoueur++;
 					}
 					else if(ordinateurBleu.isSelected() == true){
 						lesJoueursCharger[numJoueur] = new JoueurOrdinateur(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), "Ordinateur "+numordi, listeDifficulteBleu.getSelectedIndex()+1);
@@ -655,15 +616,8 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 						
 				if(rougeChoisi == true){
 					if(humainRouge.isSelected() == true){
-						if(pseudoRouge.getText().equals("")){
-							informations.setText("Les pseudos des joueurs ne peuvent être vide !");
-							informations.setVisible(true);
-						}
-						
-						else{
-							lesJoueursCharger[numJoueur] = new JoueurHumain(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), pseudoRouge.getText());
-							numJoueur++;
-						}
+						lesJoueursCharger[numJoueur] = new JoueurHumain(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), pseudoRouge.getText());
+						numJoueur++;
 					}
 					else if(ordinateurRouge.isSelected() == true){
 						lesJoueursCharger[numJoueur] = new JoueurOrdinateur(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), "Ordinateur "+numordi, listeDifficulteRouge.getSelectedIndex()+1);
@@ -674,15 +628,8 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 					
 				if(orangeChoisi == true){
 					if(humainOrange.isSelected() == true){
-						if(pseudoOrange.getText().equals("")){
-							informations.setText("Les pseudos des joueurs ne peuvent être vide !");
-							informations.setVisible(true);
-						}
-						
-						else{
-							lesJoueursCharger[numJoueur] = new JoueurHumain(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), pseudoOrange.getText());
-							numJoueur++;
-						}
+						lesJoueursCharger[numJoueur] = new JoueurHumain(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), pseudoOrange.getText());
+						numJoueur++;
 					}
 					else if(ordinateurOrange.isSelected() == true){
 						lesJoueursCharger[numJoueur] = new JoueurOrdinateur(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), "Ordinateur "+numordi, listeDifficulteOrange.getSelectedIndex()+1);
@@ -693,15 +640,8 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 					
 				if(vertChoisi == true){
 					if(humainVert.isSelected() == true){
-						if(pseudoVert.getText().equals("")){
-							informations.setText("Les pseudos des joueurs ne peuvent être vide !");
-							informations.setVisible(true);
-						}
-						
-						else{
-							lesJoueursCharger[numJoueur] = new JoueurHumain(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), pseudoVert.getText());
-							numJoueur++;
-						}
+						lesJoueursCharger[numJoueur] = new JoueurHumain(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), pseudoVert.getText());
+						numJoueur++;
 					}
 					else if(ordinateurVert.isSelected() == true){
 						lesJoueursCharger[numJoueur] = new JoueurOrdinateur(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), "Ordinateur "+numordi, listeDifficulteVert.getSelectedIndex()+1);
@@ -712,15 +652,8 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 					
 				if(jauneChoisi == true){
 					if(humainJaune.isSelected() == true){
-						if(pseudoJaune.getText().equals("")){
-							informations.setText("Les pseudos des joueurs ne peuvent être vide !");
-							informations.setVisible(true);
-						}
-						
-						else{
-							lesJoueursCharger[numJoueur] = new JoueurHumain(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), pseudoJaune.getText());
-							numJoueur++;
-						}
+						lesJoueursCharger[numJoueur] = new JoueurHumain(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), pseudoJaune.getText());
+						numJoueur++;
 					}
 					else if(ordinateurJaune.isSelected() == true){
 						lesJoueursCharger[numJoueur] = new JoueurOrdinateur(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), "Ordinateur "+numordi, listeDifficulteJaune.getSelectedIndex()+1);
@@ -731,16 +664,8 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 					
 				if(violetChoisi == true){
 					if(humainViolet.isSelected() == true){
-						if(pseudoViolet.getText().equals("")){
-							informations.setText("Les pseudos des joueurs ne peuvent être vide !");
-							informations.setVisible(true);
-						}
-						
-						else{
-							lesJoueursCharger[numJoueur] = new JoueurHumain(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), pseudoViolet.getText());
-							numJoueur++;
-
-						}
+						lesJoueursCharger[numJoueur] = new JoueurHumain(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), pseudoViolet.getText());
+						numJoueur++;
 					}
 					else if(ordinateurViolet.isSelected() == true){
 						lesJoueursCharger[numJoueur] = new JoueurOrdinateur(partieCharger.getPlateau().getTaille(), partieCharger.getJoueur(numJoueur), "Ordinateur "+numordi, listeDifficulteViolet.getSelectedIndex()+1);
@@ -749,12 +674,11 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 					}
 				}
 				
-				if(informations.getText().equals("")){
-					PartieAffichage p = new PartieAffichage(m.getParentt(), partieCharger.getPlateau().getTaille(),nbJoueurCharger,"normal",false,lesJoueursCharger,true);
-					m.getParentt().setMain(p);
-					m.getParentt().validate();
-					p.getPanelJeu().updateFirst();
-				}
+
+				PartieAffichage p = new PartieAffichage(m.getParentt(), partieCharger.getPlateau().getTaille(),nbJoueurCharger,"normal",false,lesJoueursCharger,true);
+				m.getParentt().setMain(p);
+				m.getParentt().validate();
+				p.getPanelJeu().updateFirst();
 			}
 			
 			else{
@@ -764,17 +688,17 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 				else if (taille4.isSelected()){tailleChoisi = 4;}
 				else if (taille5.isSelected()){tailleChoisi = 5;}	
 				nbJoueur = 6;
-				
-				if(typePartie!="personalise"){
+					if(typePartie!="personalise"){
 					//compter le nb de joueur
-					if(inactifBleu.isSelected()){nbJoueur--;}
+						if(inactifBleu.isSelected()){nbJoueur--;}
 					if(inactifRouge.isSelected()){nbJoueur--;}
 					if(inactifOrange.isSelected()){nbJoueur--;}
 					if(inactifVert.isSelected()){nbJoueur--;}
 					if(inactifJaune.isSelected()){nbJoueur--;}
 					if(inactifViolet.isSelected()){nbJoueur--;}
-				}
 				
+					
+				}
 				int numJoueur = 0;
 				if(typePartie.equals("editeur")){
 					couleurChoisi = new String[nbJoueur];
@@ -825,22 +749,11 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 					lesJoueurs = new Joueur[nbJoueur];
 	
 					int numOrdi = 1;
-				
-					informations.setText("");
-					informations.setVisible(false);
-										
+					
 					//JOUEUR BLEU
 					if(humainBleu.isSelected()){
-						
-						if(pseudoBleu.getText().equals("")){
-							informations.setText("Les pseudos des joueurs ne peuvent être vide !");
-							informations.setVisible(true);
-						}
-						
-						else{
-							lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"bleu",0, pseudoBleu.getText());	
-							numJoueur++;
-						}
+						lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"bleu",0,pseudoBleu.getText());
+						numJoueur++;
 					}
 					else if(ordinateurBleu.isSelected()){
 						lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"bleu",listeDifficulteBleu.getSelectedIndex()+1,0,"Ordinateur "+numOrdi);
@@ -850,32 +763,19 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 					
 					//JOUEUR ROUGE
 					if(humainRouge.isSelected()){
-						if(pseudoRouge.getText().equals("")){
-							informations.setText("Les pseudos des joueurs ne peuvent être vide !");
-							informations.setVisible(true);
-						}
-						else{
-							lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"rouge",0, pseudoRouge.getText());
-							numJoueur++;
-						}
-						
+						lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"rouge",0, pseudoRouge.getText());
+						numJoueur++;
 					}
 					else if(ordinateurRouge.isSelected()){
 						lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"rouge",listeDifficulteRouge.getSelectedIndex()+1,0,"Ordinateur "+numOrdi);
 						numOrdi++;
-						numJoueur++;;
+						numJoueur++;
 					}
 					
 					//JOUEUR ORANGE
 					if(humainOrange.isSelected()){
-						if(pseudoOrange.getText().equals("")){
-							informations.setText("Les pseudos des joueurs ne peuvent être vide !");
-							informations.setVisible(true);
-						}
-						else{
-							lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"orange",0, pseudoOrange.getText());
-							numJoueur++;
-						}
+						lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"orange",0, pseudoOrange.getText());
+						numJoueur++;
 					}
 					else if(ordinateurOrange.isSelected()){
 						lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"orange",listeDifficulteOrange.getSelectedIndex()+1,0,"Ordinateur "+numOrdi);
@@ -885,14 +785,8 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 					
 					//JOUEUR VERT
 					if(humainVert.isSelected()){
-						if(pseudoVert.getText().equals("")){
-							informations.setText("Les pseudos des joueurs ne peuvent être vide !");
-							informations.setVisible(true);
-						}
-						else{
-							lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"vert",0, pseudoVert.getText());
-							numJoueur++;
-						}
+						lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"vert",0, pseudoVert.getText());
+						numJoueur++;
 					}
 					else if(ordinateurVert.isSelected()){
 						lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"vert",listeDifficulteVert.getSelectedIndex()+1,0,"Ordinateur "+numOrdi);
@@ -902,14 +796,8 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 		
 					//JOUEUR JAUNE
 					if(humainJaune.isSelected()){
-						if(pseudoJaune.getText().equals("")){
-							informations.setText("Les pseudos des joueurs ne peuvent être vide !");
-							informations.setVisible(true);
-						}
-						else{
-							lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"jaune",0, pseudoJaune.getText());
-							numJoueur++;
-						}
+						lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"jaune",0, pseudoJaune.getText());
+						numJoueur++;
 					}
 					else if(ordinateurJaune.isSelected()){
 						lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"jaune",listeDifficulteJaune.getSelectedIndex()+1,0,"Ordinateur "+numOrdi);
@@ -919,14 +807,8 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 		
 					//JOUEUR VIOLET
 					if(humainViolet.isSelected()){
-						if(pseudoViolet.getText().equals("")){
-							informations.setText("Les pseudos des joueurs ne peuvent être vide !");
-							informations.setVisible(true);
-						}
-						else{
-							lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"violet",0, pseudoViolet.getText());
-							numJoueur++;
-						}
+						lesJoueurs[numJoueur] = new JoueurHumain(tailleChoisi,numJoueur,"violet",0, pseudoViolet.getText());
+						numJoueur++;;
 					}
 					else if(ordinateurViolet.isSelected()){
 						lesJoueurs[numJoueur] = new JoueurOrdinateur(tailleChoisi,numJoueur,"violet",listeDifficulteViolet.getSelectedIndex()+1,0,"Ordinateur "+numOrdi);
@@ -943,33 +825,29 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 		//			lesJoueurs[1] = new JoueurHumain(taillePlateau,1,"rouge",1);
 		//			lesJoueurs[2] = new JoueurHumain(taillePlateau,2,"orange",2);
 					
-					//Si ya pas d'erreur (pas d'info) alors on lance
-					if(informations.getText().equals("")){
-						//normale 
-						if(typePartie.equals("normale")){
-							PartieAffichage p = new PartieAffichage(m.getParentt(),tailleChoisi,nbJoueur,"normal",false,lesJoueurs);
-							
-							m.getParentt().setMain(p);
-							m.getParentt().validate();
-							p.getPanelJeu().updateFirst();
-						}
+					//normale 
+					if(typePartie.equals("normale")){
+						PartieAffichage p = new PartieAffichage(m.getParentt(),tailleChoisi,nbJoueur,"normal",false,lesJoueurs);
 						
-						//Chrono
-						if(typePartie.equals("chronometre")){
-							
-							if(chrono2.isSelected()){c=new Chronometre(2,0);}
-							else if(chrono3.isSelected()){c=new Chronometre(3,0);}
-							else if(chrono4.isSelected()){c=new Chronometre(4,0);}
-							else if(chrono5.isSelected()){c=new Chronometre(5,0);}						
-							
-							PartieAffichage p = new PartieAffichage(m.getParentt(),tailleChoisi,nbJoueur,"chronometre",false,lesJoueurs,false,c);
-							
-							m.getParentt().setMain(p);
-							m.getParentt().validate();
-							p.getPanelJeu().updateFirst();
-						}
+						m.getParentt().setMain(p);
+						m.getParentt().validate();
+						p.getPanelJeu().updateFirst();
 					}
-
+					
+					//Chrono
+					if(typePartie.equals("chronometre")){
+						
+						if(chrono2.isSelected()){c=new Chronometre(2,0);}
+						else if(chrono3.isSelected()){c=new Chronometre(3,0);}
+						else if(chrono4.isSelected()){c=new Chronometre(4,0);}
+						else if(chrono5.isSelected()){c=new Chronometre(5,0);}						
+						
+						PartieAffichage p = new PartieAffichage(m.getParentt(),tailleChoisi,nbJoueur,"chronometre",false,lesJoueurs,false,c);
+						
+						m.getParentt().setMain(p);
+						m.getParentt().validate();
+						p.getPanelJeu().updateFirst();
+					}
 					
 					// perso : 
 					//PartieAffichage p = new PartieAffichage(m.getParent(),taillePlateau,1,"personalise",false);
