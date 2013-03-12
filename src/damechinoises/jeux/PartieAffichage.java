@@ -66,8 +66,7 @@ public class PartieAffichage extends JPanel {
 
 			@Override
 			public void finJoueur(TourEvent e) {
-				getParentt().setMain(new PartieFinie(getParentt(),partie));
-
+				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -160,7 +159,7 @@ public class PartieAffichage extends JPanel {
 		
 			@Override
 			public void finJoueur(TourEvent e) {
-				getParentt().setMain(new PartieFinie(getParentt(),partie));
+				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -212,7 +211,7 @@ public class PartieAffichage extends JPanel {
 
 			@Override
 			public void finJoueur(TourEvent e) {
-				getParentt().setMain(new PartieFinie(getParentt(),partie));
+				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -260,7 +259,7 @@ public class PartieAffichage extends JPanel {
 
 			@Override
 			public void finJoueur(TourEvent e) {
-				getParentt().setMain(new PartieFinie(getParentt(),partie));
+				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -311,8 +310,7 @@ public class PartieAffichage extends JPanel {
 
 			@Override
 			public void finJoueur(TourEvent e) {
-				getParentt().setMain(new PartieFinie(getParentt(),partie));
-
+				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -361,7 +359,7 @@ public class PartieAffichage extends JPanel {
 		
 			@Override
 			public void finJoueur(TourEvent e) {
-				getParentt().setMain(new PartieFinie(getParentt(),partie));
+				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -411,7 +409,7 @@ public class PartieAffichage extends JPanel {
 		
 			@Override
 			public void finJoueur(TourEvent e) {
-				getParentt().setMain(new PartieFinie(getParentt(),partie));
+				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -459,7 +457,7 @@ public class PartieAffichage extends JPanel {
 		
 			@Override
 			public void finJoueur(TourEvent e) {
-				getParentt().setMain(new PartieFinie(getParentt(),partie));
+				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -510,26 +508,7 @@ public class PartieAffichage extends JPanel {
 	    	/* Action réalisé par le timer */
 	    	tache_timer = new ActionListener() {
 	    		public void actionPerformed(ActionEvent e1) {
-	    			if (seconde == 0) {
-	    				if(minute==0){
-	    					int[] nbpionfinis=new int[6];
-	    					
-	    					System.out.println("chrono fini");
-	    					for(int i=0;i<partie.getNbJoueurs();i++){
-	    						nbpionfinis[i]=0;
-	    						for(int j=0;j<partie.getPlateau().getNbPionParJoueur();j++){
-	    							if((partie.getJoueur(i).getPion(j).getPosition().getBranch())&&(partie.getJoueur(i).getPion(j).getPosition().getAngle() == partie.getJoueur(i).getNumBrancheFin())){
-	    								nbpionfinis[i]++;
-	    							}
-	    						}
-	    					}
-	    					for(int i=0;i<nbpionfinis.length;i++){
-	    						System.out.println("tableau nbpionfinis:"+nbpionfinis[i]);
-	    					}
-	    					getParentt().setMain(new PartieFinie(getParentt(),partie,nbpionfinis));
-	    				}
-	    					
-
+	    			if (seconde == 00) {
 	    				seconde = 60;
 	    				minute--;
 	    			}
@@ -552,7 +531,6 @@ public class PartieAffichage extends JPanel {
 	    }
 	 
 	}
-	  
 	
 	
 }
