@@ -66,7 +66,7 @@ public class PartieAffichage extends JPanel {
 
 			@Override
 			public void finJoueur(TourEvent e) {
-				// TODO Auto-generated method stub
+				getParentt().setMain(new PartieFinie(getParentt(),partie));
 				
 			}
 		});
@@ -159,7 +159,7 @@ public class PartieAffichage extends JPanel {
 		
 			@Override
 			public void finJoueur(TourEvent e) {
-				// TODO Auto-generated method stub
+				getParentt().setMain(new PartieFinie(getParentt(),partie));
 				
 			}
 		});
@@ -211,7 +211,7 @@ public class PartieAffichage extends JPanel {
 
 			@Override
 			public void finJoueur(TourEvent e) {
-				// TODO Auto-generated method stub
+				getParentt().setMain(new PartieFinie(getParentt(),partie));
 				
 			}
 		});
@@ -259,7 +259,7 @@ public class PartieAffichage extends JPanel {
 
 			@Override
 			public void finJoueur(TourEvent e) {
-				// TODO Auto-generated method stub
+				getParentt().setMain(new PartieFinie(getParentt(),partie));
 				
 			}
 		});
@@ -310,7 +310,7 @@ public class PartieAffichage extends JPanel {
 
 			@Override
 			public void finJoueur(TourEvent e) {
-				// TODO Auto-generated method stub
+				getParentt().setMain(new PartieFinie(getParentt(),partie));
 				
 			}
 		});
@@ -359,7 +359,7 @@ public class PartieAffichage extends JPanel {
 		
 			@Override
 			public void finJoueur(TourEvent e) {
-				// TODO Auto-generated method stub
+				getParentt().setMain(new PartieFinie(getParentt(),partie));
 				
 			}
 		});
@@ -409,7 +409,7 @@ public class PartieAffichage extends JPanel {
 		
 			@Override
 			public void finJoueur(TourEvent e) {
-				// TODO Auto-generated method stub
+				getParentt().setMain(new PartieFinie(getParentt(),partie));
 				
 			}
 		});
@@ -457,7 +457,7 @@ public class PartieAffichage extends JPanel {
 		
 			@Override
 			public void finJoueur(TourEvent e) {
-				// TODO Auto-generated method stub
+				getParentt().setMain(new PartieFinie(getParentt(),partie));
 				
 			}
 		});

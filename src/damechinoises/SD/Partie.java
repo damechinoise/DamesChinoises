@@ -966,7 +966,7 @@ public Partie(String nomFichier){
 	
 	public boolean finPartie(){
 		for(int i = 0; i < getNbJoueurs() ; i++){
-			if(!lesJoueurs[tourDe].fini())
+			if(!lesJoueurs[i].fini())
 				return false;
 		}
 		return true;

@@ -169,13 +169,13 @@ public class PartieFinie extends JPanel {
 		
 		if(nbj==2){
 			premier.setText(premier.getText()+pa.getJoueur(tabfini[0]).getCouleur()+" avec "+nbcoups[tabfini[0]]+" coups.");
-			deuxieme.setText(deuxieme.getText()+pa.getJoueur(tabfini[1]).getCouleur()+" avec "+nbcoups[tabfini[0]]+" coups.(+ "+(nbcoups[tabfini[1]]-nbcoups[tabfini[1]])+" coups");
+			deuxieme.setText(deuxieme.getText()+pa.getJoueur(tabfini[1]).getCouleur()+" avec "+nbcoups[tabfini[0]]+" coups.(+ "+(nbcoups[tabfini[1]]-nbcoups[tabfini[0]])+" coups");
 		}
 		
 		if(nbj==3){
 			premier.setText(premier.getText()+pa.getJoueur(tabfini[0]).getCouleur()+" avec "+nbcoups[tabfini[0]]+" coups.");
-			deuxieme.setText(deuxieme.getText()+pa.getJoueur(tabfini[1]).getCouleur()+" avec "+nbcoups[tabfini[0]]+" coups.(+ "+(nbcoups[tabfini[1]]-nbcoups[tabfini[1]])+" coups");
-			troisieme.setText(troisieme.getText()+pa.getJoueur(tabfini[2]).getCouleur()+" avec "+nbcoups[tabfini[0]]+" coups.(+ "+(nbcoups[tabfini[2]]-nbcoups[tabfini[2]])+" coups");
+			deuxieme.setText(deuxieme.getText()+pa.getJoueur(tabfini[1]).getCouleur()+" avec "+nbcoups[tabfini[0]]+" coups.(+ "+(nbcoups[tabfini[1]]-nbcoups[tabfini[0]])+" coups");
+			troisieme.setText(troisieme.getText()+pa.getJoueur(tabfini[2]).getCouleur()+" avec "+nbcoups[tabfini[0]]+" coups.(+ "+(nbcoups[tabfini[2]]-nbcoups[tabfini[0]])+" coups");
 		}
 		
 		if(nbj==4){
@@ -227,26 +227,6 @@ public class PartieFinie extends JPanel {
 		
 	}
 	
-	public static void triBulleCroissant(int tableau[]) {
-		int longueur = tableau.length;
-		int tampon = 0;
-		boolean permut;
- 
-		do {
-			// hypothèse : le tableau est trié
-			permut = false;
-			for (int i = 0; i < longueur - 1; i++) {
-				// Teste si 2 éléments successifs sont dans le bon ordre ou non
-				if (tableau[i] > tableau[i + 1]) {
-					// s'ils ne le sont pas, on échange leurs positions
-					tampon = tableau[i];
-					tableau[i] = tableau[i + 1];
-					tableau[i + 1] = tampon;
-					permut = true;
-				}
-			}
-		} while (permut);
-	}
 	
 	public FenetrePrincipale getParentt(){
 		return parent;
