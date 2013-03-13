@@ -1,5 +1,7 @@
 package damechinoises.SD;
 
+import damechinoises.jeux.PlateauAffichage;
+
 public class JoueurOrdinateur extends Joueur{
 /*###ATTRIBUTS###*/
 /*##############*/
@@ -40,7 +42,14 @@ public class JoueurOrdinateur extends Joueur{
 		
 /*###METHODES###*/
 /*#############*/
+		public void choisirPion(Partie p,PlateauAffichage pA) {
+			ArbreAI a = new ArbreAI(p,p.getNbJoueurs()*difficulte,getNumero());
+			a.selectionCoup(pA);
+		}
+
+		@Override
 		public void choisirPion() {
+			// TODO Auto-generated method stub
 			
 		}
 		

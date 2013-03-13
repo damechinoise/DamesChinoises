@@ -1009,37 +1009,6 @@ public Partie(String nomFichier){
 		return nbj;
 	}
 	
-	public int etatJoueur(int numJoueur){
-		int etat = 0;
-		try {
-			for (int i = 0 ; i < lesJoueurs[numJoueur].nbPions() ; i++ ){
-				int val =lesJoueurs[numJoueur].getPion(i).getPosition().value(lesJoueurs[numJoueur].getNumBrancheDebut()); 
-				etat+=val;
-				//System.out.println("Valeur du pion "+i+" du joueur "+numJoueur+" : "+val);
-			}
-		}
-		catch (Exception e){
-			etat = 0;
-		}
-		return etat;
-	}
-	
-	public Partie tourJoueurAI(int joueur, int pion, int prio){
-		Partie suivant = this;
-		//TODO
-		/*
-		 * Méthode qui joue l'un des 3 coups décrit pour le joueur donné sur une copie de la partie
-		 * Sert juste à alimenter l'algorithme alpha-beta de l'AI
-		 * joueur : numéro du joueur
-		 * pion : numéro du pion
-		 * prio : 
-		 * 		0 - meilleur coup
-		 * 		1 - pire coup
-		 * 		2 - coup aléa
-		 */
-		return suivant;
-	}
-	
 	 public synchronized void addEventListener(InterfaceTour listener)  {
 		     _listener.add(listener);
 		   }

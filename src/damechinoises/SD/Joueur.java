@@ -106,7 +106,7 @@ public abstract class Joueur {
 		//this.nbCoup = nbCoup;
 		
 		for (int i = 0; i < nbPionParJoueur; i++){
-			lesPions[i] = new Pion(couleur); 
+			lesPions[i] = new Pion(couleur,numero); 
 		}
 	}
 	
@@ -126,7 +126,29 @@ public abstract class Joueur {
 		//this.nbCoup = nbCoup;
 		
 		for (int i = 0; i < nbPionParJoueur; i++){
-			lesPions[i] = new Pion(couleur); 
+			lesPions[i] = new Pion(couleur,numero); 
+		}
+	}
+	
+	public Joueur(int taillePlateau,Joueur j){
+		int nbPionParJoueur = 0;
+		
+		for (int i = 0; i < taillePlateau; i++){
+			nbPionParJoueur += taillePlateau-i;
+		}
+		numero=j.getNumero();
+		couleur=j.getCouleur();
+		numBrancheDebut=j.getNumBrancheDebut();
+		numBrancheFin=j.getNumBrancheFin();
+		nom=j.getNom();
+		type=j.getType();
+		
+		nbCoup=j.getNbCoup();
+		
+		lesPions = new Pion[nbPionParJoueur];
+		
+		for (int i = 0; i < nbPionParJoueur; i++){
+			lesPions[i] = new Pion(j.getPion(i));
 		}
 	}
 	

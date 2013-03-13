@@ -14,6 +14,7 @@ public class Pion{
 	 */
 	private Case position;
 	private String couleur;
+	private int numJoueur;
 	
 	JLabel casegraph;
 	ImageIcon iconefond;
@@ -36,8 +37,9 @@ public class Pion{
 	 * Constructeur d'un pion.
 	 * @param position la position de ce pion
 	 */
-	public Pion(String couleur){
+	public Pion(String couleur,int numJoueur){
 		this.couleur=couleur;
+		this.numJoueur = numJoueur;
 	}
 	
 /*###ACCESSEURS###*/

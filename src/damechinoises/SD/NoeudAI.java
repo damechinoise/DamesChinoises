@@ -4,17 +4,17 @@ import java.util.Vector;
 
 public class NoeudAI {
 
-	private Partie p;
+	private PlateauAI p;
 	private Vector<NoeudAI> fils = new Vector<NoeudAI>();
 	private NoeudAI parent = null;
 	private int joueur;
 	
-	public NoeudAI(Partie p,int joueur){
+	public NoeudAI(PlateauAI p,int joueur){
 		this.p = p;
 		this.joueur = joueur;
 	}
 	
-	public NoeudAI(Partie p,NoeudAI parent,int joueur){
+	public NoeudAI(PlateauAI p,NoeudAI parent,int joueur){
 		this.parent=parent;
 		this.p = p;
 		this.joueur = joueur;
@@ -31,7 +31,7 @@ public class NoeudAI {
 		return ajout;
 	}
 	
-	public Partie getPartie(){
+	public PlateauAI getPlateau(){
 		return p;
 	}
 	

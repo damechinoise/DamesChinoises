@@ -24,6 +24,17 @@ public class Case{
 		p=null;
 	}
 	
+	public Case(Case c){
+		x = c.x;
+		y = c.y;
+		branche = c.branche;
+		angle = c.angle;
+		dist = c.dist;
+		num = c.num;
+		occupe = false;
+		p = null;
+	}
+	
 	public Case(boolean b,int n,int d,int nu){
 		x=0;
 		y=0;
@@ -113,8 +124,11 @@ public class Case{
 	}
 	
 	public void setPion(Pion p){
-		if(p!=null)
+		if(p!=null){
 				p.setPosition(this);
+				occupe = true;
+		} else
+			occupe = false;
 		this.p = p;
 	}
 /*###METHODES###*/
@@ -146,20 +160,13 @@ public class Case{
 				value = -100;
 			}
 		} else {
-			int aTemp = (brancheDepart-angle);
-			if (aTemp < 0)
-				aTemp = -aTemp;
-			if(aTemp == 4)
-				aTemp+=2;
-			switch(aTemp){
-			case(0):
-				value=20-dist;
-				break;
-			case(3):
-				value=20+dist;
-				break;
-			default:
-				value =10-dist;
+			if(brancheDepart == angle){
+				value = 0 - dist * 4;
+			} 
+			else if((brancheDepart+3)%6==angle){
+				value = dist * 4;
+			} else {
+				value = 0 - dist * (brancheDepart-angle)%3 ;
 			}
 		}
 		return value;
