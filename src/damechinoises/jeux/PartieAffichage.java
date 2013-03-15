@@ -143,7 +143,7 @@ public class PartieAffichage extends JPanel {
 		this.add(panelJeu,BorderLayout.CENTER);
 		newgame.addActionListener(new NewGameListener(this));
 		mainmenu.addActionListener(new RetourMenuListener(this));
-		if (partie.getType()=="chronometre"){
+		if (partie.getType()!= null && partie.getType().equals("chrono")){
 			panelMenu.add(new PanelChronometre(c.getMinute(),c.getSeconde()));
 		}
 		if(partie.getEditable()==false){
@@ -195,7 +195,7 @@ public class PartieAffichage extends JPanel {
 		this.add(panelJeu,BorderLayout.CENTER);
 		newgame.addActionListener(new NewGameListener(this));
 		mainmenu.addActionListener(new RetourMenuListener(this));
-		if (partie.getType().equals("chronometre")){
+		if (partie.getType() !=null && partie.getType().equals("chrono")){
 			panelMenu.add(new PanelChronometre(partie.getChrono().getMinute(),partie.getChrono().getSeconde()));
 		}
 		panelMenu.add(new JLabel(""));

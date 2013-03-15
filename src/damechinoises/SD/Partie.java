@@ -82,8 +82,8 @@ public Partie(String nomFichier){
 				num=Integer.parseInt(lignes.get(ligneactuelle+3+(i*5)));
 				couleur=lignes.get(ligneactuelle+4+(i*5));
 				if (branche){
-					plateau.getBranche(angle).getLigne(distance-1).getCase(num).setOccupe(true);
-					plateau.getBranche(angle).getLigne(distance-1).getCase(num).setPion(this.getJoueur(couleur).getPion(h.get(couleur)));
+					plateau.getBranche(angle).getLigne(distance).getCase(num).setOccupe(true);
+					plateau.getBranche(angle).getLigne(distance).getCase(num).setPion(this.getJoueur(couleur).getPion(h.get(couleur)));
 					h.put(couleur,h.get(couleur)+1);
 				}
 				else{
