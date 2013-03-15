@@ -112,6 +112,7 @@ public class PlateauAI {
 
 	public PlateauAI tourJoueurAI(int joueur, int pion, int prio){
 		PlateauAI suivant = new PlateauAI(this);
+		Random r = new Random();
 		Pion p = suivant.joueurs[joueur].getPion(pion);
 		Vector<Case> mvt = suivant.m.mvtpossibles(p.getPosition());
 		if(mvt.size() != 0){
@@ -124,6 +125,8 @@ public class PlateauAI {
 					max = i;
 				}
 			}
+			if(prio == 1)
+				max = r.nextInt(mvt.size());
 			suivant.m.move(p.getPosition(), mvt.get(max));
 			return suivant;
 		}

@@ -8,16 +8,19 @@ public class NoeudAI {
 	private Vector<NoeudAI> fils = new Vector<NoeudAI>();
 	private NoeudAI parent = null;
 	private int joueur;
+	private int profondeur;
 	
-	public NoeudAI(PlateauAI p,int joueur){
+	public NoeudAI(PlateauAI p,int joueur, int prof){
 		this.p = p;
 		this.joueur = joueur;
+		this.profondeur = prof;
 	}
 	
-	public NoeudAI(PlateauAI p,NoeudAI parent,int joueur){
+	public NoeudAI(PlateauAI p,NoeudAI parent,int joueur, int prof){
 		this.parent=parent;
 		this.p = p;
 		this.joueur = joueur;
+		this.profondeur = prof;
 	}
 	
 	public boolean ajoutFils(NoeudAI fils){
@@ -56,7 +59,10 @@ public class NoeudAI {
 	
 	public int alphabeta(int joueurini, int alpha, int beta){
 		if(fils.isEmpty()){
-			return getPoids(joueurini);
+			if(profondeur != 1)
+				return getPoids(joueurini);
+			else
+				return p.etatJoueur(joueurini);
 		} else {
 			int val = 0;;
 			if(joueur != joueurini){

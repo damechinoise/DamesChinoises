@@ -173,10 +173,7 @@ public class Case{
 					temp = brancheDepart - angle;
 				if (temp < 0)
 					temp = - temp;
-				if(temp == 2)
-					value = 0 - dist + num + temp;
-				else
-					value = 0 - dist - num - temp;
+				value = 0 + dist + num *( temp -1 );
 			}
 		}
 		return value;

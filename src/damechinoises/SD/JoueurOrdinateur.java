@@ -1,11 +1,14 @@
 package damechinoises.SD;
 
+import java.util.Vector;
+
 import damechinoises.jeux.PlateauAffichage;
 
 public class JoueurOrdinateur extends Joueur{
 /*###ATTRIBUTS###*/
 /*##############*/
 		private int difficulte;
+		private Vector<Case> mvtprec =null;
 /*###CONSTRUCTEURS###*/
 /*##################*/
 		public JoueurOrdinateur(int taillePlateau){
@@ -44,7 +47,10 @@ public class JoueurOrdinateur extends Joueur{
 /*#############*/
 		public void choisirPion(Partie p,PlateauAffichage pA) {
 			ArbreAI a = new ArbreAI(p,p.getNbJoueurs()*(difficulte-1)+1,getNumero());
-			a.selectionCoup(pA);
+			mvtprec = a.selectionCoup(pA,mvtprec);
+			Case arr = mvtprec.get(0);
+			Case dep = mvtprec.get(1);
+			pA.move(pA.selCase(dep.getX(),dep.getY()),pA.selCase(arr.getX(),arr.getY()));
 		}
 
 		@Override
