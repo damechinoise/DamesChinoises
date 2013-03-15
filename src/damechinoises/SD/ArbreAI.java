@@ -24,7 +24,7 @@ public class ArbreAI {
 			for (int j = 0; j < 1; j ++){
 			PlateauAI tour = p.tourJoueurAI(joueur,i,j);
 			if (tour!=null)
-				root.ajoutFils(ajoutNoeud(prof-1,tour,p.joueurSuivant(joueur)));
+				root.ajoutFils(ajoutNoeud(prof-1,tour,joueur));
 		}
 	}
 	
@@ -44,11 +44,27 @@ public class ArbreAI {
 	}
 	
 	public void selectionCoup(PlateauAffichage pA){
+		int valPA = pA.getPartie().etatJoueur(joueur);
+		System.out.print(valPA+" : ");
 		int min = root.fils(0).alphabeta(joueur, -5000000, 5000000);
 		int fils = 0;
-		for(int i = 1; i < root.nbFils() ; i++)
-			if(root.fils(i)!=null && root.fils(i).alphabeta(joueur, -5000000, 5000000)>min)
+		System.out.print(min+" : ");
+		while(min == valPA){
+			fils++;
+			min = root.fils(fils).alphabeta(joueur, -5000000, 5000000);
+			System.out.print(min+" : ");
+		}
+		for(int i = fils+1; i < root.nbFils() ; i++){
+			int val = root.fils(i).alphabeta(joueur, -5000000, 5000000);
+			System.out.print(val+" : ");
+			if(root.fils(i)!=null && val>min && val!=valPA ){
 				fils = i;
+				min = val;
+				System.out.print("S : ");
+			}
+		}
+		int val = root.fils(fils).alphabeta(joueur, -5000000, 5000000);
+		System.out.println(" select  : "+val);
 		Vector<Case> mvt =p.changement(root.fils(fils).getPlateau());
 		Case arr = mvt.get(0);
 		Case dep = mvt.get(1);

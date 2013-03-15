@@ -152,10 +152,10 @@ public class Case{
 		int value = 0;
 		if (branche){
 			if(brancheDepart == angle){
-				value = 0 - (dist+1) * 20;
+				value = 0 - (dist+1) * 50;
 			} 
 			else if(brancheArrive==angle){
-				value = (dist +1) * 20;
+				value = (dist +1) * 20 - num;
 			} else {
 				value = -100;
 			}
@@ -164,14 +164,19 @@ public class Case{
 				value = 0 - (dist+1) * 4;
 			} 
 			else if(brancheArrive==angle){
-				value = (dist+1) * 4;
+				value = (dist+1) * 3;
 			} else {
 				int temp = 0;
 				if(brancheArrive > 3)
 					temp = brancheArrive - angle;
 				else
 					temp = brancheDepart - angle;
-				value = 0 - dist * temp;
+				if (temp < 0)
+					temp = - temp;
+				if(temp == 2)
+					value = 0 - dist + num + temp;
+				else
+					value = 0 - dist - num - temp;
 			}
 		}
 		return value;

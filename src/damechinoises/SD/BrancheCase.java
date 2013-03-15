@@ -18,7 +18,7 @@ public class BrancheCase {
 		tailleBranche = taille;
 		lignes = new Vector<LigneCase>();
 		for (int i = tailleBranche; i > 0 ; i --)
-			lignes.add(new LigneCase(i,true,tailleBranche-i+1,angle));
+			lignes.add(new LigneCase(i,true,tailleBranche-i,angle));
 	}
 	
 	public LigneCase getLigne(int numLigne){

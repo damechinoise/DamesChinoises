@@ -44,6 +44,8 @@ public class JoueurHumain extends Joueur{
 	@Override
 	public Joueur copy(int taillePlateau) {
 		JoueurHumain copy = new JoueurHumain(taillePlateau);
+		copy.setNumBrancheDebut(getNumBrancheDebut());
+		copy.setNumBrancheFin(getNumBrancheFin());
 		for(int i = 0; i < this.getNbPions() ; i++){
 			copy.setPion(i,new Pion(this.getPion(i)));
 		}

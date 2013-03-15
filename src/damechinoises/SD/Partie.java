@@ -1031,5 +1031,29 @@ public Partie(String nomFichier){
 			 ((InterfaceTour) i.next()).finJoueur(e);
 		 }
 	 }
-  
+	 
+	 public int getPoids(int joueur){
+			int poids = 0;
+			for (int i = 0; i < getNbJoueurs(); i++)
+				if(i!=joueur)
+					poids -= etatJoueur(i);
+				else
+					poids += etatJoueur(i);
+			return poids;
+		}
+	 
+	 public int etatJoueur(int numJoueur){
+			int etat = 0;
+			try {
+				for (int i = 0 ; i < lesJoueurs[0].getNbPions() ; i++ ){
+					int val =lesJoueurs[numJoueur].getPion(i).getPosition().value(lesJoueurs[numJoueur].getNumBrancheDebut(),lesJoueurs[numJoueur].getNumBrancheFin()); 
+					etat+=val;
+					//System.out.println("Valeur du pion "+i+" du joueur "+numJoueur+" : "+val);
+				}
+			}
+			catch (Exception e){
+				etat = 0;
+			}
+			return etat;
+		}
 }

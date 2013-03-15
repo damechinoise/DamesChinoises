@@ -55,6 +55,8 @@ public class JoueurOrdinateur extends Joueur{
 		
 		public Joueur copy(int taillePlateau) {
 			JoueurOrdinateur copy = new JoueurOrdinateur(taillePlateau);
+			copy.setNumBrancheDebut(getNumBrancheDebut());
+			copy.setNumBrancheFin(getNumBrancheFin());
 			for(int i = 0; i < this.getNbPions() ; i++){
 				copy.setPion(i,new Pion(this.getPion(i)));
 			}
