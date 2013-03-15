@@ -1,5 +1,7 @@
 package damechinoises.SD;
 
+import damechinoises.jeux.PlateauAffichage;
+
 
 /**
  * La classe joueur correspond à un joueur du jeu de dames chinoises.
@@ -232,8 +234,16 @@ public abstract class Joueur {
 		return this.nbCoup;
 	}
 	
+	public int getNbPions(){
+		return lesPions.length;
+	}
+	
 	public void setNbCoup(int n){
 		this.nbCoup = n;
+	}
+	
+	public void setPion(int index,Pion p){
+		lesPions[index]=p;
 	}
 	
 /*###METHODES###*/
@@ -277,5 +287,10 @@ public abstract class Joueur {
 				return false;
 		return true;
 	}
+
+	abstract public void choisirPion(Partie partie, PlateauAffichage plateauAffichage);
+
+	abstract public Joueur copy(int tailleplateau);
+	
 	
 }

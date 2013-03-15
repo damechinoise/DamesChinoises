@@ -43,7 +43,7 @@ public class JoueurOrdinateur extends Joueur{
 /*###METHODES###*/
 /*#############*/
 		public void choisirPion(Partie p,PlateauAffichage pA) {
-			ArbreAI a = new ArbreAI(p,p.getNbJoueurs()*difficulte,getNumero());
+			ArbreAI a = new ArbreAI(p,p.getNbJoueurs()*(difficulte-1)+1,getNumero());
 			a.selectionCoup(pA);
 		}
 
@@ -51,6 +51,14 @@ public class JoueurOrdinateur extends Joueur{
 		public void choisirPion() {
 			// TODO Auto-generated method stub
 			
+		}
+		
+		public Joueur copy(int taillePlateau) {
+			JoueurOrdinateur copy = new JoueurOrdinateur(taillePlateau);
+			for(int i = 0; i < this.getNbPions() ; i++){
+				copy.setPion(i,new Pion(this.getPion(i)));
+			}
+			return copy;
 		}
 		
 }

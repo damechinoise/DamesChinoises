@@ -1,5 +1,7 @@
 package damechinoises.SD;
 
+import damechinoises.jeux.PlateauAffichage;
+
 public class JoueurHumain extends Joueur{
 /*###ATTRIBUTS###*/
 /*##############*/
@@ -33,6 +35,19 @@ public class JoueurHumain extends Joueur{
 /*#############*/
 	public void choisirPion(){
 		
+	}
+
+	@Override
+	public void choisirPion(Partie partie, PlateauAffichage plateauAffichage) {
+	}
+
+	@Override
+	public Joueur copy(int taillePlateau) {
+		JoueurHumain copy = new JoueurHumain(taillePlateau);
+		for(int i = 0; i < this.getNbPions() ; i++){
+			copy.setPion(i,new Pion(this.getPion(i)));
+		}
+		return copy;
 	}
 	
 }

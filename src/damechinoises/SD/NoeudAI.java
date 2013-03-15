@@ -49,7 +49,7 @@ public class NoeudAI {
 		try{
 			return fils.get(index);
 		}
-		catch(ArrayIndexOutOfBoundsException e){
+		catch(Exception e){
 			return null;
 		}
 	}
@@ -92,5 +92,9 @@ public class NoeudAI {
 			return a;
 		else
 			return b;
+	}
+
+	public int nbFils() {
+		return fils.size();
 	}
 }

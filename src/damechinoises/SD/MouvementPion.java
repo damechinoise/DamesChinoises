@@ -14,7 +14,7 @@ public class MouvementPion {
 	public Case selCase(int x,int y){
 		int taille = plateau.getTaille();
 		int casex,casey;
-		for (int c = 1; c < 1+taille ; c ++){
+		for (int c = 0; c < taille ; c ++){
 				casex = plateau.getCase(c).getX();
 				casey = plateau.getCase(c).getY();
 				if(x>= casex-12 && x<=casex +12 && y>= casey-12 && y<=casey +12 ){

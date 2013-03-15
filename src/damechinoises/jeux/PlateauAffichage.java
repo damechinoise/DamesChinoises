@@ -78,6 +78,9 @@ public class PlateauAffichage extends JPanel {
 			}
 			taillebranche --;
 		}
+		while(partie.getJoueur(partie.getTourDe()).getType().equalsIgnoreCase("ordinateur")){
+			partie.nextJoueur();
+		}
 	}
 	
 	public void update(){
@@ -255,6 +258,16 @@ public class PlateauAffichage extends JPanel {
 		return v;
 	}
 	
+	public void tourJoueur(){
+		update();
+		partie.nextJoueur();
+		while(partie.getJoueur(partie.getTourDe()).getType().equalsIgnoreCase("ordinateur")){
+			partie.getJoueur(partie.getTourDe()).choisirPion(partie,this);
+			update();
+			partie.nextJoueur();
+		}
+	}
+	
 	public Vector<Case> mvtpossibles(Case c){
 		Vector<Case> v = new Vector<Case>();
 		Vector<Case> s = scan(c);
@@ -343,10 +356,6 @@ public class PlateauAffichage extends JPanel {
 							premierMvt = true;
 							select = false;
 							update();
-							partie.getJoueur(partie.getTourDe()).ajoutCoup();
-							//TEST
-							System.out.println("Nb coup joueur "+ partie.getJoueur(partie.getTourDe()).getCouleur() + ": "+partie.getJoueur(partie.getTourDe()).getNbCoup());
-							partie.nextJoueur();
 						}
 						arr=null;
 						break;
@@ -355,17 +364,14 @@ public class PlateauAffichage extends JPanel {
 						dep = null;
 						select = false;
 						partie.getJoueur(partie.getTourDe()).ajoutCoup();
-						//TEST
-						System.out.println("Nb coup joueur "+ partie.getJoueur(partie.getTourDe()).getCouleur() + ": "+partie.getJoueur(partie.getTourDe()).getNbCoup());						partie.nextJoueur();
+						tourJoueur();
 						break;
 					case(1):
 						dep = null;
 						arr = null;
 						select = false;
 						partie.getJoueur(partie.getTourDe()).ajoutCoup();
-						//TEST
-						System.out.println("Nb coup joueur "+ partie.getJoueur(partie.getTourDe()).getCouleur() + ": "+partie.getJoueur(partie.getTourDe()).getNbCoup());
-						partie.nextJoueur();
+						tourJoueur();
 					}
 				}
 			}
@@ -399,4 +405,8 @@ public class PlateauAffichage extends JPanel {
 		}
 		
 	}
+	
+    public Partie getPartie(){
+    	return partie;
+    }
 }

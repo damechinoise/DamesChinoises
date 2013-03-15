@@ -9,13 +9,19 @@ public class PlateauAI {
 	private Joueur[] joueurs;
 	private MouvementPion m;
 	private int taille;
+	private int tailleplateau;
 	private int nbpions;
 	
 	public PlateauAI (Partie p){
+		m = new MouvementPion(this);
 		taille = p.getPlateau().getTaille();
+		tailleplateau = p.getPlateau().getTaille();
 		joueurs = new Joueur[p.getNbJoueurs()];
 		cases = new Vector<Case>();
 		nbpions = p.getPlateau().getNbPionParJoueur();
+		for (int i = 0 ; i < p.getNbJoueurs() ; i++){
+			joueurs[i]=p.getJoueur(i).copy(tailleplateau);
+		}
 		cases.add(new Case(p.getPlateau().getAnneau(0).getLigne(0).getCase(0)));
 		for (int anneau = 1; anneau < 1+taille ; anneau ++)
 			for (int cases = 0 ; cases < 6 ; cases ++)
@@ -28,11 +34,13 @@ public class PlateauAI {
 					this.cases.add(new Case(p.getPlateau().getBranche(cases).getLigne(branche).getCase(i)));
 			taillebranche --;
 		}
+		taille = cases.size();
 		for (int i = 0; i < p.getNbJoueurs() ; i ++){
 			Joueur j = joueurs[i];
 			for(int k =0 ; k < nbpions; k++){
 				Pion pi = j.getPion(k);
-				pi.setPosition(m.selCase(pi.getPosition().getX(), pi.getPosition().getY()));
+				Case pos = pi.getPosition();
+				pi.setPosition(m.selCase(pos.getX(), pos.getY()));
 				pi.getPosition().setPion(pi);
 			}
 		}
@@ -40,10 +48,15 @@ public class PlateauAI {
 	
 	public PlateauAI(PlateauAI copie){
 		taille = copie.taille;
+		tailleplateau = copie.tailleplateau;
+		m = new MouvementPion(this);
 		joueurs = new Joueur[copie.getNbJoueurs()];
 		nbpions = copie.nbpions;
 		cases = new Vector<Case>();
-		for (int i = 0; i < 1+taille ; i ++)
+		for (int i = 0 ; i < copie.getNbJoueurs() ; i++){
+			joueurs[i]=copie.getJoueur(i).copy(tailleplateau);
+		}
+		for (int i = 0; i < taille ; i ++)
 			cases.add(new Case(copie.getCase(i)));
 		for (int i = 0; i < copie.getNbJoueurs() ; i ++){
 			Joueur j = joueurs[i];
@@ -70,11 +83,15 @@ public class PlateauAI {
 		return joueurs.length;
 	}
 	
+	public int getNbPions(){
+		return nbpions;
+	}
+	
 	public int etatJoueur(int numJoueur){
 		int etat = 0;
 		try {
-			for (int i = 0 ; i < joueurs[numJoueur].nbPions() ; i++ ){
-				int val =joueurs[numJoueur].getPion(i).getPosition().value(joueurs[numJoueur].getNumBrancheDebut()); 
+			for (int i = 0 ; i < nbpions ; i++ ){
+				int val =joueurs[numJoueur].getPion(i).getPosition().value(joueurs[numJoueur].getNumBrancheDebut(),joueurs[numJoueur].getNumBrancheFin()); 
 				etat+=val;
 				//System.out.println("Valeur du pion "+i+" du joueur "+numJoueur+" : "+val);
 			}
@@ -97,35 +114,20 @@ public class PlateauAI {
 		PlateauAI suivant = new PlateauAI(this);
 		Pion p = suivant.joueurs[joueur].getPion(pion);
 		Vector<Case> mvt = suivant.m.mvtpossibles(p.getPosition());
-		int min = 0;
-		int minval = mvt.get(min).value(joueurs[joueur].getNumBrancheDebut());
-		int max = min;
-		int maxval = mvt.get(max).value(joueurs[joueur].getNumBrancheDebut());
-		for(int i = 1 ; i < mvt.size(); i ++){
-			int val = mvt.get(i).value(joueurs[joueur].getNumBrancheDebut());
-			if(val < minval){
-				minval = val;
-				min = i;
+		if(mvt.size() != 0){
+			int max = 0;
+			int maxval = mvt.get(max).value(joueurs[joueur].getNumBrancheDebut(),joueurs[joueur].getNumBrancheFin());
+			for(int i = 1 ; i < mvt.size(); i ++){
+				int val = mvt.get(i).value(joueurs[joueur].getNumBrancheDebut(),joueurs[joueur].getNumBrancheFin());
+				if(val > maxval){
+					maxval = val;
+					max = i;
+				}
 			}
-			if(val > maxval){
-				maxval = val;
-				max = i;
-			}
-		}
-		switch(prio){
-		case 0:
 			suivant.m.move(p.getPosition(), mvt.get(max));
-			break;
-		case 1:
-			suivant.m.move(p.getPosition(), mvt.get(min));
-			break;
-		default:
-			Random r = new Random();
-			int val = r.nextInt(mvt.size());
-			suivant.m.move(p.getPosition(), mvt.get(val));
-			break;
+			return suivant;
 		}
-		return suivant;
+		return null;
 	}
 
 	public int joueurSuivant(int tourDe) {
@@ -139,11 +141,14 @@ public class PlateauAI {
 		return jS;
 	}
 	
-	public Case changement (PlateauAI p){
+	public Vector<Case> changement (PlateauAI p){
+		Vector<Case> ret = new Vector<Case>();
 		for(int i = 0 ; i < p.getNbJoueurs() ; i ++)
 			for(int j = 0 ; j < nbpions ; j++)
 				if(!p.joueurs[i].getPion(j).getPosition().equals(joueurs[i].getPion(j).getPosition())){
-					return joueurs[i].getPion(j).getPosition();
+					ret.add( p.joueurs[i].getPion(j).getPosition());
+					ret.add( joueurs[i].getPion(j).getPosition());
+					return ret;
 				}
 		return null;
 	}

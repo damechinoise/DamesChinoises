@@ -542,7 +542,7 @@ public class PartieAffichage extends JPanel {
 	    public int getSeconde(){
 	    	return seconde;
 	    }
-	 
+	    
 	}
 	
 	
