@@ -449,8 +449,8 @@ public Partie(String nomFichier){
 			for (int i=0;i<nbjoueurs;i++){
 				for(int j=0;j<plateau.getNbPionParJoueur();j++){
 					if (lesJoueurs[i].getPion(j).getPosition().getBranch()){
-						plateau.getBranche(lesJoueurs[i].getPion(j).getPosition().getAngle()).getLigne(lesJoueurs[i].getPion(j).getPosition().getDist()-1).getCase(lesJoueurs[i].getPion(j).getPosition().getNum()).setOccupe(true);
-						plateau.getBranche(lesJoueurs[i].getPion(j).getPosition().getAngle()).getLigne(lesJoueurs[i].getPion(j).getPosition().getDist()-1).getCase(lesJoueurs[i].getPion(j).getPosition().getNum()).setPion(lesJoueurs[i].getPion(j));
+						plateau.getBranche(lesJoueurs[i].getPion(j).getPosition().getAngle()).getLigne(lesJoueurs[i].getPion(j).getPosition().getDist()).getCase(lesJoueurs[i].getPion(j).getPosition().getNum()).setOccupe(true);
+						plateau.getBranche(lesJoueurs[i].getPion(j).getPosition().getAngle()).getLigne(lesJoueurs[i].getPion(j).getPosition().getDist()).getCase(lesJoueurs[i].getPion(j).getPosition().getNum()).setPion(lesJoueurs[i].getPion(j));
 					}
 					else{
 						if (lesJoueurs[i].getPion(j).getPosition().getDist()==0){
@@ -966,7 +966,7 @@ public Partie(String nomFichier){
 	
 	public boolean finPartie(){
 		for(int i = 0; i < getNbJoueurs() ; i++){
-			if(!lesJoueurs[i].fini())
+			if((!lesJoueurs[i].fini())&& (lesJoueurs[i].getType().equals("humain")))
 				return false;
 		}
 		return true;

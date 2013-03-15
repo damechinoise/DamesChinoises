@@ -630,12 +630,14 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 								
 				int numordi = 1;
 				int numJoueur = 0;
+				int numHum = 0;
 
 				informations.setText("");
 				informations.setVisible(false);
 	
 				if(bleuChoisi == true){
 					if(humainBleu.isSelected() == true){
+						numHum++;
 						if(pseudoBleu.getText().equals("")){
 							informations.setText("Les pseudos des joueurs ne peuvent être vide !");
 							informations.setVisible(true);
@@ -655,6 +657,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 						
 				if(rougeChoisi == true){
 					if(humainRouge.isSelected() == true){
+						numHum++;
 						if(pseudoRouge.getText().equals("")){
 							informations.setText("Les pseudos des joueurs ne peuvent être vide !");
 							informations.setVisible(true);
@@ -674,6 +677,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 					
 				if(orangeChoisi == true){
 					if(humainOrange.isSelected() == true){
+						numHum++;
 						if(pseudoOrange.getText().equals("")){
 							informations.setText("Les pseudos des joueurs ne peuvent être vide !");
 							informations.setVisible(true);
@@ -693,6 +697,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 					
 				if(vertChoisi == true){
 					if(humainVert.isSelected() == true){
+						numHum++;
 						if(pseudoVert.getText().equals("")){
 							informations.setText("Les pseudos des joueurs ne peuvent être vide !");
 							informations.setVisible(true);
@@ -712,6 +717,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 					
 				if(jauneChoisi == true){
 					if(humainJaune.isSelected() == true){
+						numHum++;
 						if(pseudoJaune.getText().equals("")){
 							informations.setText("Les pseudos des joueurs ne peuvent être vide !");
 							informations.setVisible(true);
@@ -731,6 +737,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 					
 				if(violetChoisi == true){
 					if(humainViolet.isSelected() == true){
+						numHum++;
 						if(pseudoViolet.getText().equals("")){
 							informations.setText("Les pseudos des joueurs ne peuvent être vide !");
 							informations.setVisible(true);
@@ -747,6 +754,11 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 						numordi++;
 						numJoueur++;
 					}
+				}
+				
+				if(numHum == 0){
+					informations.setText("Il doit y avoir au moins un humain !");
+					informations.setVisible(true);
 				}
 				
 				if(informations.getText().equals("")){
@@ -825,13 +837,14 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 					lesJoueurs = new Joueur[nbJoueur];
 	
 					int numOrdi = 1;
+					int numHumain = 0;
 				
 					informations.setText("");
 					informations.setVisible(false);
 										
 					//JOUEUR BLEU
 					if(humainBleu.isSelected()){
-						
+						numHumain++;
 						if(pseudoBleu.getText().equals("")){
 							informations.setText("Les pseudos des joueurs ne peuvent être vide !");
 							informations.setVisible(true);
@@ -850,6 +863,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 					
 					//JOUEUR ROUGE
 					if(humainRouge.isSelected()){
+						numHumain++;
 						if(pseudoRouge.getText().equals("")){
 							informations.setText("Les pseudos des joueurs ne peuvent être vide !");
 							informations.setVisible(true);
@@ -868,6 +882,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 					
 					//JOUEUR ORANGE
 					if(humainOrange.isSelected()){
+						numHumain++;
 						if(pseudoOrange.getText().equals("")){
 							informations.setText("Les pseudos des joueurs ne peuvent être vide !");
 							informations.setVisible(true);
@@ -885,6 +900,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 					
 					//JOUEUR VERT
 					if(humainVert.isSelected()){
+						numHumain++;
 						if(pseudoVert.getText().equals("")){
 							informations.setText("Les pseudos des joueurs ne peuvent être vide !");
 							informations.setVisible(true);
@@ -902,6 +918,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 		
 					//JOUEUR JAUNE
 					if(humainJaune.isSelected()){
+						numHumain++;
 						if(pseudoJaune.getText().equals("")){
 							informations.setText("Les pseudos des joueurs ne peuvent être vide !");
 							informations.setVisible(true);
@@ -919,6 +936,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 		
 					//JOUEUR VIOLET
 					if(humainViolet.isSelected()){
+						numHumain++;
 						if(pseudoViolet.getText().equals("")){
 							informations.setText("Les pseudos des joueurs ne peuvent être vide !");
 							informations.setVisible(true);
@@ -934,14 +952,11 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 						numJoueur++;
 					}
 					
-					// Pour partie normale
-		//			int nbjoueurs=3;
-		//			lesJoueurs = new Joueur[nbjoueurs];
-		//			int taillePlateau=5;
-		//			
-		//			lesJoueurs[0] = new JoueurHumain(taillePlateau,0,"bleu",0);
-		//			lesJoueurs[1] = new JoueurHumain(taillePlateau,1,"rouge",1);
-		//			lesJoueurs[2] = new JoueurHumain(taillePlateau,2,"orange",2);
+
+					if(numHumain == 0){
+						informations.setText("Il doit y avoir au moins un humain !");
+						informations.setVisible(true);
+					}
 					
 					//Si ya pas d'erreur (pas d'info) alors on lance
 					if(informations.getText().equals("")){
