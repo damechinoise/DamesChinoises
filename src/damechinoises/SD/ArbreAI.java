@@ -21,7 +21,7 @@ public class ArbreAI {
 		this.joueur=joueur;
 		nbPetitFils = 3;
 		for (int i = 0 ; i < nbFils ; i++)
-			for (int j = 0; j < 2; j ++){
+			for (int j = 0; j < 1; j ++){
 			PlateauAI tour = p.tourJoueurAI(joueur,i,j);
 			if (tour!=null)
 				root.ajoutFils(ajoutNoeud(prof-1,tour,joueur,1));
@@ -33,7 +33,7 @@ public class ArbreAI {
 		Random r = new Random();
 		if(profondeur != 0){
 			for (int i = 0 ; i < nbPetitFils ; i++)
-				for (int j = 0; j < 2 ; j ++){
+				for (int j = 0; j < 1 ; j ++){
 					int v = r.nextInt(nbFils);
 					PlateauAI tour = p.tourJoueurAI(joueur,v,j);
 					if (tour!=null)
@@ -69,7 +69,6 @@ public class ArbreAI {
 					min = val;
 				}
 			}
-			int val = root.fils(fils).alphabeta(joueur, -5000000, 5000000);
 			mvt =p.changement(root.fils(fils).getPlateau());
 			arr = mvt.get(0);
 			dep = mvt.get(1);
@@ -79,7 +78,6 @@ public class ArbreAI {
 				if(dep1.getX() == arr.getX() && dep1.getY() == arr.getY() && arr1.getX() == dep.getX() && arr1.getY() == dep.getY() && count !=3){
 					passer.add(new Integer(fils));
 					count++;
-					System.out.print(count);
 				}
 				else
 					move = true;
@@ -87,7 +85,6 @@ public class ArbreAI {
 			else
 				move = true;
 		}while (!move);
-		System.out.println();
 		return mvt;
 	}
 }

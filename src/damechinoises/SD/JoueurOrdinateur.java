@@ -51,6 +51,7 @@ public class JoueurOrdinateur extends Joueur{
 			Case arr = mvtprec.get(0);
 			Case dep = mvtprec.get(1);
 			pA.move(pA.selCase(dep.getX(),dep.getY()),pA.selCase(arr.getX(),arr.getY()));
+			this.ajoutCoup();
 		}
 
 		@Override

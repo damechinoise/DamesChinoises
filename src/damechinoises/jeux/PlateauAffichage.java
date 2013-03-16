@@ -261,7 +261,7 @@ public class PlateauAffichage extends JPanel {
 	public void tourJoueur(){
 		update();
 		partie.nextJoueur();
-		while(partie.getJoueur(partie.getTourDe()).getType().equalsIgnoreCase("ordinateur")){
+		while(partie.getJoueur(partie.getTourDe()).getType().equalsIgnoreCase("ordinateur") && !partie.finPartie()){
 			partie.getJoueur(partie.getTourDe()).choisirPion(partie,this);
 			update();
 			partie.nextJoueur();

@@ -49,7 +49,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 	private JPanel sousPanelJoueurBleu, sousPanelJoueurRouge, sousPanelJoueurOrange, sousPanelJoueurVert, sousPanelJoueurJaune, sousPanelJoueurViolet;
 	private JTextField pseudoBleu, pseudoRouge, pseudoOrange, pseudoVert, pseudoJaune, pseudoViolet;
 	private JComboBox listeDifficulteBleu, listeDifficulteRouge, listeDifficulteOrange, listeDifficulteVert, listeDifficulteJaune, listeDifficulteViolet;
-	private Object[] lesDifficultes = new Object[]{"1","2","3","4","5","6","7","8","9"} ;
+	private Object[] lesDifficultes = new Object[]{"1","2"} ;
 	private JButton retour, lancer, charger;
 	private ButtonGroup taille, choixBleu, choixRouge, choixOrange, choixVert, choixJaune, choixViolet;
 	private JRadioButton taille2, taille3, taille4, taille5;

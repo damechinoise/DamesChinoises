@@ -34,17 +34,11 @@ public class PartieFinie extends JPanel {
 		quatrieme.setText("Quatrieme : ");
 		cinquieme.setText("Cinquieme : ");
 		sixieme.setText("Sixieme : ");
-		for(int i=0;i<nbpionsarrives.length;i++){
-			System.out.println("tableau nbpionarrives:"+nbpionsarrives[i]);
-		}
 		
 		int[] tabfini=new int[6];
 		int[] tabtemp=new int[6];
 		for (int i = 0; i < nbj ; i++) {
 			tabtemp[i]=nbpionsarrives[i];
-		}
-		for(int i=0;i<tabtemp.length;i++){
-			System.out.println("tableau temp:"+tabtemp[i]);
 		}
 		int max=0;
 		int indexmax=0;
@@ -58,9 +52,6 @@ public class PartieFinie extends JPanel {
 			}
 			tabtemp[indexmax]=0;
 			tabfini[k]=indexmax;
-		}
-		for(int i=0;i<tabfini.length;i++){
-			System.out.println("tableau fini:"+tabfini[i]);
 		}
 		
 		
@@ -134,6 +125,9 @@ public class PartieFinie extends JPanel {
 		int nbcoups[]=new int[6];
 		for(int i=0;i<nbj;i++){
 			nbcoups[i]=pa.getJoueur(i).getNbCoup();
+			if(!pa.getJoueur(i).fini()){
+				nbcoups[i]+=2;
+			}
 		}
 		int[] tabfini=new int[6];
 		int[] tabtemp=new int[6];
@@ -141,9 +135,7 @@ public class PartieFinie extends JPanel {
 		for (int i = 0; i < nbj ; i++) {
 			tabtemp[i]=nbcoups[i];
 		}
-		for(int i=0;i<tabtemp.length;i++){
-			System.out.println("tableau temp:"+tabtemp[i]);
-		}
+
 		int min=1000;
 		int indexmin=0;
 		for(int k=0;k<nbj;k++){
@@ -157,9 +149,7 @@ public class PartieFinie extends JPanel {
 			tabtemp[indexmin]=1000;
 			tabfini[k]=indexmin;
 		}
-		for(int i=0;i<tabfini.length;i++){
-			System.out.println("tableau fini:"+tabfini[i]);
-		}
+
 
 		
 		retour = new JButton("Retour au menu principal");
