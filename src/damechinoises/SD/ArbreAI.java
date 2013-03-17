@@ -64,7 +64,7 @@ public class ArbreAI {
 					for(int j = 0 ; j < passer.size() ; j++)
 						if(passer.get(j)==i)
 							pass = true;
-				if(root.fils(i)!=null && val>min && val!=valPA && !pass){
+				if(root.fils(i)!=null && val>min /*&& val>valPA*/ && !pass){
 					fils = i;
 					min = val;
 				}

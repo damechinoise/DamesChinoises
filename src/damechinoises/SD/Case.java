@@ -155,25 +155,25 @@ public class Case{
 				value = 0 - (dist+1) * 50;
 			} 
 			else if(brancheArrive==angle){
-				value = (dist +1) * 20 - num;
+				value = (dist + 2) * 50 + num * 10;
 			} else {
 				value = -100;
 			}
 		} else {
-			if(brancheDepart == angle){
-				value = 0 - (dist+1) * 4;
-			} 
-			else if(brancheArrive==angle){
-				value = (dist+1) * 3;
+			if( angle == brancheDepart){
+				value = 0 - (dist) * 10;
+			} else if ( angle == brancheArrive){
+				value = (dist)* 20;
 			} else {
-				int temp = 0;
-				if(brancheArrive > 3)
-					temp = brancheArrive - angle;
-				else
-					temp = brancheDepart - angle;
-				if (temp < 0)
-					temp = - temp;
-				value = 0 + dist + num *( temp -1 );
+				if( (brancheDepart +1)%6 == angle){
+					value = 0 - ((dist) * 9) + num * 3;
+				}else if ((brancheDepart +2)%6 == angle){
+					value = ((dist) * 9) + num * 3;
+				}else if ((brancheDepart -1)%6 == angle){
+					value = 0 - ((dist) * 9) + num * 3;
+				}else {
+					value = 0 + ((dist) * 9 ) -  num * 4;
+				}
 			}
 		}
 		return value;
