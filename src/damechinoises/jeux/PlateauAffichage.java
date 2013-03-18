@@ -25,7 +25,7 @@ public class PlateauAffichage extends JPanel {
 	public PlateauAffichage(Partie p){
 		partie =p;
 		plateau = p.getPlateau();
-		this.setBackground(Color.DARK_GRAY);
+		this.setBackground(Color.BLACK);
 		this.addMouseListener(new ClicListener());
 	}
 	
