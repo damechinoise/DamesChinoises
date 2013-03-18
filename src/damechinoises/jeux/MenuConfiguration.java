@@ -776,6 +776,12 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 					informations.setVisible(true);
 				}
 				
+				if(informations.getText().equals("") && numJoueur == 5){
+					informations.setText("Impossible de lancer une partie avec 5 joueurs !");
+					informations.setVisible(true);
+				}
+				
+				
 				if(informations.getText().equals("")){
 					
 					if(typePartie.equals("chronometre")){
@@ -848,11 +854,18 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 						numJoueur++;
 					}
 					
-					PartieAffichage p = new PartieAffichage(m.getParentt(),tailleChoisi,nbJoueur,true, couleurChoisi);
-					p.getPartie().setEditable(true);
-					m.getParentt().setMain(p);
-					m.getParentt().validate();
-					p.getPanelJeu().updateFirst();
+					if(informations.getText().equals("") && numJoueur == 5){
+						informations.setText("Impossible de lancer une partie avec 5 joueurs !");
+						informations.setVisible(true);
+					}
+					
+					if(informations.getText().equals("")){
+						PartieAffichage p = new PartieAffichage(m.getParentt(),tailleChoisi,nbJoueur,true, couleurChoisi);
+						p.getPartie().setEditable(true);
+						m.getParentt().setMain(p);
+						m.getParentt().validate();
+						p.getPanelJeu().updateFirst();
+					}
 				
 				}
 				
@@ -987,6 +1000,11 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 
 					if(numHumain == 0){
 						informations.setText("Il doit y avoir au moins un humain !");
+						informations.setVisible(true);
+					}
+					
+					if(informations.getText().equals("") && numJoueur == 5){
+						informations.setText("Impossible de lancer une partie avec 5 joueurs !");
 						informations.setVisible(true);
 					}
 					
