@@ -27,7 +27,7 @@ public class Util
    }
    else if(getPlatform() == OS.macos)
    {
-     workingDirectory = new File(userHome, "Library/Application Support/" + applicationName);
+     workingDirectory = new File(userHome, "Library/Application Support/" + applicationName + '/');
    }
    else
    {
@@ -35,6 +35,10 @@ public class Util
    }
    
    if ((!workingDirectory.exists()) && (!workingDirectory.mkdirs())) throw new RuntimeException("Le répertoire de travail n'a pas pu être créé: " + workingDirectory);
+   File saveDir = new File(workingDirectory, "Sauvegardes/");
+   File platDir = new File(workingDirectory, "Plateaux/");
+   if ((!saveDir.exists()) && (!saveDir.mkdirs())) throw new RuntimeException("Le répertoire de travail n'a pas pu être créé: " + workingDirectory);
+   if ((!platDir.exists()) && (!platDir.mkdirs())) throw new RuntimeException("Le répertoire de travail n'a pas pu être créé: " + workingDirectory);
    return workingDirectory;
  }
 

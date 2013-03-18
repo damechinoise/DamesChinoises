@@ -797,18 +797,19 @@ public Partie(String nomFichier){
 			// le BufferedWriter bw auquel on donne comme argument un FileWriter
 			Date aujourdhui = new Date();
 			DateFormat fullDateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL,DateFormat.FULL);
+			File workDir = Util.getWorkingDirectory();
 			String path=new String();
 			if(this.type.equals("normal")){
-				path="Sauvegardes/Partie normale ";
+				path="/Sauvegardes/Partie normale ";
 			}
 			if(this.type.equals("personalise")){
-				path="Sauvegardes/Partie Solo ";
+				path="/Sauvegardes/Partie Solo ";
 			}
 			if(this.editable==true){
-				path="Plateaux/Plateau avec "+nbJoueur+" joueur de taille "+this.getPlateau().getTaille()+" ";
+				path="/Plateaux/Plateau avec "+nbJoueur+" joueur de taille "+this.getPlateau().getTaille()+" ";
 			}
 			if(this.type.equals("chronometre")){
-				path="Sauvegardes/Partie chronometree ";
+				path="/Sauvegardes/Partie chronometree ";
 			}
 			path+="du "+fullDateFormat.format(aujourdhui);
 			if(this.editable==true){
@@ -817,15 +818,15 @@ public Partie(String nomFichier){
 			else{
 				path+=".dc";
 			}
+			path = workDir.getAbsolutePath() + path;
+			System.out.println(path);
 			BufferedWriter bw = new BufferedWriter(new FileWriter(path));
-			
 			//on marque dans le fichier ou plutot dans le BufferedWriter qui sert comme un tampon(stream)
 			
 			int nbPionParJoueur = this.getPlateau().getNbPionParJoueur();
 			
 			bw.write("Taille du plateau :"+this.getPlateau().getTaille() + "\r\nNombre de joueurs :" + nbJoueur+"\r\nTour de :"+this.getTourDe());
 			bw.write("\r\n");
-			
 			//PARCOURS DES JOUEURS DE LA PARTIE
 			for (int i = 0; i < nbJoueur; i++){
 				bw.write("Joueur numero:"+this.getJoueur(i).getNumero() + "\r\nJoueur couleur:" + this.getJoueur(i).getCouleur() + "\r\nJoueur branche debut:" + this.getJoueur(i).getNumBrancheDebut()

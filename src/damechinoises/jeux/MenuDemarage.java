@@ -8,6 +8,8 @@ import java.io.FileFilter;
 
 import javax.swing.*;
 
+import damechinoises.SD.Util;
+
 
 public class MenuDemarage extends JPanel {
 
@@ -93,7 +95,11 @@ public class MenuDemarage extends JPanel {
 		
 		public void actionPerformed(ActionEvent e) {
 			
-			JFileChooser choix = new JFileChooser("Sauvegardes");
+			File workDir = Util.getWorkingDirectory();
+			File saveDir = new File(workDir.getAbsolutePath()+"/Sauvegardes");
+			if (saveDir == null)
+				saveDir.mkdir();
+			JFileChooser choix = new JFileChooser(saveDir);
 			FiltreSimple onlyTXT = new FiltreSimple();
 			choix.removeChoosableFileFilter(choix.getAcceptAllFileFilter());
 			choix.setFileFilter(onlyTXT);

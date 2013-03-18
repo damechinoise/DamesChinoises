@@ -8,6 +8,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -23,6 +24,7 @@ import damechinoises.SD.Joueur;
 import damechinoises.SD.JoueurHumain;
 import damechinoises.SD.JoueurOrdinateur;
 import damechinoises.SD.Partie;
+import damechinoises.SD.Util;
 
 import javax.swing.JFileChooser;
 
@@ -541,7 +543,9 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 		
 		public void actionPerformed(ActionEvent e) {
 			
-			choix = new JFileChooser("Plateaux");
+			File workDir = Util.getWorkingDirectory();
+			File saveDir = new File(workDir.getAbsolutePath()+"/Plateaux");
+			JFileChooser choix = new JFileChooser(saveDir);
 			FiltrePlateauMultijoueur onlyPlateau = new FiltrePlateauMultijoueur();
 			choix.removeChoosableFileFilter(choix.getAcceptAllFileFilter());
 			choix.setFileFilter(onlyPlateau);
@@ -1040,7 +1044,9 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 			
 		public void actionPerformed(ActionEvent e) {
 				
-			JFileChooser choix = new JFileChooser("Plateaux");
+			File workDir = Util.getWorkingDirectory();
+			File saveDir = new File(workDir.getAbsolutePath()+"Plateaux");
+			JFileChooser choix = new JFileChooser(saveDir);
 			FiltrePlateauSolo isPlateautaille1 = new FiltrePlateauSolo();
 			choix.removeChoosableFileFilter(choix.getAcceptAllFileFilter());
 			choix.setFileFilter(isPlateautaille1);
@@ -1071,8 +1077,11 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 		}
 				
 		public void actionPerformed(ActionEvent e) {
-					
-			JFileChooser choix = new JFileChooser("Plateaux");
+
+
+			File workDir = Util.getWorkingDirectory();
+			File saveDir = new File(workDir.getAbsolutePath()+"/Plateaux");
+			JFileChooser choix = new JFileChooser(saveDir);
 			FiltrePlateauMultijoueur isPlateautaillen = new FiltrePlateauMultijoueur();
 			choix.removeChoosableFileFilter(choix.getAcceptAllFileFilter());
 			choix.setFileFilter(isPlateautaillen);
