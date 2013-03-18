@@ -781,7 +781,6 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 					informations.setVisible(true);
 				}
 				
-				
 				if(informations.getText().equals("")){
 					
 					if(typePartie.equals("chronometre")){
@@ -828,6 +827,9 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 				int numJoueur = 0;
 				if(typePartie.equals("editeur")){
 					couleurChoisi = new String[nbJoueur];
+					
+					informations.setText("");
+					informations.setVisible(false);
 					
 					if(actifBleu.isSelected()){
 						couleurChoisi[numJoueur] = new String("bleu");
