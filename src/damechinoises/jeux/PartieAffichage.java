@@ -143,7 +143,7 @@ public class PartieAffichage extends JPanel {
 		this.add(panelJeu,BorderLayout.CENTER);
 		newgame.addActionListener(new NewGameListener(this));
 		mainmenu.addActionListener(new RetourMenuListener(this));
-		if (partie.getType()!= null && partie.getType().equals("chrono")){
+		if (partie.getType().equals("chronometre")){
 			panelMenu.add(new PanelChronometre(c.getMinute(),c.getSeconde()));
 		}
 		if(partie.getEditable()==false){
@@ -195,7 +195,7 @@ public class PartieAffichage extends JPanel {
 		this.add(panelJeu,BorderLayout.CENTER);
 		newgame.addActionListener(new NewGameListener(this));
 		mainmenu.addActionListener(new RetourMenuListener(this));
-		if (partie.getType() !=null && partie.getType().equals("chrono")){
+		if (partie.getType().equals("chronometre")){
 			panelMenu.add(new PanelChronometre(partie.getChrono().getMinute(),partie.getChrono().getSeconde()));
 		}
 		panelMenu.add(new JLabel(""));
@@ -485,7 +485,8 @@ public class PartieAffichage extends JPanel {
 	
 	public void majTour(){
 		String couleur = partie.getJoueur(partie.getTourDe()).getCouleur();
-		tourDe.setText("Tour du joueur "+couleur);
+		String nom=partie.getJoueur(partie.getTourDe()).getNom();
+		tourDe.setText("Tour de "+nom+" ("+couleur+")");
 	}
 	
 
@@ -509,7 +510,7 @@ public class PartieAffichage extends JPanel {
 	    	tache_timer = new ActionListener() {
 	    		public void actionPerformed(ActionEvent e1) {
 	    			if (seconde == 0) {
-	    					if(minute==0){
+	    					if((minute==0)&&(partie.finPartie()==false)){
 	    						int[] nbpionfinis=new int[6];
 	    						for(int i=0;i<partie.getNbJoueurs();i++){
 	    							nbpionfinis[i]=0;
@@ -519,8 +520,9 @@ public class PartieAffichage extends JPanel {
 	    								}
 	    							}
 	    					}
-	    				
+	    					
 	    					getParentt().setMain(new PartieFinie(getParentt(),partie,nbpionfinis));
+	    					
 	    				}
 	    				seconde = 60;
 	    				minute--;

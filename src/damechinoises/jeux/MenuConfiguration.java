@@ -609,6 +609,8 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 					ordinateurViolet.setSelected(true);
 					listeDifficulteViolet.setVisible(true);
 				}
+				
+				panelTaillePlateau.setVisible(false);
 	
 			}	
 		}	
@@ -639,7 +641,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 					if(humainBleu.isSelected() == true){
 						numHum++;
 						if(pseudoBleu.getText().equals("")){
-							informations.setText("Les pseudos des joueurs ne peuvent Ãªtre vide !");
+							informations.setText("Les pseudos des joueurs ne peuvent être vide !");
 							informations.setVisible(true);
 						}
 						
@@ -679,7 +681,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 					if(humainOrange.isSelected() == true){
 						numHum++;
 						if(pseudoOrange.getText().equals("")){
-							informations.setText("Les pseudos des joueurs ne peuvent Ãªtre vide !");
+							informations.setText("Les pseudos des joueurs ne peuvent être vide !");
 							informations.setVisible(true);
 						}
 						
@@ -762,10 +764,27 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 				}
 				
 				if(informations.getText().equals("")){
-					PartieAffichage p = new PartieAffichage(m.getParentt(), partieCharger.getPlateau().getTaille(),nbJoueurCharger,"normal",false,lesJoueursCharger,true);
-					m.getParentt().setMain(p);
-					m.getParentt().validate();
-					p.getPanelJeu().updateFirst();
+					
+					if(typePartie.equals("chronometre")){
+						
+						if(chrono2.isSelected()){c=new Chronometre(2,0);}
+						else if(chrono3.isSelected()){c=new Chronometre(3,0);}
+						else if(chrono4.isSelected()){c=new Chronometre(4,0);}
+						else if(chrono5.isSelected()){c=new Chronometre(5,0);}						
+						
+						PartieAffichage p = new PartieAffichage(m.getParentt(),partieCharger.getPlateau().getTaille(),nbJoueurCharger,"chronometre",false,lesJoueursCharger,true,c);
+						
+						m.getParentt().setMain(p);
+						m.getParentt().validate();
+						p.getPanelJeu().updateFirst();
+					}
+					
+					else{
+						PartieAffichage p = new PartieAffichage(m.getParentt(), partieCharger.getPlateau().getTaille(),nbJoueurCharger,"normale",false,lesJoueursCharger,true);
+						m.getParentt().setMain(p);
+						m.getParentt().validate();
+						p.getPanelJeu().updateFirst();
+					}
 				}
 			}
 			

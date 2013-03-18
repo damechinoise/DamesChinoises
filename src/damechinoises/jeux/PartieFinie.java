@@ -54,37 +54,38 @@ public class PartieFinie extends JPanel {
 			tabfini[k]=indexmax;
 		}
 		
-		
+		System.out.println(pa.getJoueur(0).getNom());
+		System.out.println(pa.getJoueur(1).getNom());
 		
 		if(nbj==1){
-			premier.setText(premier.getText()+pa.getJoueur(0).getCouleur()+" avec "+nbpionsarrives[tabfini[0]]+" pions arrivés.");
+			premier.setText(premier.getText()+pa.getJoueur(0).getNom()+" ("+pa.getJoueur(0).getCouleur()+") avec "+nbpionsarrives[tabfini[0]]+" pions arrivés.");
 		}
 		
 		if(nbj==2){
-			premier.setText(premier.getText()+pa.getJoueur(tabfini[0]).getCouleur()+" avec "+nbpionsarrives[tabfini[0]]+" pions arrivés.");
-			deuxieme.setText(deuxieme.getText()+pa.getJoueur(tabfini[1]).getCouleur()+" avec "+nbpionsarrives[tabfini[1]]+" pions arrivés.");
+			premier.setText(premier.getText()+pa.getJoueur(tabfini[0]).getNom()+" ("+pa.getJoueur(tabfini[0]).getCouleur()+") avec "+nbpionsarrives[tabfini[0]]+" pions arrivés.");
+			deuxieme.setText(deuxieme.getText()+pa.getJoueur(tabfini[1]).getNom()+" ("+pa.getJoueur(tabfini[1]).getCouleur()+")  avec "+nbpionsarrives[tabfini[1]]+" pions arrivés.");
 		}
 		
 		if(nbj==3){
-			premier.setText(premier.getText()+pa.getJoueur(tabfini[0]).getCouleur()+" avec "+nbpionsarrives[tabfini[0]]+" pions arrivés.");
-			deuxieme.setText(deuxieme.getText()+pa.getJoueur(tabfini[1]).getCouleur()+" avec "+nbpionsarrives[tabfini[1]]+" pions arrivés.");
-			troisieme.setText(troisieme.getText()+pa.getJoueur(tabfini[2]).getCouleur()+" avec "+nbpionsarrives[tabfini[2]]+" pions arrivés.");
+			premier.setText(premier.getText()+pa.getJoueur(tabfini[0]).getNom()+" ("+pa.getJoueur(tabfini[0]).getCouleur()+")  avec "+nbpionsarrives[tabfini[0]]+" pions arrivés.");
+			deuxieme.setText(deuxieme.getText()+pa.getJoueur(tabfini[1]).getNom()+" ("+pa.getJoueur(tabfini[1]).getCouleur()+")  avec "+nbpionsarrives[tabfini[1]]+" pions arrivés.");
+			troisieme.setText(troisieme.getText()+pa.getJoueur(tabfini[2]).getNom()+" ("+pa.getJoueur(tabfini[2]).getCouleur()+") avec "+nbpionsarrives[tabfini[2]]+" pions arrivés.");
 		}
 		
 		if(nbj==4){
-			premier.setText(premier.getText()+pa.getJoueur(tabfini[0]).getCouleur()+" avec "+nbpionsarrives[tabfini[0]]+" pions arrivés.");
-			deuxieme.setText(deuxieme.getText()+pa.getJoueur(tabfini[1]).getCouleur()+" avec "+nbpionsarrives[tabfini[1]]+" pions arrivés.");
-			troisieme.setText(troisieme.getText()+pa.getJoueur(tabfini[2]).getCouleur()+" avec "+nbpionsarrives[tabfini[2]]+" pions arrivés.");
-			quatrieme.setText(quatrieme.getText()+pa.getJoueur(tabfini[3]).getCouleur()+" avec "+nbpionsarrives[tabfini[3]]+" pions arrivés.");
+			premier.setText(premier.getText()+pa.getJoueur(tabfini[0]).getNom()+" ("+pa.getJoueur(tabfini[0]).getCouleur()+")  avec "+nbpionsarrives[tabfini[0]]+" pions arrivés.");
+			deuxieme.setText(deuxieme.getText()+pa.getJoueur(tabfini[1]).getNom()+" ("+pa.getJoueur(tabfini[1]).getCouleur()+")  avec "+nbpionsarrives[tabfini[1]]+" pions arrivés.");
+			troisieme.setText(troisieme.getText()+pa.getJoueur(tabfini[2]).getNom()+" ("+pa.getJoueur(tabfini[2]).getCouleur()+")  avec "+nbpionsarrives[tabfini[2]]+" pions arrivés.");
+			quatrieme.setText(quatrieme.getText()+pa.getJoueur(tabfini[3]).getNom()+" ("+pa.getJoueur(tabfini[3]).getCouleur()+")  avec "+nbpionsarrives[tabfini[3]]+" pions arrivés.");
 		}
 		
 		if(nbj==6){
-			premier.setText(premier.getText()+pa.getJoueur(tabfini[0]).getCouleur()+" avec "+nbpionsarrives[tabfini[0]]+" pions arrivés.");
-			deuxieme.setText(deuxieme.getText()+pa.getJoueur(tabfini[1]).getCouleur()+" avec "+nbpionsarrives[tabfini[1]]+" pions arrivés.");
-			troisieme.setText(troisieme.getText()+pa.getJoueur(tabfini[2]).getCouleur()+" avec "+nbpionsarrives[tabfini[2]]+" pions arrivés.");
-			quatrieme.setText(quatrieme.getText()+pa.getJoueur(tabfini[3]).getCouleur()+" avec "+nbpionsarrives[tabfini[3]]+" pions arrivés.");
-			cinquieme.setText(cinquieme.getText()+pa.getJoueur(tabfini[4]).getCouleur()+" avec "+nbpionsarrives[tabfini[4]]+" pions arrivés.");
-			sixieme.setText(sixieme.getText()+pa.getJoueur(tabfini[5]).getCouleur()+" avec "+nbpionsarrives[tabfini[5]]+" pions arrivés.");
+			premier.setText(premier.getText()+pa.getJoueur(tabfini[0]).getNom()+" ("+pa.getJoueur(tabfini[0]).getCouleur()+") avec "+nbpionsarrives[tabfini[0]]+" pions arrivés.");
+			deuxieme.setText(deuxieme.getText()+pa.getJoueur(tabfini[1]).getNom()+" ("+pa.getJoueur(tabfini[1]).getCouleur()+") avec "+nbpionsarrives[tabfini[1]]+" pions arrivés.");
+			troisieme.setText(troisieme.getText()+pa.getJoueur(tabfini[2]).getNom()+" ("+pa.getJoueur(tabfini[2]).getCouleur()+") avec "+nbpionsarrives[tabfini[2]]+" pions arrivés.");
+			quatrieme.setText(quatrieme.getText()+pa.getJoueur(tabfini[3]).getNom()+" ("+pa.getJoueur(tabfini[3]).getCouleur()+") avec "+nbpionsarrives[tabfini[3]]+" pions arrivés.");
+			cinquieme.setText(cinquieme.getText()+pa.getJoueur(tabfini[4]).getNom()+" ("+pa.getJoueur(tabfini[4]).getCouleur()+") avec "+nbpionsarrives[tabfini[4]]+" pions arrivés.");
+			sixieme.setText(sixieme.getText()+pa.getJoueur(tabfini[5]).getNom()+" ("+pa.getJoueur(tabfini[5]).getCouleur()+") avec "+nbpionsarrives[tabfini[5]]+" pions arrivés.");
 		}
 		
 		
@@ -154,34 +155,34 @@ public class PartieFinie extends JPanel {
 		
 		retour = new JButton("Retour au menu principal");
 		if(nbj==1){
-			premier.setText(premier.getText()+pa.getJoueur(0).getCouleur()+" avec "+nbcoups[tabfini[0]]+" coups.");
+			premier.setText(premier.getText()+pa.getJoueur(0).getNom()+" ("+pa.getJoueur(0).getCouleur()+") avec "+nbcoups[tabfini[0]]+" coups.");
 		}
 		
 		if(nbj==2){
-			premier.setText(premier.getText()+pa.getJoueur(tabfini[0]).getCouleur()+" avec "+nbcoups[tabfini[0]]+" coups.");
-			deuxieme.setText(deuxieme.getText()+pa.getJoueur(tabfini[1]).getCouleur()+" avec "+nbcoups[tabfini[1]]+" coups.(+ "+(nbcoups[tabfini[1]]-nbcoups[tabfini[0]])+" coups)");
+			premier.setText(premier.getText()+pa.getJoueur(tabfini[0]).getNom()+" ("+pa.getJoueur(tabfini[0]).getCouleur()+") avec "+nbcoups[tabfini[0]]+" coups.");
+			deuxieme.setText(deuxieme.getText()+pa.getJoueur(tabfini[1]).getNom()+" ("+pa.getJoueur(tabfini[1]).getCouleur()+") avec "+nbcoups[tabfini[1]]+" coups.(+ "+(nbcoups[tabfini[1]]-nbcoups[tabfini[0]])+" coups)");
 		}
 		
 		if(nbj==3){
-			premier.setText(premier.getText()+pa.getJoueur(tabfini[0]).getCouleur()+" avec "+nbcoups[tabfini[0]]+" coups.");
-			deuxieme.setText(deuxieme.getText()+pa.getJoueur(tabfini[1]).getCouleur()+" avec "+nbcoups[tabfini[1]]+" coups.(+ "+(nbcoups[tabfini[1]]-nbcoups[tabfini[0]])+" coups)");
-			troisieme.setText(troisieme.getText()+pa.getJoueur(tabfini[2]).getCouleur()+" avec "+nbcoups[tabfini[2]]+" coups.(+ "+(nbcoups[tabfini[2]]-nbcoups[tabfini[0]])+" coups)");
+			premier.setText(premier.getText()+pa.getJoueur(tabfini[0]).getNom()+" ("+pa.getJoueur(tabfini[0]).getCouleur()+") avec "+nbcoups[tabfini[0]]+" coups.");
+			deuxieme.setText(deuxieme.getText()+pa.getJoueur(tabfini[1]).getNom()+" ("+pa.getJoueur(tabfini[1]).getCouleur()+") avec "+nbcoups[tabfini[1]]+" coups.(+ "+(nbcoups[tabfini[1]]-nbcoups[tabfini[0]])+" coups)");
+			troisieme.setText(troisieme.getText()+pa.getJoueur(tabfini[2]).getNom()+" ("+pa.getJoueur(tabfini[2]).getCouleur()+") avec "+nbcoups[tabfini[2]]+" coups.(+ "+(nbcoups[tabfini[2]]-nbcoups[tabfini[0]])+" coups)");
 		}
 		
 		if(nbj==4){
-			premier.setText(premier.getText()+pa.getJoueur(tabfini[0]).getCouleur()+" avec "+nbcoups[tabfini[0]]+" coups.");
-			deuxieme.setText(deuxieme.getText()+pa.getJoueur(tabfini[1]).getCouleur()+" avec "+nbcoups[tabfini[1]]+" coups.(+ "+(nbcoups[tabfini[1]]-nbcoups[tabfini[0]])+" coups)");
-			troisieme.setText(troisieme.getText()+pa.getJoueur(tabfini[2]).getCouleur()+" avec "+nbcoups[tabfini[2]]+" coups.(+ "+(nbcoups[tabfini[2]]-nbcoups[tabfini[0]])+" coups)");
-			quatrieme.setText(quatrieme.getText()+pa.getJoueur(tabfini[3]).getCouleur()+" avec "+nbcoups[tabfini[3]]+" coups.(+ "+(nbcoups[tabfini[3]]-nbcoups[tabfini[0]])+" coups)");
+			premier.setText(premier.getText()+pa.getJoueur(tabfini[0]).getNom()+" ("+pa.getJoueur(tabfini[0]).getCouleur()+") avec "+nbcoups[tabfini[0]]+" coups.");
+			deuxieme.setText(deuxieme.getText()+pa.getJoueur(tabfini[1]).getNom()+" ("+pa.getJoueur(tabfini[1]).getCouleur()+") avec "+nbcoups[tabfini[1]]+" coups.(+ "+(nbcoups[tabfini[1]]-nbcoups[tabfini[0]])+" coups)");
+			troisieme.setText(troisieme.getText()+pa.getJoueur(tabfini[2]).getNom()+" ("+pa.getJoueur(tabfini[2]).getCouleur()+") avec "+nbcoups[tabfini[2]]+" coups.(+ "+(nbcoups[tabfini[2]]-nbcoups[tabfini[0]])+" coups)");
+			quatrieme.setText(quatrieme.getText()+pa.getJoueur(tabfini[3]).getNom()+" ("+pa.getJoueur(tabfini[3]).getCouleur()+") avec "+nbcoups[tabfini[3]]+" coups.(+ "+(nbcoups[tabfini[3]]-nbcoups[tabfini[0]])+" coups)");
 		}
 		
 		if(nbj==6){
-			premier.setText(premier.getText()+pa.getJoueur(tabfini[0]).getCouleur()+" avec "+nbcoups[tabfini[0]]+" coups.");
-			deuxieme.setText(deuxieme.getText()+pa.getJoueur(tabfini[1]).getCouleur()+" avec "+nbcoups[tabfini[1]]+" coups.(+ "+(nbcoups[tabfini[1]]-nbcoups[tabfini[0]])+" coups)");
-			troisieme.setText(troisieme.getText()+pa.getJoueur(tabfini[2]).getCouleur()+" avec "+nbcoups[tabfini[2]]+" coups.(+ "+(nbcoups[tabfini[2]]-nbcoups[tabfini[0]])+" coups)");
-			quatrieme.setText(quatrieme.getText()+pa.getJoueur(tabfini[3]).getCouleur()+" avec "+nbcoups[tabfini[3]]+" coups.(+ "+(nbcoups[tabfini[3]]-nbcoups[tabfini[0]])+" coups)");
-			cinquieme.setText(cinquieme.getText()+pa.getJoueur(tabfini[4]).getCouleur()+" avec "+nbcoups[tabfini[4]]+" coups.(+ "+(nbcoups[tabfini[4]]-nbcoups[tabfini[0]])+" coups)");
-			sixieme.setText(sixieme.getText()+pa.getJoueur(tabfini[5]).getCouleur()+" avec "+nbcoups[tabfini[5]]+" coups.(+ "+(nbcoups[tabfini[5]]-nbcoups[tabfini[0]])+" coups)");
+			premier.setText(premier.getText()+pa.getJoueur(tabfini[0]).getNom()+" ("+pa.getJoueur(tabfini[0]).getCouleur()+") avec "+nbcoups[tabfini[0]]+" coups.");
+			deuxieme.setText(deuxieme.getText()+pa.getJoueur(tabfini[1]).getNom()+" ("+pa.getJoueur(tabfini[1]).getCouleur()+") avec "+nbcoups[tabfini[1]]+" coups.(+ "+(nbcoups[tabfini[1]]-nbcoups[tabfini[0]])+" coups)");
+			troisieme.setText(troisieme.getText()+pa.getJoueur(tabfini[2]).getNom()+" ("+pa.getJoueur(tabfini[2]).getCouleur()+") avec "+nbcoups[tabfini[2]]+" coups.(+ "+(nbcoups[tabfini[2]]-nbcoups[tabfini[0]])+" coups)");
+			quatrieme.setText(quatrieme.getText()+pa.getJoueur(tabfini[3]).getNom()+" ("+pa.getJoueur(tabfini[3]).getCouleur()+") avec "+nbcoups[tabfini[3]]+" coups.(+ "+(nbcoups[tabfini[3]]-nbcoups[tabfini[0]])+" coups)");
+			cinquieme.setText(cinquieme.getText()+pa.getJoueur(tabfini[4]).getNom()+" ("+pa.getJoueur(tabfini[4]).getCouleur()+") avec "+nbcoups[tabfini[4]]+" coups.(+ "+(nbcoups[tabfini[4]]-nbcoups[tabfini[0]])+" coups)");
+			sixieme.setText(sixieme.getText()+pa.getJoueur(tabfini[5]).getNom()+" ("+pa.getJoueur(tabfini[5]).getCouleur()+") avec "+nbcoups[tabfini[5]]+" coups.(+ "+(nbcoups[tabfini[5]]-nbcoups[tabfini[0]])+" coups)");
 		}
 		
 		

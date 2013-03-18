@@ -25,7 +25,7 @@ public class PlateauAffichage extends JPanel {
 	public PlateauAffichage(Partie p){
 		partie =p;
 		plateau = p.getPlateau();
-		this.setBackground(Color.BLACK);
+		this.setBackground(Color.DARK_GRAY);
 		this.addMouseListener(new ClicListener());
 	}
 	
@@ -108,18 +108,53 @@ public class PlateauAffichage extends JPanel {
 			}
 		}
 		int taillebranche = taille;
+		String couleur=new String("");
 		for (int branche = taille +1 ; branche < 2*taille + 1 ; branche++){
 			for (int cases = 0 ; cases < 6 ; cases ++){
 				for (int i = (branche-taillebranche)/2 +1 ; i < (branche+taillebranche)/2 +1 ; i++ ){
 					int x = plateau.getBranche(cases).getLigne(branche-taille-1).getCase(i-((branche-taillebranche)/2)-1).getX();
 					int y = plateau.getBranche(cases).getLigne(branche-taille-1).getCase(i-((branche-taillebranche)/2)-1).getY();
+					if(partie.getJoueurr(cases)!=null)
+					{
+						couleur=partie.getJoueurr(cases).getCouleur();
+
+						this.affCase((int)x,(int)y,27,couleur,true);
+						
+					}
 					this.affCase((int)x,(int)y,24,plateau.getBranche(cases).getLigne(branche-taille-1).getCase(i-((branche-taillebranche)/2)-1).getCouleur());
+					
 				}
 			}
 			taillebranche --;
 		}
 	}
 	
+	private void affCase(int x, int y, int d, String couleur, boolean b) {
+		Graphics g = this.getGraphics();
+		if (!(couleur!=null)){
+			g.setColor(Color.LIGHT_GRAY);
+		}
+		else{
+			if (couleur.equals("bleu"))
+				g.setColor(Color.blue);
+			if (couleur.equals("rouge"))
+				g.setColor(Color.red);
+			if (couleur.equals("orange"))
+				g.setColor(Color.orange);
+			if (couleur.equals("vert"))
+				g.setColor(Color.green);
+			if (couleur.equals("jaune"))
+				g.setColor(Color.yellow);
+			if (couleur.equals("violet"))
+				g.setColor(Color.magenta);
+			if (couleur.equals("fond"))
+				g.setColor(Color.white);
+		}
+	    g.drawOval((x-d/2)-1,(y-d/2)-1, d, d);
+	    g.drawOval(x-d/2, y-d/2, d, d);
+		
+	}
+
 	public void affCase(int x,int y,int d,String couleur) {
 		Graphics g = this.getGraphics();
 		if (!(couleur!=null)){
@@ -139,7 +174,7 @@ public class PlateauAffichage extends JPanel {
 			if (couleur.equals("violet"))
 				g.setColor(Color.magenta);
 			if (couleur.equals("fond"))
-				g.setColor(Color.DARK_GRAY);
+				g.setColor(Color.white);
 		}
 		g.fillOval(x-d/2, y-d/2, d, d);
 	    g.drawOval(x-d/2, y-d/2, d, d);
