@@ -53,7 +53,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 	private JButton retour, lancer, charger;
 	private ButtonGroup taille, choixBleu, choixRouge, choixOrange, choixVert, choixJaune, choixViolet;
 	private JRadioButton taille2, taille3, taille4, taille5;
-	private JRadioButton chrono2, chrono3, chrono4, chrono5;
+	private JRadioButton chrono2, chrono3, chrono4, chrono5, chrono10, chrono15, chrono30;
 	private JRadioButton humainBleu, ordinateurBleu, inactifBleu, actifBleu;
 	private JRadioButton humainRouge, ordinateurRouge, inactifRouge, actifRouge;
 	private JRadioButton humainOrange, ordinateurOrange, inactifOrange, actifOrange;
@@ -120,17 +120,26 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 			chrono3 = new JRadioButton("3 minutes");
 			chrono4 = new JRadioButton("4 minutes");
 			chrono5 = new JRadioButton("5 minutes",true);
+			chrono10 = new JRadioButton("10 minutes");
+			chrono15 = new JRadioButton("15 minutes");
+			chrono30 = new JRadioButton("30 minutes");
 	
 			chronoGroup.add(chrono2);
 			chronoGroup.add(chrono3);
 			chronoGroup.add(chrono4);
 			chronoGroup.add(chrono5);
+			chronoGroup.add(chrono10);
+			chronoGroup.add(chrono15);
+			chronoGroup.add(chrono30);
 			
 			panelChrono.add(leChrono);
 			panelChrono.add(chrono2);
 			panelChrono.add(chrono3);
 			panelChrono.add(chrono4);
 			panelChrono.add(chrono5);
+			panelChrono.add(chrono10);
+			panelChrono.add(chrono15);
+			panelChrono.add(chrono30);
 		}
 		
 		
@@ -641,7 +650,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 					if(humainBleu.isSelected() == true){
 						numHum++;
 						if(pseudoBleu.getText().equals("")){
-							informations.setText("Les pseudos des joueurs ne peuvent être vide !");
+							informations.setText("Les pseudos des joueurs ne peuvent ï¿½tre vide !");
 							informations.setVisible(true);
 						}
 						
@@ -681,7 +690,7 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 					if(humainOrange.isSelected() == true){
 						numHum++;
 						if(pseudoOrange.getText().equals("")){
-							informations.setText("Les pseudos des joueurs ne peuvent être vide !");
+							informations.setText("Les pseudos des joueurs ne peuvent ï¿½tre vide !");
 							informations.setVisible(true);
 						}
 						
@@ -994,7 +1003,10 @@ public class MenuConfiguration extends JPanel implements ActionListener{
 							if(chrono2.isSelected()){c=new Chronometre(2,0);}
 							else if(chrono3.isSelected()){c=new Chronometre(3,0);}
 							else if(chrono4.isSelected()){c=new Chronometre(4,0);}
-							else if(chrono5.isSelected()){c=new Chronometre(5,0);}						
+							else if(chrono5.isSelected()){c=new Chronometre(5,0);}
+							else if(chrono10.isSelected()){c=new Chronometre(10,0);}
+							else if(chrono15.isSelected()){c=new Chronometre(15,0);}
+							else if(chrono30.isSelected()){c=new Chronometre(30,0);}
 							
 							PartieAffichage p = new PartieAffichage(m.getParentt(),tailleChoisi,nbJoueur,"chronometre",false,lesJoueurs,false,c);
 							
